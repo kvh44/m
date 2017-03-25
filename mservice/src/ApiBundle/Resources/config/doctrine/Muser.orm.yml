@@ -8,13 +8,13 @@ ApiBundle\Entity\Muser:
         wechat:
             columns:
                 - wechat
+        email_2:
+            columns:
+                - email
     uniqueConstraints:
         username:
             columns:
                 - username
-        email:
-            columns:
-                - email
         internal_id:
             columns:
                 - internal_id
@@ -30,6 +30,9 @@ ApiBundle\Entity\Muser:
         slug:
             columns:
                 - slug
+        telephone_2:
+            columns:
+                - telephone
     id:
         id:
             type: integer
@@ -48,7 +51,7 @@ ApiBundle\Entity\Muser:
                 fixed: false
         email:
             type: string
-            nullable: false
+            nullable: true
             length: 255
             options:
                 fixed: false

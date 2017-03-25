@@ -400,4 +400,3 @@ class Mdraft
         return $this->updated;
     }
 }
-

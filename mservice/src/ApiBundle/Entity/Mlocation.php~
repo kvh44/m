@@ -255,3 +255,4 @@ class Mlocation
         return $this->slug;
     }
 }
+

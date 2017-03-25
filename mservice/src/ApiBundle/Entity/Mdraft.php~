@@ -3,9 +3,9 @@
 namespace ApiBundle\Entity;
 
 /**
- * Mphoto
+ * Mdraft
  */
-class Mphoto
+class Mdraft
 {
     /**
      * @var integer
@@ -15,37 +15,37 @@ class Mphoto
     /**
      * @var string
      */
-    private $photoType;
-
-    /**
-     * @var integer
-     */
-    private $postId;
+    private $otherWeb;
 
     /**
      * @var string
      */
-    private $photoOrigin;
+    private $link;
 
     /**
      * @var string
      */
-    private $photoMedium;
+    private $linkId;
 
     /**
      * @var string
      */
-    private $photoSmall;
+    private $content;
 
     /**
-     * @var string
+     * @var boolean
      */
-    private $title;
+    private $isNewContent;
 
     /**
-     * @var integer
+     * @var boolean
      */
-    private $viewNumber;
+    private $isUpdatedContent;
+
+    /**
+     * @var boolean
+     */
+    private $isRead;
 
     /**
      * @var boolean
@@ -56,6 +56,11 @@ class Mphoto
      * @var integer
      */
     private $deletedByUserId;
+
+    /**
+     * @var string
+     */
+    private $slug;
 
     /**
      * @var string
@@ -72,11 +77,6 @@ class Mphoto
      */
     private $updated;
 
-    /**
-     * @var \ApiBundle\Entity\Muser
-     */
-    private $user;
-
 
     /**
      * Get id
@@ -89,171 +89,171 @@ class Mphoto
     }
 
     /**
-     * Set photoType
+     * Set otherWeb
      *
-     * @param string $photoType
+     * @param string $otherWeb
      *
-     * @return Mphoto
+     * @return Mdraft
      */
-    public function setPhotoType($photoType)
+    public function setOtherWeb($otherWeb)
     {
-        $this->photoType = $photoType;
+        $this->otherWeb = $otherWeb;
 
         return $this;
     }
 
     /**
-     * Get photoType
+     * Get otherWeb
      *
      * @return string
      */
-    public function getPhotoType()
+    public function getOtherWeb()
     {
-        return $this->photoType;
+        return $this->otherWeb;
     }
 
     /**
-     * Set postId
+     * Set link
      *
-     * @param integer $postId
+     * @param string $link
      *
-     * @return Mphoto
+     * @return Mdraft
      */
-    public function setPostId($postId)
+    public function setLink($link)
     {
-        $this->postId = $postId;
+        $this->link = $link;
 
         return $this;
     }
 
     /**
-     * Get postId
-     *
-     * @return integer
-     */
-    public function getPostId()
-    {
-        return $this->postId;
-    }
-
-    /**
-     * Set photoOrigin
-     *
-     * @param string $photoOrigin
-     *
-     * @return Mphoto
-     */
-    public function setPhotoOrigin($photoOrigin)
-    {
-        $this->photoOrigin = $photoOrigin;
-
-        return $this;
-    }
-
-    /**
-     * Get photoOrigin
+     * Get link
      *
      * @return string
      */
-    public function getPhotoOrigin()
+    public function getLink()
     {
-        return $this->photoOrigin;
+        return $this->link;
     }
 
     /**
-     * Set photoMedium
+     * Set linkId
      *
-     * @param string $photoMedium
+     * @param string $linkId
      *
-     * @return Mphoto
+     * @return Mdraft
      */
-    public function setPhotoMedium($photoMedium)
+    public function setLinkId($linkId)
     {
-        $this->photoMedium = $photoMedium;
+        $this->linkId = $linkId;
 
         return $this;
     }
 
     /**
-     * Get photoMedium
+     * Get linkId
      *
      * @return string
      */
-    public function getPhotoMedium()
+    public function getLinkId()
     {
-        return $this->photoMedium;
+        return $this->linkId;
     }
 
     /**
-     * Set photoSmall
+     * Set content
      *
-     * @param string $photoSmall
+     * @param string $content
      *
-     * @return Mphoto
+     * @return Mdraft
      */
-    public function setPhotoSmall($photoSmall)
+    public function setContent($content)
     {
-        $this->photoSmall = $photoSmall;
+        $this->content = $content;
 
         return $this;
     }
 
     /**
-     * Get photoSmall
+     * Get content
      *
      * @return string
      */
-    public function getPhotoSmall()
+    public function getContent()
     {
-        return $this->photoSmall;
+        return $this->content;
     }
 
     /**
-     * Set title
+     * Set isNewContent
      *
-     * @param string $title
+     * @param boolean $isNewContent
      *
-     * @return Mphoto
+     * @return Mdraft
      */
-    public function setTitle($title)
+    public function setIsNewContent($isNewContent)
     {
-        $this->title = $title;
+        $this->isNewContent = $isNewContent;
 
         return $this;
     }
 
     /**
-     * Get title
+     * Get isNewContent
      *
-     * @return string
+     * @return boolean
      */
-    public function getTitle()
+    public function getIsNewContent()
     {
-        return $this->title;
+        return $this->isNewContent;
     }
 
     /**
-     * Set viewNumber
+     * Set isUpdatedContent
      *
-     * @param integer $viewNumber
+     * @param boolean $isUpdatedContent
      *
-     * @return Mphoto
+     * @return Mdraft
      */
-    public function setViewNumber($viewNumber)
+    public function setIsUpdatedContent($isUpdatedContent)
     {
-        $this->viewNumber = $viewNumber;
+        $this->isUpdatedContent = $isUpdatedContent;
 
         return $this;
     }
 
     /**
-     * Get viewNumber
+     * Get isUpdatedContent
      *
-     * @return integer
+     * @return boolean
      */
-    public function getViewNumber()
+    public function getIsUpdatedContent()
     {
-        return $this->viewNumber;
+        return $this->isUpdatedContent;
+    }
+
+    /**
+     * Set isRead
+     *
+     * @param boolean $isRead
+     *
+     * @return Mdraft
+     */
+    public function setIsRead($isRead)
+    {
+        $this->isRead = $isRead;
+
+        return $this;
+    }
+
+    /**
+     * Get isRead
+     *
+     * @return boolean
+     */
+    public function getIsRead()
+    {
+        return $this->isRead;
     }
 
     /**
@@ -261,7 +261,7 @@ class Mphoto
      *
      * @param boolean $isDeleted
      *
-     * @return Mphoto
+     * @return Mdraft
      */
     public function setIsDeleted($isDeleted)
     {
@@ -285,7 +285,7 @@ class Mphoto
      *
      * @param integer $deletedByUserId
      *
-     * @return Mphoto
+     * @return Mdraft
      */
     public function setDeletedByUserId($deletedByUserId)
     {
@@ -305,11 +305,35 @@ class Mphoto
     }
 
     /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return Mdraft
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
      * Set internalId
      *
      * @param string $internalId
      *
-     * @return Mphoto
+     * @return Mdraft
      */
     public function setInternalId($internalId)
     {
@@ -333,7 +357,7 @@ class Mphoto
      *
      * @param \DateTime $created
      *
-     * @return Mphoto
+     * @return Mdraft
      */
     public function setCreated($created)
     {
@@ -357,7 +381,7 @@ class Mphoto
      *
      * @param \DateTime $updated
      *
-     * @return Mphoto
+     * @return Mdraft
      */
     public function setUpdated($updated)
     {
@@ -375,28 +399,5 @@ class Mphoto
     {
         return $this->updated;
     }
-
-    /**
-     * Set user
-     *
-     * @param \ApiBundle\Entity\Muser $user
-     *
-     * @return Mphoto
-     */
-    public function setUser(\ApiBundle\Entity\Muser $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return \ApiBundle\Entity\Muser
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
 }
+

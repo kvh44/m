@@ -1,10 +1,10 @@
 mobile:
     resource: "@MobileBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /mobile
 
 admin:
     resource: "@AdminBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /admin
 
 front:
     resource: "@FrontBundle/Resources/config/routing.yml"
@@ -12,11 +12,11 @@ front:
 
 middle:
     resource: "@MiddleBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /middle
 
 api:
     resource: "@ApiBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /api
 
 app:
     resource: "@AppBundle/Controller/"
