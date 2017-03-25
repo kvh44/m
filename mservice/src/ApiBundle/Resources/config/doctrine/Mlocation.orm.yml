@@ -1,0 +1,93 @@
+ApiBundle\Entity\Mlocation:
+    type: entity
+    table: mlocation
+    indexes:
+        country_id:
+            columns:
+                - country_id
+        city_zh:
+            columns:
+                - city_zh
+        city_fr:
+            columns:
+                - city_fr
+        city_en:
+            columns:
+                - city_en
+        internal_id:
+            columns:
+                - internal_id
+    uniqueConstraints:
+        post_number:
+            columns:
+                - post_number
+        slug:
+            columns:
+                - slug
+        post_number_zh:
+            columns:
+                - post_number_zh
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        countryId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: country_id
+        cityZh:
+            type: string
+            nullable: true
+            length: 20
+            options:
+                fixed: false
+            column: city_zh
+        cityFr:
+            type: string
+            nullable: true
+            length: 50
+            options:
+                fixed: false
+            column: city_fr
+        cityEn:
+            type: string
+            nullable: true
+            length: 50
+            options:
+                fixed: false
+            column: city_en
+        postNumber:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: post_number
+        postNumberZh:
+            type: string
+            nullable: false
+            length: 10
+            options:
+                fixed: false
+            column: post_number_zh
+        internalId:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: internal_id
+        slug:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

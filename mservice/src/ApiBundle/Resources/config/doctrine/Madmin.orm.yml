@@ -1,0 +1,119 @@
+ApiBundle\Entity\Madmin:
+    type: entity
+    table: madmin
+    indexes:
+        admin_password:
+            columns:
+                - admin_password
+        encryption_method:
+            columns:
+                - encryption_method
+        indication:
+            columns:
+                - indication
+        salt:
+            columns:
+                - salt
+    uniqueConstraints:
+        internal_id:
+            columns:
+                - internal_id
+        admin_email:
+            columns:
+                - admin_email
+        admin_username:
+            columns:
+                - admin_username
+        token:
+            columns:
+                - token
+        slug:
+            columns:
+                - slug
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        internalId:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: internal_id
+        adminEmail:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: admin_email
+        adminUsername:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: admin_username
+        adminPassword:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: admin_password
+        encryptionMethod:
+            type: string
+            nullable: false
+            length: 30
+            options:
+                fixed: false
+            column: encryption_method
+        salt:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        indication:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        slug:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        token:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        lastConnected:
+            type: datetime
+            nullable: true
+            column: last_connected
+        allowedIp:
+            type: blob
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+            column: allowed_ip
+        created:
+            type: datetime
+            nullable: false
+        updated:
+            type: datetime
+            nullable: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,64 @@
+ApiBundle\Entity\Mcountry:
+    type: entity
+    table: mcountry
+    uniqueConstraints:
+        country_zh:
+            columns:
+                - country_zh
+        country_fr:
+            columns:
+                - country_fr
+        country_en:
+            columns:
+                - country_en
+        internal_id:
+            columns:
+                - internal_id
+        slug:
+            columns:
+                - slug
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        countryZh:
+            type: string
+            nullable: false
+            length: 20
+            options:
+                fixed: false
+            column: country_zh
+        countryFr:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+            column: country_fr
+        countryEn:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+            column: country_en
+        internalId:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: internal_id
+        slug:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

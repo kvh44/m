@@ -1,0 +1,3 @@
+mobile_homepage:
+    path:     /
+    defaults: { _controller: MobileBundle:Default:index }

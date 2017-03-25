@@ -1,0 +1,111 @@
+ApiBundle\Entity\Mphoto:
+    type: entity
+    table: mphoto
+    indexes:
+        photo_type:
+            columns:
+                - photo_type
+        user_id:
+            columns:
+                - user_id
+        post_id:
+            columns:
+                - post_id
+        title:
+            columns:
+                - title
+    uniqueConstraints:
+        internal_id:
+            columns:
+                - internal_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        photoType:
+            type: string
+            nullable: false
+            length: 10
+            options:
+                fixed: false
+            column: photo_type
+        postId:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: post_id
+        photoOrigin:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: photo_origin
+        photoMedium:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: photo_medium
+        photoSmall:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: photo_small
+        title:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        viewNumber:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: view_number
+        isDeleted:
+            type: boolean
+            nullable: true
+            column: is_deleted
+        deletedByUserId:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: deleted_by_user_id
+        internalId:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: internal_id
+        created:
+            type: datetime
+            nullable: false
+        updated:
+            type: datetime
+            nullable: false
+    manyToOne:
+        user:
+            targetEntity: Muser
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                user_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

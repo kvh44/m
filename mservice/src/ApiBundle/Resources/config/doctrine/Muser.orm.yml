@@ -1,0 +1,318 @@
+ApiBundle\Entity\Muser:
+    type: entity
+    table: muser
+    indexes:
+        telephone:
+            columns:
+                - telephone
+        wechat:
+            columns:
+                - wechat
+    uniqueConstraints:
+        username:
+            columns:
+                - username
+        email:
+            columns:
+                - email
+        internal_id:
+            columns:
+                - internal_id
+        token:
+            columns:
+                - token
+        internal_token:
+            columns:
+                - internal_token
+        external_token:
+            columns:
+                - external_token
+        slug:
+            columns:
+                - slug
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        username:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        email:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        telephone:
+            type: string
+            nullable: false
+            length: 20
+            options:
+                fixed: false
+        wechat:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        facebook:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        instagram:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        website:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        timezone:
+            type: string
+            nullable: true
+            length: 60
+            options:
+                fixed: false
+        country:
+            type: string
+            nullable: true
+            length: 20
+            options:
+                fixed: false
+        city:
+            type: string
+            nullable: true
+            length: 20
+            options:
+                fixed: false
+        postNumber:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: post_number
+        countryId:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: country_id
+        locationId:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: location_id
+        skinColor:
+            type: string
+            nullable: true
+            length: 15
+            options:
+                fixed: false
+            column: skin_color
+        weight:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+        height:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+        birthday:
+            type: date
+            nullable: true
+        hourPrice:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: hour_price
+        hourPriceUnit:
+            type: string
+            nullable: true
+            length: 10
+            options:
+                fixed: false
+            column: hour_price_unit
+        nightPrice:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: night_price
+        nightPriceUnit:
+            type: string
+            nullable: true
+            length: 10
+            options:
+                fixed: false
+            column: night_price_unit
+        shopAddress:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+            column: shop_address
+        description:
+            type: blob
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        translatedDescription:
+            type: blob
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+            column: translated_description
+        isActive:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+            column: is_active
+        isDeleted:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: is_deleted
+        isPremium:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: is_premium
+        isSingle:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+            column: is_single
+        isShop:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: is_shop
+        isZh:
+            type: boolean
+            nullable: true
+            column: is_zh
+        isEn:
+            type: boolean
+            nullable: true
+            column: is_en
+        isFr:
+            type: boolean
+            nullable: true
+            column: is_fr
+        isAdmin:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: is_admin
+        isSynchronizedByCache:
+            type: boolean
+            nullable: true
+            column: is_synchronized_by_cache
+        isSynchronizedBySearch:
+            type: boolean
+            nullable: true
+            column: is_synchronized_by_search
+        isFromOtherWeb:
+            type: boolean
+            nullable: true
+            column: is_from_other_web
+        otherWeb:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+            column: other_web
+        viewNumber:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: view_number
+        slug:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        token:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        internalToken:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: internal_token
+        externalToken:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: external_token
+        internalId:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: internal_id
+        topTime:
+            type: datetime
+            nullable: true
+            column: top_time
+        lastSynchronizedFromOtherWebTime:
+            type: datetime
+            nullable: true
+            column: last_synchronized_from_other_web_time
+        paymentExpiredTime:
+            type: datetime
+            nullable: true
+            column: payment_expired_time
+        allowedIp:
+            type: blob
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+            column: allowed_ip
+        created:
+            type: datetime
+            nullable: false
+        updated:
+            type: datetime
+            nullable: false
+    lifecycleCallbacks: {  }

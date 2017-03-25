@@ -1,0 +1,103 @@
+ApiBundle\Entity\Mpost:
+    type: entity
+    table: mpost
+    indexes:
+        user_id:
+            columns:
+                - user_id
+        title:
+            columns:
+                - title
+    uniqueConstraints:
+        internal_id:
+            columns:
+                - internal_id
+        slug:
+            columns:
+                - slug
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        internalId:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: internal_id
+        title:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        description:
+            type: blob
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+        displayedHome:
+            type: boolean
+            nullable: true
+            column: displayed_home
+        viewNumber:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: view_number
+        isFromOtherWeb:
+            type: boolean
+            nullable: true
+            column: is_from_other_web
+        otherWeb:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+            column: other_web
+        isSynchronizedByCache:
+            type: boolean
+            nullable: true
+            column: is_synchronized_by_cache
+        isSynchronizedBySearch:
+            type: boolean
+            nullable: true
+            column: is_synchronized_by_search
+        slug:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        topTime:
+            type: datetime
+            nullable: true
+            column: top_time
+        created:
+            type: datetime
+            nullable: false
+        updated:
+            type: datetime
+            nullable: false
+    manyToOne:
+        user:
+            targetEntity: Muser
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                user_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

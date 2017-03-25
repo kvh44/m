@@ -1,0 +1,98 @@
+ApiBundle\Entity\Mdraft:
+    type: entity
+    table: mdraft
+    indexes:
+        other_web:
+            columns:
+                - other_web
+        link:
+            columns:
+                - link
+        link_id:
+            columns:
+                - link_id
+    uniqueConstraints:
+        slug:
+            columns:
+                - slug
+        internal_id:
+            columns:
+                - internal_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        otherWeb:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+            column: other_web
+        link:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        linkId:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+            column: link_id
+        content:
+            type: blob
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+        isNewContent:
+            type: boolean
+            nullable: true
+            column: is_new_content
+        isUpdatedContent:
+            type: boolean
+            nullable: true
+            column: is_updated_content
+        isRead:
+            type: boolean
+            nullable: true
+            column: is_read
+        isDeleted:
+            type: boolean
+            nullable: true
+            column: is_deleted
+        deletedByUserId:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: deleted_by_user_id
+        slug:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        internalId:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: internal_id
+        created:
+            type: datetime
+            nullable: false
+        updated:
+            type: datetime
+            nullable: false
+    lifecycleCallbacks: {  }
