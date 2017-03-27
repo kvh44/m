@@ -13,4 +13,24 @@ use ApiBundle\Entity\Muser as Muser;
  */
 class EMuser extends Muser{
     //put your code here
+    
+    public function setSlug($slug) {
+        $slug = $slug . '-' . date("YmdHis");
+        parent::setSlug($slug);
+    }
+    
+    public function setToken($token) {
+        $token = $token . mt_rand() . date("YmdHis");
+        parent::setToken($token);
+    }
+    
+    public function setExternalToken($token) {
+        $token = $token . mt_rand() . date("YmdHis");
+        parent::setExternalToken($token);
+    }
+    
+    public function setInternalToken($token) {
+        $token = $token . mt_rand() . date("YmdHis");
+        parent::setInternalToken($token);
+    }
 }

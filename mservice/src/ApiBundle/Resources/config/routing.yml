@@ -3,6 +3,6 @@ api_homepage:
     defaults: { _controller: ApiBundle:Default:index }
 
 public_api_login:
-    path: /public/login
-    defaults: { _controller: ApiBundle:Public:login, _format:json}
+    path: /public/user/login
+    defaults: { _controller: ApiBundle:PublicUser:login, _format:json}
     methods:  [POST]
