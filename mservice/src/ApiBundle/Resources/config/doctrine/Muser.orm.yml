@@ -1,6 +1,7 @@
 ApiBundle\Entity\Muser:
     type: entity
     table: muser
+    repositoryClass: ApiBundle\Repository\MassageUserRepository
     indexes:
         telephone:
             columns:

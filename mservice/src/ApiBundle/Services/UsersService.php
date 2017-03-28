@@ -1,8 +1,8 @@
 <?php
 namespace ApiBundle\Services;
 
-use ApiBundle\ExtendedEntity\EMuser;
-use ApiBundle\Entity\Mpassword;
+use ApiBundle\Entity\ExtendedEntity\EMuser;
+use ApiBundle\Entity\ExtendedEntity\EMpassword;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,7 +38,7 @@ class UsersService {
      protected $utileService;
      
      
-     protected $muser;
+     protected $mUser;
      
      
      protected $mPassword;
@@ -51,12 +51,13 @@ class UsersService {
         $this->translator = $translator;
         $this->container = $container;
         $this->utileService = $utileService;
-        $this->mUser = new EMuser();  
-        $this->mPassword = new Mpassword();
      }  
      
      public function createUser($request) {
-         if($request->get('email') !== ''){
+         $this->mUser = new EMuser();  
+         $this->mPassword = new EMpassword();
+        
+         if(strlen($request->get('email')) > 0){
              if(!$this->validateEmailFormat($request->get('email'))){
                 $this->utileService->response['error'] = 'email_invalid';
                 $this->utileService->response['state'] = false;
@@ -78,19 +79,28 @@ class UsersService {
          }
          
          if($this->utileService->response['state'] === true) {
-             $encodedPassword = $this->encryptPassword($request->get('password1'));
              $this->mUser->setUsername($request->get('username'));
-             //$this->mUser->setPassword($encodedPassword);
-             //$this->mUser->setPasswordIndication($this->setPasswordIndication($request->get('password1')));
-             
+             $this->mUser->setEmail($request->get('email'));
+             $this->mUser->setTelephone($request->get('telephone'));
              $this->mUser->setSlug($request->get('username'));
              $this->mUser->setToken();
              $this->mUser->setInternalToken();
              $this->mUser->setExternalToken();
-             $this->mUser->setCreatedAt(new \DateTime('now'));
-             $this->mUser->setUpdatedAt(new \DateTime('now'));
+             $this->mUser->setInternalId();
+             $this->mUser->setCreated(new \DateTime('now'));
+             $this->mUser->setUpdated(new \DateTime('now'));
              $this->em->persist($this->mUser);
-             $this->em->persist($this->mPassword->setUser($this->mUser));
+             
+             $encodedPassword = $this->encryptPassword($request->get('password1'));
+             $this->mPassword->setPassword($encodedPassword);
+             $this->mPassword->setEncryptionMethod('bcrypt');
+             $this->mPassword->setIndication($this->setPasswordIndication($request->get('password1')));
+             $this->mPassword->setSalt('');
+             $this->mPassword->setInternalId();
+             $this->mPassword->setCreated(new \DateTime('now'));
+             $this->mPassword->setUpdated(new \DateTime('now'));
+             $this->mPassword->setUser($this->mUser);
+             $this->em->persist($this->mPassword);
              $this->em->flush();
              $this->utileService->response['data'] = $this->mUser;
          }

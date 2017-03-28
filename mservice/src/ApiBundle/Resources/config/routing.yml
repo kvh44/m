@@ -6,3 +6,8 @@ public_api_login:
     path: /public/user/login
     defaults: { _controller: ApiBundle:PublicUser:login, _format:json}
     methods:  [POST]
+    
+public_api_create_user:
+    path: /public/user/create
+    defaults: { _controller: ApiBundle:PublicUser:createUser, _format:json}
+    methods:  [POST]    
