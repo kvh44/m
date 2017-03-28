@@ -82,12 +82,15 @@ class UsersService {
              $this->mUser->setUsername($request->get('username'));
              //$this->mUser->setPassword($encodedPassword);
              //$this->mUser->setPasswordIndication($this->setPasswordIndication($request->get('password1')));
-             $this->mUser->setIsactive(1);
+             
              $this->mUser->setSlug($request->get('username'));
-             $this->mUser->setToken('');
+             $this->mUser->setToken();
+             $this->mUser->setInternalToken();
+             $this->mUser->setExternalToken();
              $this->mUser->setCreatedAt(new \DateTime('now'));
              $this->mUser->setUpdatedAt(new \DateTime('now'));
              $this->em->persist($this->mUser);
+             $this->em->persist($this->mPassword->setUser($this->mUser));
              $this->em->flush();
              $this->utileService->response['data'] = $this->mUser;
          }
@@ -97,7 +100,7 @@ class UsersService {
      
      public function encryptPassword($password, $algo = 'md5', $salt = null){
          $encoder = $this->container->get('security.password_encoder');
-         $encodedPassword = $encoder->encodePassword($this->cramUser, $password);
+         $encodedPassword = $encoder->encodePassword($this->mUser, $password);
     
          return $encodedPassword;
      }

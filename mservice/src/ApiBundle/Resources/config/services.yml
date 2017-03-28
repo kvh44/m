@@ -3,11 +3,10 @@ services:
 #        class: ApiBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
 
-api_massage.UtileService:
-        class: ApiBundle\Services\UtileService
-        arguments: ["@translator.default"]
-        
-api_massage.UsersService:
-        class: ApiBundle\Services\UsersService
-        arguments: ["@doctrine","@session","@translator.default","@service_container", "@api_cram.UtileService"]
-        
+    api_massage.UtileService:
+            class: ApiBundle\Services\UtileService
+            arguments: ["@translator.default"]
+
+    api_massage.UsersService:
+            class: ApiBundle\Services\UsersService
+            arguments: ["@doctrine","@session","@translator.default","@service_container", "@api_massage.UtileService"]

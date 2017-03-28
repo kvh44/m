@@ -6,6 +6,7 @@ namespace ApiBundle\ExtendedEntity;
  * and open the template in the editor.
  */
 use ApiBundle\Entity\Muser as Muser;
+use ApiBundle\Services\UtileService;
 /**
  * Description of EMuser
  *
@@ -15,22 +16,27 @@ class EMuser extends Muser{
     //put your code here
     
     public function setSlug($slug) {
-        $slug = $slug . '-' . date("YmdHis");
+        $slug = $slug . '-' . UtileService::getDateTimeMicroseconds();
         parent::setSlug($slug);
     }
     
-    public function setToken($token) {
-        $token = $token . mt_rand() . date("YmdHis");
+    public function setToken($token = '') {
+        $token = $token . UtileService::RandomString(32) . UtileService::getDateTimeMicroseconds();
         parent::setToken($token);
     }
     
-    public function setExternalToken($token) {
-        $token = $token . mt_rand() . date("YmdHis");
+    public function setExternalToken($token = '') {
+        $token = $token . UtileService::RandomString(32) . UtileService::getDateTimeMicroseconds();
         parent::setExternalToken($token);
     }
     
-    public function setInternalToken($token) {
-        $token = $token . mt_rand() . date("YmdHis");
+    public function setInternalToken($token = '') {
+        $token = $token . UtileService::RandomString(32) . UtileService::getDateTimeMicroseconds();
         parent::setInternalToken($token);
+    }
+    
+    public function setInternalId($internalId = '') {
+        $internalId = $internalId . UtileService::RandomString(32) . UtileService::getDateTimeMicroseconds();
+        parent::setInternalId($internalId);
     }
 }
