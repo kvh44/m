@@ -1,0 +1,41 @@
+
+ApiBundle\Entity\Mpassword:  
+    properties:
+        password:
+            - NotBlank:  
+                message: 'user.password.not_blank' 
+            - Length:
+                min: 8
+                minMessage: 'user.password.too_short'
+            - Regex:
+                pattern: '/^(?=.*[a-zA-Z])(?=.*[0-9]).+$/'
+                match:   true
+                message: 'user.password.complex.invalid'
+                
+ApiBundle\Entity\Muser:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [username]
+            message: 'user.username.exist'
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [telephone]
+            message: 'user.telephone.exist'    
+    properties:
+        username:
+            - NotBlank:  
+                message: 'user.username.not_blank' 
+            - Length:
+                min: 3
+                minMessage: 'user.username.too_short' 
+        telephone:
+            - NotBlank:  
+                message: 'user.telephone.not_blank' 
+            - Length:
+                min: 8
+                minMessage: 'user.telephone.too_short'     
+                max: 20
+                maxMessage: 'user.telephone.too_long' 
+            - Regex:
+                pattern: '/^[0-9]{8,20}$/'
+                match:   true
+                message: user.telephone.format.invalid       

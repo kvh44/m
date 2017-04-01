@@ -21,15 +21,33 @@ class UtileService {
         $this->translator = $translator;
      }  
     
-    public $response= array('data' => array(), 'state' => true, 'error' => '');
+    public $response= array('data' => array(), 'state' => true, 'errorMessage' => '', 'errorNumber' => 0);
     
-    public $errors = array(
-    );
+    public $errors = array();
+    
+    public function setResponseData($data = array()) {
+        $this->response['data'] = $data;
+    }
+    
+    public function setResponseState($state = true) {
+        $this->response['state'] = $state;
+    }
+    
+    public function setResponseErrorMessage($errorMessage = '') {
+        $this->response['errorMessage'] = $errorMessage;
+    }
+    
+    public function setResponseErrorNumber($errorNumber = 0) {
+        $this->response['errorNumber'] = $errorNumber;
+    }
     
     public function setResponse($response) {
         $this->response = $response;
     }
-
+    
+    public function getResponseState() {
+        return $this->response['state'];
+    }
     public function getResponse() {
         return $this->response;
     }
@@ -55,4 +73,20 @@ class UtileService {
     public static function getDateTimeMicroseconds(){
         return date("YmdHis").substr((string)microtime(), 1, 8);
     }
+    
+    public static function validateEmailFormat($email) {
+      return filter_var($email, FILTER_VALIDATE_EMAIL);
+    }
+    
+    public static function prepareIndication($string, $mask = '*'){
+         $length = strlen($string);
+         $first = $string[0];
+         $last = $string[$length - 1];
+         
+         $star = '';
+         for($n = 0; $n < $length - 2; $n++){
+             $star .= $mask;
+         }
+         return $first .$star. $last;
+     }
 }

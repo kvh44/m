@@ -1,0 +1,3 @@
+user:
+    password:
+        too_short: Password is too short (at least 8 letters)
