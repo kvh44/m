@@ -17,7 +17,7 @@ class PublicUserController extends FOSRestController
     
     public function loginAction(Request $request)
     {
-        return $request->get('username');
+        return $this->container->get('api_massage.UsersService')->login($request);
     }        
     
     public function createUserAction(Request $request)

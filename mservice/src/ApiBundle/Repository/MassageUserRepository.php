@@ -18,6 +18,20 @@ class MassageUserRepository extends EntityRepository implements UserLoaderInterf
             ->getOneOrNullResult();
     }
     
+    public function loadPasswordIndicationByIdentifier($identifier)
+    {
+        return $this->createQueryBuilder('u') 
+            ->select('u.id, u.email, u.username, u.telephone, mPassword.id, mPassword.indication')    
+            ->innerJoin('ApiBundle:mPassword', 'mPassword','WITH','mPassword.userId = u.id')    
+            ->where('u.username = :username or u.email = :email or u.telephone = :telephone')
+            ->setParameter('username', $identifier)
+            ->setParameter('email', $identifier)
+            ->setParameter('telephone', $identifier)    
+            ->orderBy('mPassword.id','DESC')    
+            ->getQuery()
+            ->getOneOrNullResult();
+    }        
+
     public function loadUserByUsername($username)
     {
         return $this->createQueryBuilder('u') 

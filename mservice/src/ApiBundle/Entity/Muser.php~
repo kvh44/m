@@ -1443,5 +1443,68 @@ class Muser
     {
         return $this->updated;
     }
-}
+    /**
+     * @var string
+     */
+    private $nickname;
 
+    /**
+     * @var boolean
+     */
+    private $isTest = '0';
+    
+    private $haha;
+    
+    public function setHaha($haha)
+    {
+        $this->haha = $haha;
+    }        
+
+        /**
+     * Set nickname
+     *
+     * @param string $nickname
+     *
+     * @return Muser
+     */
+    public function setNickname($nickname)
+    {
+        $this->nickname = $nickname;
+
+        return $this;
+    }
+
+    /**
+     * Get nickname
+     *
+     * @return string
+     */
+    public function getNickname()
+    {
+        return $this->nickname;
+    }
+
+    /**
+     * Set isTest
+     *
+     * @param boolean $isTest
+     *
+     * @return Muser
+     */
+    public function setIsTest($isTest)
+    {
+        $this->isTest = $isTest;
+
+        return $this;
+    }
+
+    /**
+     * Get isTest
+     *
+     * @return boolean
+     */
+    public function getIsTest()
+    {
+        return $this->isTest;
+    }
+}

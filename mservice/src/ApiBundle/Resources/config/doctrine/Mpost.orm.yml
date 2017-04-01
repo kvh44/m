@@ -65,6 +65,16 @@ ApiBundle\Entity\Mpost:
             options:
                 fixed: false
             column: other_web
+        isDeleted:
+            type: boolean
+            nullable: true
+            column: is_deleted
+        deletedByUserId:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: deleted_by_user_id    
         isSynchronizedByCache:
             type: boolean
             nullable: true

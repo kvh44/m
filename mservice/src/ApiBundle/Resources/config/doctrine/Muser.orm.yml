@@ -12,6 +12,9 @@ ApiBundle\Entity\Muser:
         email_2:
             columns:
                 - email
+        nickname:
+            columns:
+                - nickname        
     uniqueConstraints:
         username:
             columns:
@@ -62,6 +65,12 @@ ApiBundle\Entity\Muser:
             length: 20
             options:
                 fixed: false
+        nickname:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false        
         wechat:
             type: string
             nullable: true
@@ -236,6 +245,12 @@ ApiBundle\Entity\Muser:
             options:
                 default: '0'
             column: is_admin
+        isTest:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: is_test   
         isSynchronizedByCache:
             type: boolean
             nullable: true

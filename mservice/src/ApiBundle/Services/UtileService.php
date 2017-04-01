@@ -17,11 +17,15 @@ class UtileService {
     protected $translator;
     
     public function __construct(Translator $translator)
-     {
+    {
         $this->translator = $translator;
-     }  
-    
-    public $response= array('data' => array(), 'state' => true, 'errorMessage' => '', 'errorNumber' => 0);
+    }  
+     
+    const FROM_SQL = 1;
+    const FROM_CACHE = 2;
+    const FROM_SEARCH = 3;
+
+    public $response= array('data' => array(), 'state' => true, 'message' => null, 'path' => null, 'from' => null,'code' => 0);
     
     public $errors = array();
     
@@ -33,14 +37,22 @@ class UtileService {
         $this->response['state'] = $state;
     }
     
-    public function setResponseErrorMessage($errorMessage = '') {
-        $this->response['errorMessage'] = $errorMessage;
+    public function setResponseErrorMessage($errorMessage = null) {
+        $this->response['message'] = $errorMessage;
     }
     
     public function setResponseErrorNumber($errorNumber = 0) {
-        $this->response['errorNumber'] = $errorNumber;
+        $this->response['code'] = $errorNumber;
     }
     
+    public function setResponseErrorPath($errorPath = null){
+        $this->response['path'] = $errorPath;
+    }
+    
+    public function setResponseFrom($from = null){
+        $this->response['from'] = $from;
+    }
+
     public function setResponse($response) {
         $this->response = $response;
     }

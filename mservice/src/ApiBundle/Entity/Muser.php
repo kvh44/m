@@ -26,6 +26,11 @@ class Muser
      * @var string
      */
     private $telephone;
+    
+    /**
+     * @var string
+     */
+    private $nickname;
 
     /**
      * @var string
@@ -176,6 +181,11 @@ class Muser
      * @var boolean
      */
     private $isAdmin = '0';
+
+    /**
+     * @var boolean
+     */
+    private $isTest = '0';  
 
     /**
      * @var boolean
@@ -1442,5 +1452,53 @@ class Muser
     public function getUpdated()
     {
         return $this->updated;
+    }  
+
+     /**
+     * Set nickname
+     *
+     * @param string $nickname
+     *
+     * @return Muser
+     */
+    public function setNickname($nickname)
+    {
+        $this->nickname = $nickname;
+
+        return $this;
+    }
+
+    /**
+     * Get nickname
+     *
+     * @return string
+     */
+    public function getNickname()
+    {
+        return $this->nickname;
+    }
+
+    /**
+     * Set isTest
+     *
+     * @param boolean $isTest
+     *
+     * @return Muser
+     */
+    public function setIsTest($isTest)
+    {
+        $this->isTest = $isTest;
+
+        return $this;
+    }
+
+    /**
+     * Get isTest
+     *
+     * @return boolean
+     */
+    public function getIsTest()
+    {
+        return $this->isTest;
     }
 }

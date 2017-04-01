@@ -428,4 +428,62 @@ class Mpost
     {
         return $this->user;
     }
+    /**
+     * @var boolean
+     */
+    private $isDeleted;
+
+    /**
+     * @var integer
+     */
+    private $deletedByUserId;
+
+
+    /**
+     * Set isDeleted
+     *
+     * @param boolean $isDeleted
+     *
+     * @return Mpost
+     */
+    public function setIsDeleted($isDeleted)
+    {
+        $this->isDeleted = $isDeleted;
+
+        return $this;
+    }
+
+    /**
+     * Get isDeleted
+     *
+     * @return boolean
+     */
+    public function getIsDeleted()
+    {
+        return $this->isDeleted;
+    }
+
+    /**
+     * Set deletedByUserId
+     *
+     * @param integer $deletedByUserId
+     *
+     * @return Mpost
+     */
+    public function setDeletedByUserId($deletedByUserId)
+    {
+        $this->deletedByUserId = $deletedByUserId;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedByUserId
+     *
+     * @return integer
+     */
+    public function getDeletedByUserId()
+    {
+        return $this->deletedByUserId;
+    }
 }

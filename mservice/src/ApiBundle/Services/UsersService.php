@@ -52,7 +52,6 @@ class UsersService {
      
      protected $mPassword;
      
-     
      const MIN_LENGTH_PASSWORD = 8;
      
      const MIN_LENGTH_TOKEN = 32;
@@ -68,117 +67,129 @@ class UsersService {
      }  
      
      public function createUser($request) {
-         $this->mUser = new Muser();  
-         $this->mPassword = new Mpassword();
-        
-         if(strlen($request->get('email')) > 0){
-             if(!$this->validateEmailFormat($request->get('email'))){
-                $this->utileService->setResponseErrorMessage('user.email.format.invalid');
-                $this->utileService->setResponseState(false);
-             }
-             if($this->findUserByEmail($request->get('email'))){
-                $this->utileService->setResponseErrorMessage('user.email.exist');
-                $this->utileService->setResponseState(false);
-             }
-         }
-         /*
-         if($this->findUserByTelephone($request->get('telephone'))){
-                $this->utileService->setResponseErrorMessage('telephone_exist');
-                $this->utileService->setResponseState(false);
-         }
-          */
-         /*
-         if($this->findUserByUsername($request->get('username'))){
-                $this->utileService->setResponseErrorMessage('username_exist');
-                $this->utileService->setResponseState(false);
-         }
-         */
-         if($request->get('password1') !== $request->get('password2')) {
-             $this->utileService->setResponseErrorMessage('user.password.differ');
-             $this->utileService->setResponseState(false);
-         }
-         /*
-         if(strlen($request->get('password1')) < MIN_LENGTH_PASSWORD) {
-             $this->utileService->setResponseErrorMessage('password_to_short');
-             $this->utileService->setResponseState(false);
-         }
-         */
-         if($this->utileService->getResponseState() === true) {
-             $this->mUser->setUsername($request->get('username'));
-             $this->mUser->setEmail($request->get('email'));
-             $this->mUser->setTelephone($request->get('telephone'));
-             $this->mUser->setSlug($this->prepareSlug($request->get('username')));
-             $this->mUser->setToken($this->prepareToken());
-             $this->mUser->setInternalToken($this->prepareInternalToken());
-             $this->mUser->setExternalToken($this->prepareExternalToken());
-             $this->mUser->setInternalId($this->prepareInternalId());
-             if($request->get('is_shop') === 1) {
-                 $this->mUser->setIsShop(1);
-                 $this->mUser->setIsSingle(0);
-             }
-             if($request->get('is_zh')) {
-                 $this->mUser->setIsZh(1);
-             }
-             if($request->get('is_fr')) {
-                 $this->mUser->setIsFr(1);
-             }
-             if($request->get('is_en')) {
-                 $this->mUser->setIsEn(1);
-             }
-             if($request->get('country_id')) {
-                 $this->mUser->setCountryId($request->get('country_id'));
-             }
-             $this->mUser->setCreated(new \DateTime('now'));
-             $this->mUser->setUpdated(new \DateTime('now'));
-             
-             
-             $encodedPassword = $this->encryptPassword($request->get('password1'));
-             $this->mPassword->setPassword($request->get('password1'));
-             $this->mPassword->setEncryptionMethod('bcrypt');
-             $this->mPassword->setIndication($this->preparePasswordIndication($request->get('password1')));
-             $this->mPassword->setSalt(null);
-             $this->mPassword->setInternalId($this->prepareInternalId());
-             $this->mPassword->setCreated(new \DateTime('now'));
-             $this->mPassword->setUpdated(new \DateTime('now'));
-             $this->mPassword->setUser($this->mUser);
-             
-             
-             $errorsPassword = $this->validator->validate($this->mPassword);
-             if(count($errorsPassword)>0){
-                 $message = $this->translator->trans(
-                     $errorsPassword[0]->getMessage(), 
-                     array(), 
-                     'validators'
-                 );
-                 $this->utileService->setResponseErrorMessage($message);
-                 $this->utileService->setResponseState(false);
-                 return $this->utileService->response;
-             }
-             
-             $errorsUser = $this->validator->validate($this->mUser);
-             if(count($errorsUser)>0){
-                 $message = $this->translator->trans(
-                     $errorsUser[0]->getMessage(), 
-                     array(), 
-                     'validators'
-                 );
-                 $this->utileService->setResponseErrorMessage($message);
-                 $this->utileService->setResponseState(false);
-                 return $this->utileService->response;
-             }
-             
-             $this->em->persist($this->mUser);
-             /*
-              * here we store the encoded password before persist!!!
-              */
-             $this->mPassword->setPassword($encodedPassword);
-             $this->em->persist($this->mPassword);
-             
-             $this->em->flush();
-             $this->utileService->response['data'] = $this->mUser;
-         }
+         try{
+            $this->mUser = new Muser();  
+            $this->mPassword = new Mpassword();
 
-         return $this->utileService->response;
+            if(strlen($request->get('email')) > 0){
+                if(!$this->validateEmailFormat($request->get('email'))){
+                   $this->utileService->setResponseErrorPath(array('field' => 'email')); 
+                   $this->utileService->setResponseErrorMessage('user.email.format.invalid');
+                   $this->utileService->setResponseState(false);
+                }
+                if($this->findUserByEmail($request->get('email'))){
+                    $this->utileService->setResponseErrorPath(array('field' => 'email')); 
+                   $this->utileService->setResponseErrorMessage('user.email.exist');
+                   $this->utileService->setResponseState(false);
+                }
+            }
+            /*
+            if($this->findUserByTelephone($request->get('telephone'))){
+                   $this->utileService->setResponseErrorMessage('telephone_exist');
+                   $this->utileService->setResponseState(false);
+            }
+             */
+            /*
+            if($this->findUserByUsername($request->get('username'))){
+                   $this->utileService->setResponseErrorMessage('username_exist');
+                   $this->utileService->setResponseState(false);
+            }
+            */
+            if($request->get('password1') !== $request->get('password2')) {
+                $this->utileService->setResponseErrorPath(array('field' => array('password1', 'password2'))); 
+                $this->utileService->setResponseErrorMessage('user.password.differ');
+                $this->utileService->setResponseState(false);
+            }
+            /*
+            if(strlen($request->get('password1')) < MIN_LENGTH_PASSWORD) {
+                $this->utileService->setResponseErrorMessage('password_to_short');
+                $this->utileService->setResponseState(false);
+            }
+            */
+            if($this->utileService->getResponseState() === true) {
+                $this->mUser->setUsername($request->get('username'));
+                $this->mUser->setEmail($request->get('email'));
+                $this->mUser->setTelephone($request->get('telephone'));
+                $this->mUser->setSlug($this->prepareSlug($request->get('username')));
+                $this->mUser->setToken($this->prepareToken());
+                $this->mUser->setInternalToken($this->prepareInternalToken());
+                $this->mUser->setExternalToken($this->prepareExternalToken());
+                $this->mUser->setInternalId($this->prepareInternalId());
+                if($request->get('is_shop') === 1) {
+                    $this->mUser->setIsShop(1);
+                    $this->mUser->setIsSingle(0);
+                }
+                if($request->get('is_zh')) {
+                    $this->mUser->setIsZh(1);
+                }
+                if($request->get('is_fr')) {
+                    $this->mUser->setIsFr(1);
+                }
+                if($request->get('is_en')) {
+                    $this->mUser->setIsEn(1);
+                }
+                if($request->get('country_id')) {
+                    $this->mUser->setCountryId($request->get('country_id'));
+                }
+                $this->mUser->setCreated(new \DateTime('now'));
+                $this->mUser->setUpdated(new \DateTime('now'));
+
+
+                $encodedPassword = $this->encryptPassword($request->get('password1'));
+                $this->mPassword->setPassword($request->get('password1'));
+                $this->mPassword->setEncryptionMethod('bcrypt');
+                $this->mPassword->setIndication($this->preparePasswordIndication($request->get('password1')));
+                $this->mPassword->setSalt(null);
+                $this->mPassword->setInternalId($this->prepareInternalId());
+                $this->mPassword->setCreated(new \DateTime('now'));
+                $this->mPassword->setUpdated(new \DateTime('now'));
+                $this->mPassword->setUser($this->mUser);
+
+
+                $errorsPassword = $this->validator->validate($this->mPassword);
+                if(count($errorsPassword)>0){
+                    $message = $this->translator->trans(
+                        $errorsPassword[0]->getMessage(), 
+                        array(), 
+                        'validators'
+                    );
+                    $this->utileService->setResponseErrorPath(array('field' => $errorsPassword[0]->getPropertyPath())); 
+                    $this->utileService->setResponseErrorMessage($message);
+                    $this->utileService->setResponseState(false);
+                    return $this->utileService->response;
+                }
+
+                $errorsUser = $this->validator->validate($this->mUser);
+                if(count($errorsUser)>0){
+                    $message = $this->translator->trans(
+                        $errorsUser[0]->getMessage(), 
+                        array(), 
+                        'validators'
+                    );
+                    $this->utileService->setResponseErrorPath(array('field' => $errorsUser[0]->getPropertyPath())); 
+                    $this->utileService->setResponseErrorMessage($message);
+                    $this->utileService->setResponseState(false);
+                    return $this->utileService->response;
+                }
+
+                $this->em->persist($this->mUser);
+                /*
+                 * here we store the encoded password before persist!!!
+                 */
+                $this->mPassword->setPassword($encodedPassword);
+                $this->em->persist($this->mPassword);
+
+                $this->em->flush();
+                $this->utileService->setResponseData($this->mUser);
+                $this->utileService->setResponseFrom(UtileService::FROM_SQL);
+            }
+
+            return $this->utileService->response;
+         } catch (\Exception $e){
+             $this->utileService->setResponseErrorMessage($e->getMessage());
+             $this->utileService->setResponseState(false);
+             return $this->utileService->response;
+         }
      }
      
      public function prepareSlug($slug) {
@@ -265,20 +276,25 @@ class UsersService {
       * @param type $password
       * @return response
       */
-     public function login($username, $password){
-         $user = $this->em->getRepository('ApiBundle:Muser')->loadUserByUsername($username);
+     public function login($identifier, $password){
+         $user = $this->em->getRepository('ApiBundle:Muser')->findUserByIdentifier($identifier);
          if($user) {
              if (password_verify($password, $user->getPassword())) { 
-               $this->utileService->response['state'] = true;
-               $this->utileService->response['data'] = $user;
-               $this->utileService->response['error'] = null;
+               $this->utileService->setResponseState(true);
+               $this->utileService->setResponseData($user);
+               $this->utileService->setResponseErrorMessage(null);
              } else {
-               $this->utileService->response['state'] = false;
-               $this->utileService->response['data'] = array();
-               $this->utileService->response['error'] = 'password_incorrect';
-             }
-             return $this->utileService->response;
+               $indication = $this->em->getRepository('ApiBundle:Muser')->loadPasswordIndicationByIdentifier($identifier);  
+               $this->utileService->setResponseState(false);
+               $this->utileService->setResponseData($indication);
+               $this->utileService->setResponseErrorMessage('user.password.incorrect');
+             }             
+         } else {
+             $this->utileService->setResponseState(false);
+             $this->utileService->setResponseData(array());
+             $this->utileService->setResponseErrorMessage('user.username.incorrect');
          }
+         return $this->utileService->response;
      }
      
 }

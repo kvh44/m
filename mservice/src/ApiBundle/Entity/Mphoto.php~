@@ -400,4 +400,3 @@ class Mphoto
         return $this->user;
     }
 }
-

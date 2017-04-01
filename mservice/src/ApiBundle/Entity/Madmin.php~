@@ -400,4 +400,3 @@ class Madmin
         return $this->updated;
     }
 }
-
