@@ -27,7 +27,8 @@ class MassageUserRepository extends EntityRepository implements UserLoaderInterf
             ->setParameter('username', $identifier)
             ->setParameter('email', $identifier)
             ->setParameter('telephone', $identifier)    
-            ->orderBy('p.id','DESC')    
+            ->orderBy('p.id','DESC')  
+            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
     }
@@ -35,11 +36,12 @@ class MassageUserRepository extends EntityRepository implements UserLoaderInterf
     public function loadPasswordByUserInternalId($internalId)
     {
         return $this->createQueryBuilder('u') 
-            ->select('p.password')    
+            ->select('p.id, p.password')    
             ->innerJoin('ApiBundle:Mpassword', 'p','WITH','p.userId = u.id')    
             ->where('u.internalId = :internal_id')
             ->setParameter('internal_id', $internalId)   
             ->orderBy('p.id','DESC')    
+            ->setMaxResults(1)    
             ->getQuery()
             ->getOneOrNullResult();
     }        
@@ -65,6 +67,22 @@ class MassageUserRepository extends EntityRepository implements UserLoaderInterf
         return $this->createQueryBuilder('u') 
             ->where('u.telephone = :telephone')
             ->setParameter('telephone', $telephone)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+    
+    public function loadUserByToken($token) {
+        return $this->createQueryBuilder('u') 
+            ->where('u.token = :token')
+            ->setParameter('token', $token)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+    
+    public function loadUserByInternalToken($internal_token) {
+        return $this->createQueryBuilder('u') 
+            ->where('u.internalToken = :internal_token')
+            ->setParameter('internal_token', $internal_token)
             ->getQuery()
             ->getOneOrNullResult();
     }
