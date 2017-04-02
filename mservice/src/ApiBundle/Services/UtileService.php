@@ -37,16 +37,16 @@ class UtileService {
         $this->response['state'] = $state;
     }
     
-    public function setResponseErrorMessage($errorMessage = null) {
-        $this->response['message'] = $errorMessage;
+    public function setResponseMessage($message = null) {
+        $this->response['message'] = $message;
     }
     
-    public function setResponseErrorNumber($errorNumber = 0) {
-        $this->response['code'] = $errorNumber;
+    public function setResponseCode($code = 0) {
+        $this->response['code'] = $code;
     }
     
-    public function setResponseErrorPath($errorPath = null){
-        $this->response['path'] = $errorPath;
+    public function setResponsePath($path = null){
+        $this->response['path'] = $path;
     }
     
     public function setResponseFrom($from = null){

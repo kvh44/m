@@ -11,3 +11,13 @@ public_api_create_user:
     path: /public/user/create
     defaults: { _controller: ApiBundle:PublicUser:createUser, _format:json}
     methods:  [POST]    
+    
+public_api_user_forget_password:
+    path: /public/user/forget/password
+    defaults: { _controller: ApiBundle:PublicUser:forgetPassword, _format:json}
+    methods:  [POST]  
+    
+public_api_user_reset_password:
+    path: /public/user/reset/password
+    defaults: { _controller: ApiBundle:PublicUser:resetPassword, _format:json}
+    methods:  [POST]        

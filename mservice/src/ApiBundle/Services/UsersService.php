@@ -66,43 +66,44 @@ class UsersService {
         $this->utileService = $utileService;
      }  
      
-     public function createUser($request) {
+     public function createUser($request) 
+     {
          try{
             $this->mUser = new Muser();  
             $this->mPassword = new Mpassword();
 
             if(strlen($request->get('email')) > 0){
                 if(!$this->validateEmailFormat($request->get('email'))){
-                   $this->utileService->setResponseErrorPath(array('field' => 'email')); 
-                   $this->utileService->setResponseErrorMessage('user.email.format.invalid');
+                   $this->utileService->setResponsePath(array('field' => 'email')); 
+                   $this->utileService->setResponseMessage('user.email.format.invalid');
                    $this->utileService->setResponseState(false);
                 }
                 if($this->findUserByEmail($request->get('email'))){
-                    $this->utileService->setResponseErrorPath(array('field' => 'email')); 
-                   $this->utileService->setResponseErrorMessage('user.email.exist');
+                    $this->utileService->setResponsePath(array('field' => 'email')); 
+                   $this->utileService->setResponseMessage('user.email.exist');
                    $this->utileService->setResponseState(false);
                 }
             }
             /*
             if($this->findUserByTelephone($request->get('telephone'))){
-                   $this->utileService->setResponseErrorMessage('telephone_exist');
+                   $this->utileService->setResponseMessage('telephone_exist');
                    $this->utileService->setResponseState(false);
             }
              */
             /*
             if($this->findUserByUsername($request->get('username'))){
-                   $this->utileService->setResponseErrorMessage('username_exist');
+                   $this->utileService->setResponseMessage('username_exist');
                    $this->utileService->setResponseState(false);
             }
             */
             if($request->get('password1') !== $request->get('password2')) {
-                $this->utileService->setResponseErrorPath(array('field' => array('password1', 'password2'))); 
-                $this->utileService->setResponseErrorMessage('user.password.differ');
+                $this->utileService->setResponsePath(array('field' => array('password1', 'password2'))); 
+                $this->utileService->setResponseMessage('user.password.differ');
                 $this->utileService->setResponseState(false);
             }
             /*
             if(strlen($request->get('password1')) < MIN_LENGTH_PASSWORD) {
-                $this->utileService->setResponseErrorMessage('password_to_short');
+                $this->utileService->setResponseMessage('password_to_short');
                 $this->utileService->setResponseState(false);
             }
             */
@@ -153,8 +154,8 @@ class UsersService {
                         array(), 
                         'validators'
                     );
-                    $this->utileService->setResponseErrorPath(array('field' => $errorsPassword[0]->getPropertyPath())); 
-                    $this->utileService->setResponseErrorMessage($message);
+                    $this->utileService->setResponsePath(array('field' => $errorsPassword[0]->getPropertyPath())); 
+                    $this->utileService->setResponseMessage($message);
                     $this->utileService->setResponseState(false);
                     return $this->utileService->response;
                 }
@@ -166,8 +167,8 @@ class UsersService {
                         array(), 
                         'validators'
                     );
-                    $this->utileService->setResponseErrorPath(array('field' => $errorsUser[0]->getPropertyPath())); 
-                    $this->utileService->setResponseErrorMessage($message);
+                    $this->utileService->setResponsePath(array('field' => $errorsUser[0]->getPropertyPath())); 
+                    $this->utileService->setResponseMessage($message);
                     $this->utileService->setResponseState(false);
                     return $this->utileService->response;
                 }
@@ -186,33 +187,39 @@ class UsersService {
 
             return $this->utileService->response;
          } catch (\Exception $e){
-             $this->utileService->setResponseErrorMessage($e->getMessage());
+             $this->utileService->setResponseMessage($e->getMessage());
              $this->utileService->setResponseState(false);
              return $this->utileService->response;
          }
      }
      
-     public function prepareSlug($slug) {
-        return $slug . '-' . UtileService::getDateTimeMicroseconds();
+     public function prepareSlug($slug)
+     {
+         return $slug . '-' . UtileService::getDateTimeMicroseconds();
      }
     
-     public function prepareToken($token = '') {
+     public function prepareToken($token = '') 
+     {
+         return $token . UtileService::RandomString(self::MIN_LENGTH_TOKEN) . UtileService::getDateTimeMicroseconds();
+     }
+    
+     public function prepareExternalToken($token = '') 
+     {
+         return $token . UtileService::RandomString(self::MIN_LENGTH_TOKEN) . UtileService::getDateTimeMicroseconds();
+     }
+    
+    public function prepareInternalToken($token = '') 
+    {
         return $token . UtileService::RandomString(self::MIN_LENGTH_TOKEN) . UtileService::getDateTimeMicroseconds();
     }
     
-    public function prepareExternalToken($token = '') {
-        return $token . UtileService::RandomString(self::MIN_LENGTH_TOKEN) . UtileService::getDateTimeMicroseconds();
-    }
-    
-    public function prepareInternalToken($token = '') {
-        return $token . UtileService::RandomString(self::MIN_LENGTH_TOKEN) . UtileService::getDateTimeMicroseconds();
-    }
-    
-    public function prepareInternalId($internalId = '') {
+    public function prepareInternalId($internalId = '')
+    {
         return $internalId . UtileService::RandomString(self::MIN_LENGTH_TOKEN) . UtileService::getDateTimeMicroseconds();
     }
      
-     public function encryptPassword($password, $algo = 'bcrypt', $salt = null){
+     public function encryptPassword($password, $algo = 'bcrypt', $salt = null)
+     {
          return password_hash($password, PASSWORD_BCRYPT);
      }
      
@@ -221,7 +228,8 @@ class UsersService {
       * @param type $password
       * @return string
       */
-     public function preparePasswordIndication($password){
+     public function preparePasswordIndication($password)
+     {
          return UtileService::prepareIndication($password);
      }
      
@@ -230,8 +238,9 @@ class UsersService {
       * @param type $email
       * @return Email
       */
-     public function validateEmailFormat($email) {
-      return UtileService::validateEmailFormat($email);
+     public function validateEmailFormat($email)
+     {
+         return UtileService::validateEmailFormat($email);
      }
      
      /**
@@ -239,7 +248,8 @@ class UsersService {
       * @param type $email
       * @return Muser or NULL
       */
-     public function findUserByEmail($email){
+     public function findUserByEmail($email)
+     {
          return $this->em->getRepository('ApiBundle:Muser')->loadUserByEmail($email);
      }
      
@@ -248,7 +258,8 @@ class UsersService {
       * @param type $telephone
       * @return Muser or NULL
       */
-     public function findUserByTelephone($telephone) {
+     public function findUserByTelephone($telephone) 
+     {
          return $this->em->getRepository('ApiBundle:Muser')->loadUserByTelephone($telephone);
      }
      
@@ -257,7 +268,8 @@ class UsersService {
       * @param type $username
       * @return Muser or NULL
       */
-     public function findUserByUsername($username) {
+     public function findUserByUsername($username) 
+     {
          return $this->em->getRepository('ApiBundle:Muser')->loadUserByUsername($username);
      }
      
@@ -266,40 +278,166 @@ class UsersService {
       * @param type $identifier
       * @return Muser or NULL
       */
-     public function findUserByIdentifier($identifier) {
+     public function findUserByIdentifier($identifier) 
+     {
          return $this->em->getRepository('ApiBundle:Muser')->loadUserByIdentifier($identifier);
      }
      
-     
-     public function findPasswordByUserInternalId($internal_id){
+     public function findPasswordIndicationByIdentifier($identifier)
+     {
+         return $this->em->getRepository('ApiBundle:Muser')->loadPasswordIndicationByIdentifier($identifier);
+     }        
+
+     public function findPasswordByUserInternalId($internal_id)
+     {
          return $this->em->getRepository('ApiBundle:Muser')->loadPasswordByUserInternalId($internal_id);
      }
+     
+     public function findUserByInternalToken($internal_token)
+     {
+         return $this->em->getRepository('ApiBundle:Muser')->loadUserByInternalToken($internal_token);
+     }
+     
+     private function refreshAlltokensForUser($internalId, $internalToken)
+     {
+         /**
+          * var $user type ApiBundle/Entity/Muser
+          */
+         $user = $this->findUserByInternalToken($internalToken);
+         if($user->getInternalId() === $internalId) {
+             $user->setToken($this->prepareToken());
+             $user->setInternalToken($this->prepareInternalToken());
+             $user->setExternalToken($this->prepareExternalToken());
+             $this->em->persist($user);
+             $this->em->flush();
              
-
+             $this->utileService->setResponseState(true);
+             $this->utileService->setResponseData(array());
+             $this->utileService->setResponseMessage('user.token.changed');
+         } else {
+             $this->utileService->setResponseState(false);
+             $this->utileService->setResponseData(array());
+             $this->utileService->setResponseMessage('user.token.wrong');
+         }
+     }
+     
      /**
       * 
       * @param $request
       * @return response
       */
-     public function login($request){
+     public function login($request)
+     {
          $user = $this->findUserByIdentifier($request->get('identifier'));
          if($user) {
              $mPassword = $this->findPasswordByUserInternalId($user->getInternalId());
              if (password_verify($request->get('password'), $mPassword['password'])) { 
                $this->utileService->setResponseState(true);
                $this->utileService->setResponseData($user);
-               $this->utileService->setResponseErrorMessage(null);
+               $this->utileService->setResponseMessage(null);
              } else {               
-                 $this->utileService->setResponseState(false);
+               $this->utileService->setResponseState(false);
                $this->utileService->setResponseData(array());
-               $this->utileService->setResponseErrorMessage('user.password.incorrect');
+               $this->utileService->setResponseMessage('user.password.incorrect');
              }             
          } else {
              $this->utileService->setResponseState(false);
              $this->utileService->setResponseData(array());
-             $this->utileService->setResponseErrorMessage('user.username.incorrect');
+             $this->utileService->setResponseMessage('user.username.incorrect');
          }
          return $this->utileService->response;
      }
+     
+     public function forgetPassword($request)
+     {
+         $user = $this->findUserByIdentifier($request->get('identifier'));
+         if($user){
+             if(count($user->getEmail()) > 0) {
+                 $this->utileService->setResponseState(true);
+                 $this->utileService->setResponseData(array());
+                 $this->utileService->setResponseMessage('user.email.indication_change_password.will_be_sent');
+             } else {
+                 $indication = $this->findPasswordIndicationByIdentifier($request->get('identifier'));
+                 $this->utileService->setResponseData($indication);
+                 $this->utileService->setResponseState(true);
+             }
+         }
+         return $this->utileService->response;
+     }
+     
+     public function resetPassword($request)
+     {
+         try{
+         $user = $this->findUserByInternalToken($request->get('internal_token'));
+         if(!$user){
+             $this->utileService->setResponseData(array());
+             $this->utileService->setResponseState(false);
+             $this->utileService->setResponseMessage('user.token.wrong');
+             return $this->utileService->response;
+         }
+        
+        $password = $this->findPasswordByUserInternalId($user->getInternalId());
+        if(!password_verify($request->get('password'), $password['password'])){
+            $this->utileService->setResponseData(array());
+            $this->utileService->setResponseState(false);
+            $this->utileService->setResponseMessage('user.password.old_password.wrong');
+            return $this->utileService->response;
+        } 
+
+        if($request->get('password1') === $request->get('password')) {
+            $this->utileService->setResponsePath(array('field' => array('password1', 'password'))); 
+            $this->utileService->setResponseMessage('user.password.old_password.same');
+            $this->utileService->setResponseState(false);
+            return $this->utileService->response;
+        }
+         
+        if($request->get('password1') !== $request->get('password2')) {
+            $this->utileService->setResponsePath(array('field' => array('password1', 'password2'))); 
+            $this->utileService->setResponseMessage('user.password.differ');
+            $this->utileService->setResponseState(false);
+            return $this->utileService->response;
+        }
+        $this->mPassword = new Mpassword();
+        $encodedPassword = $this->encryptPassword($request->get('password1'));
+        
+        $this->mPassword->setPassword($request->get('password1'));
+        $this->mPassword->setEncryptionMethod('bcrypt');
+        $this->mPassword->setIndication($this->preparePasswordIndication($request->get('password1')));
+        $this->mPassword->setSalt(null);
+        $this->mPassword->setInternalId($this->prepareInternalId());
+        $this->mPassword->setCreated(new \DateTime('now'));
+        $this->mPassword->setUpdated(new \DateTime('now'));
+        $this->mPassword->setUser($user);
+        
+        $errorsPassword = $this->validator->validate($this->mPassword);
+        if(count($errorsPassword)>0){
+            $message = $this->translator->trans(
+                $errorsPassword[0]->getMessage(), 
+                array(), 
+                'validators'
+            );
+            $this->utileService->setResponsePath(array('field' => $errorsPassword[0]->getPropertyPath())); 
+            $this->utileService->setResponseMessage($message);
+            $this->utileService->setResponseState(false);
+            return $this->utileService->response;
+        }
+        
+        $this->mPassword->setPassword($encodedPassword);
+        $this->em->persist($this->mPassword);
+        $this->em->flush();
+        
+        $this->refreshAlltokensForUser($user->getInternalId(), $user->getInternalToken());
+        } catch(\Exception $e){
+            $this->utileService->setResponseData(array());
+            $this->utileService->setResponseState(false);
+            $this->utileService->setResponseMessage($e->getMessage());
+            return $this->utileService->response;
+        }        
+         
+        $this->utileService->setResponseData(array());
+        $this->utileService->setResponseState(true);
+        $this->utileService->setResponseMessage('user.password.changed');
+        return $this->utileService->response;
+     }        
      
 }
