@@ -269,24 +269,29 @@ class UsersService {
      public function findUserByIdentifier($identifier) {
          return $this->em->getRepository('ApiBundle:Muser')->loadUserByIdentifier($identifier);
      }
+     
+     
+     public function findPasswordByUserInternalId($internal_id){
+         return $this->em->getRepository('ApiBundle:Muser')->loadPasswordByUserInternalId($internal_id);
+     }
+             
 
      /**
       * 
-      * @param type $username
-      * @param type $password
+      * @param $request
       * @return response
       */
-     public function login($identifier, $password){
-         $user = $this->em->getRepository('ApiBundle:Muser')->findUserByIdentifier($identifier);
+     public function login($request){
+         $user = $this->findUserByIdentifier($request->get('identifier'));
          if($user) {
-             if (password_verify($password, $user->getPassword())) { 
+             $mPassword = $this->findPasswordByUserInternalId($user->getInternalId());
+             if (password_verify($request->get('password'), $mPassword['password'])) { 
                $this->utileService->setResponseState(true);
                $this->utileService->setResponseData($user);
                $this->utileService->setResponseErrorMessage(null);
-             } else {
-               $indication = $this->em->getRepository('ApiBundle:Muser')->loadPasswordIndicationByIdentifier($identifier);  
-               $this->utileService->setResponseState(false);
-               $this->utileService->setResponseData($indication);
+             } else {               
+                 $this->utileService->setResponseState(false);
+               $this->utileService->setResponseData(array());
                $this->utileService->setResponseErrorMessage('user.password.incorrect');
              }             
          } else {

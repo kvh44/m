@@ -11,6 +11,11 @@ class Mpassword
      * @var integer
      */
     private $id;
+    
+    /**
+     * @var integer
+     */
+    private $userId;
 
     /**
      * @var string
@@ -61,6 +66,16 @@ class Mpassword
     public function getId()
     {
         return $this->id;
+    }
+    
+    /**
+     * Get user_id
+     *
+     * @return integer
+     */
+    public function getUserId()
+    {
+        return $this->userId;
     }
 
     /**

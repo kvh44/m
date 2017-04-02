@@ -21,9 +21,9 @@ class UtileService {
         $this->translator = $translator;
     }  
      
-    const FROM_SQL = 1;
-    const FROM_CACHE = 2;
-    const FROM_SEARCH = 3;
+    const FROM_SQL = 'sql';
+    const FROM_CACHE = 'cache';
+    const FROM_SEARCH = 'search';
 
     public $response= array('data' => array(), 'state' => true, 'message' => null, 'path' => null, 'from' => null,'code' => 0);
     
