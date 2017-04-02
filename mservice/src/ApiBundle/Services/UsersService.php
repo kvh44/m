@@ -300,25 +300,35 @@ class UsersService {
      
      private function refreshAlltokensForUser($internalId, $internalToken)
      {
-         /**
-          * var $user type ApiBundle/Entity/Muser
-          */
-         $user = $this->findUserByInternalToken($internalToken);
-         if($user->getInternalId() === $internalId) {
-             $user->setToken($this->prepareToken());
-             $user->setInternalToken($this->prepareInternalToken());
-             $user->setExternalToken($this->prepareExternalToken());
-             $this->em->persist($user);
-             $this->em->flush();
-             
-             $this->utileService->setResponseState(true);
-             $this->utileService->setResponseData(array());
-             $this->utileService->setResponseMessage('user.token.changed');
-         } else {
+         try{
+            $user = $this->findUserByInternalToken($internalToken);
+            if(!$user){
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseData(array());
+                $this->utileService->setResponseMessage('user.token.wrong');
+            }
+
+            if($user->getInternalId() === $internalId) {
+                $user->setToken($this->prepareToken());
+                $user->setInternalToken($this->prepareInternalToken());
+                $user->setExternalToken($this->prepareExternalToken());
+                $this->em->persist($user);
+                $this->em->flush();
+
+                $this->utileService->setResponseState(true);
+                $this->utileService->setResponseData(array());
+                $this->utileService->setResponseMessage('user.token.changed');
+            } else {
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseData(array());
+                $this->utileService->setResponseMessage('user.token.wrong');
+            }
+         } catch(\Exception $e){
              $this->utileService->setResponseState(false);
              $this->utileService->setResponseData(array());
-             $this->utileService->setResponseMessage('user.token.wrong');
+             $this->utileService->setResponseMessage($e->getMessage());
          }
+         
      }
      
      /**
