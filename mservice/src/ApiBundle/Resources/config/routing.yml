@@ -18,6 +18,11 @@ public_api_user_forget_password:
     methods:  [POST]  
     
 public_api_user_reset_password:
-    path: /public/user/reset/password
-    defaults: { _controller: ApiBundle:PublicUser:resetPassword, _format:json}
-    methods:  [POST]        
+    path: /private/user/reset/password
+    defaults: { _controller: ApiBundle:PrivateUser:resetPassword, _format:json}
+    methods:  [POST]
+
+public_api_user_reset_email:
+    path: /private/user/reset/email
+    defaults: { _controller: ApiBundle:PrivateUser:resetEmail, _format:json}
+    methods:  [POST]

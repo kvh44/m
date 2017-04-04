@@ -11,3 +11,14 @@ services:
             class: ApiBundle\Services\UsersService
             arguments: ["@doctrine","@session","@translator.default","@validator", "@api_massage.UtileService"]
 #  "@service_container"
+
+
+    api_massage.dataCreateListener:
+            class: ApiBundle\EventListener\DataPersist
+            tags:
+                - { name: doctrine.event_listener, event: prePersist }
+
+    api_massage.dataUpdateListener:
+                class: ApiBundle\EventListener\DataPersist
+                tags:
+                    - { name: doctrine.event_listener, event: preUPdate }
