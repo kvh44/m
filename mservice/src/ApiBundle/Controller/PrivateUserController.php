@@ -34,5 +34,10 @@ class PrivateUserController extends FOSRestController
         $internal_token = $request->headers->get('internal_token');
         return $this->container->get('api_massage.UsersService')->resetTelephone($telephone, $password, $internal_token);
     }
+    
+    public function updateUserInfoAction(Request $request)
+    {
+        return $this->container->get('api_massage.UsersService')->updateUserInfo($request);
+    }        
 
 }

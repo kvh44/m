@@ -583,4 +583,64 @@ class UsersService
         $this->utileService->setResponseMessage('user.telephone.changed');
         return $this->utileService->response;
     }
+    
+    public function updateUserInfo($request)
+    {
+        try{
+            /**
+             * @var Muser
+             */
+            $user = $this->findUserByInternalToken($request->headers->get('internal_token'));
+            if(!$user){
+                $this->utileService->setResponseData(array());
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage('user.token.wrong');
+                return $this->utileService->response;
+            }
+            $user->setWebsite($request->get('website'));
+            if(strlen($request->get('timezone')) > 0){
+                $user->setTimezone($request->get('timezone'));
+            }
+            if(strlen($request->get('country')) > 0){
+                $user->setCountry($request->get('country'));
+            }
+            if(strlen($request->get('city')) > 0){
+                $user->setCity($request->get('city'));
+            }
+            if(strlen($request->get('post_number')) > 0){
+                $user->setPostNumber($request->get('post_number'));
+            }
+            $user->setDescription($request->get('description'));
+            $user->setTranslatedDescription($request->get('translated_description'));
+            if($request->get('is_single') == 1){
+                $user->setNickname($request->get('nickname'));
+                $user->setWechat($request->get('wechat'));
+                $user->setFacebook($request->get('facebook'));
+                $user->setInstagram($request->get('instagram'));
+                $user->setSkinColor($request->get('skin_color'));
+                $user->setWeight($request->get('weight'));
+                $user->setHeight($request->get('height'));
+                $user->setBirthday($request->get('birthday'));
+                $user->setHourPrice($request->get('hour_price'));
+                $user->setHourPriceUnit($request->get('hour_price_unit'));
+                $user->setNightPrice($request->get('night_price'));
+                $user->setNightPriceUnit($request->get('night_price_unit'));
+            } else {
+                $user->setShopAddress($request->get('shop_address'));
+            }
+            
+            $this->em->persist($user);
+            $this->em->flush();
+            
+        } catch (\Exception $e) {
+            $this->utileService->setResponseData(array());
+            $this->utileService->setResponseState(false);
+            $this->utileService->setResponseMessage($e->getMessage());
+            return $this->utileService->response;
+        }
+        $this->utileService->setResponseData(array());
+        $this->utileService->setResponseState(true);
+        $this->utileService->setResponseMessage('user.information.updated');
+        return $this->utileService->response;
+    }        
 }
