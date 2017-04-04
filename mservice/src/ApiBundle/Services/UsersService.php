@@ -145,8 +145,8 @@ class UsersService
                 if ($request->get('country_id')) {
                     $this->mUser->setCountryId($request->get('country_id'));
                 }
-                $this->mUser->setCreated(new \DateTime('now'));
-                $this->mUser->setUpdated(new \DateTime('now'));
+                //$this->mUser->setCreated(new \DateTime('now'));
+                //$this->mUser->setUpdated(new \DateTime('now'));
 
 
                 $encodedPassword = $this->encryptPassword($request->get('password1'));
@@ -155,8 +155,8 @@ class UsersService
                 $this->mPassword->setIndication($this->preparePasswordIndication($request->get('password1')));
                 $this->mPassword->setSalt(null);
                 $this->mPassword->setInternalId($this->prepareInternalId());
-                $this->mPassword->setCreated(new \DateTime('now'));
-                $this->mPassword->setUpdated(new \DateTime('now'));
+                //$this->mPassword->setCreated(new \DateTime('now'));
+                //$this->mPassword->setUpdated(new \DateTime('now'));
                 $this->mPassword->setUser($this->mUser);
 
 
@@ -394,10 +394,10 @@ class UsersService
         return $this->utileService->response;
     }
 
-    public function resetPassword($request)
+    public function resetPassword($password, $password1, $password2, $internal_token)
     {
         try {
-            $user = $this->findUserByInternalToken($request->get('internal_token'));
+            $user = $this->findUserByInternalToken($internal_token);
             if (!$user) {
                 $this->utileService->setResponseData(array());
                 $this->utileService->setResponseState(false);
@@ -405,37 +405,37 @@ class UsersService
                 return $this->utileService->response;
             }
 
-            $password = $this->findPasswordByUserInternalId($user->getInternalId());
-            if (!password_verify($request->get('password'), $password['password'])) {
+            $Mpassword = $this->findPasswordByUserInternalId($user->getInternalId());
+            if (!password_verify($password, $Mpassword['password'])) {
                 $this->utileService->setResponseData(array());
                 $this->utileService->setResponseState(false);
                 $this->utileService->setResponseMessage('user.password.old_password.wrong');
                 return $this->utileService->response;
             }
 
-            if ($request->get('password1') === $request->get('password')) {
+            if ($password1 === $password) {
                 $this->utileService->setResponsePath(array('field' => array('password1', 'password')));
                 $this->utileService->setResponseMessage('user.password.old_password.same');
                 $this->utileService->setResponseState(false);
                 return $this->utileService->response;
             }
 
-            if ($request->get('password1') !== $request->get('password2')) {
+            if ($password1 !== $password2) {
                 $this->utileService->setResponsePath(array('field' => array('password1', 'password2')));
                 $this->utileService->setResponseMessage('user.password.differ');
                 $this->utileService->setResponseState(false);
                 return $this->utileService->response;
             }
             $this->mPassword = new Mpassword();
-            $encodedPassword = $this->encryptPassword($request->get('password1'));
+            $encodedPassword = $this->encryptPassword($password1);
 
-            $this->mPassword->setPassword($request->get('password1'));
+            $this->mPassword->setPassword($password1);
             $this->mPassword->setEncryptionMethod('bcrypt');
-            $this->mPassword->setIndication($this->preparePasswordIndication($request->get('password1')));
+            $this->mPassword->setIndication($this->preparePasswordIndication($password1));
             $this->mPassword->setSalt(null);
             $this->mPassword->setInternalId($this->prepareInternalId());
-            $this->mPassword->setCreated(new \DateTime('now'));
-            $this->mPassword->setUpdated(new \DateTime('now'));
+            //$this->mPassword->setCreated(new \DateTime('now'));
+            //$this->mPassword->setUpdated(new \DateTime('now'));
             $this->mPassword->setUser($user);
 
             $errorsPassword = $this->validator->validate($this->mPassword);
@@ -510,7 +510,7 @@ class UsersService
                 return $this->utileService->response;
             }
             $user->setEmail($email);
-            $user->setUpdated(new \DateTime('now'));
+            //$user->setUpdated(new \DateTime('now'));
 
             $this->em->persist($user);
             $this->em->flush();
@@ -567,7 +567,7 @@ class UsersService
             }
 
             $user->setTelephone($telephone);
-            $user->setUpdated(new \DateTime('now'));
+            //$user->setUpdated(new \DateTime('now'));
 
             $this->em->persist($user);
             $this->em->flush();

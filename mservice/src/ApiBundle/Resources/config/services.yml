@@ -19,6 +19,6 @@ services:
                 - { name: doctrine.event_listener, event: prePersist }
 
     api_massage.dataUpdateListener:
-                class: ApiBundle\EventListener\DataPersist
-                tags:
-                    - { name: doctrine.event_listener, event: preUPdate }
+            class: ApiBundle\EventListener\DataPersist
+            tags:
+                - { name: doctrine.event_listener, event: preUPdate }

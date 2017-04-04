@@ -26,3 +26,8 @@ public_api_user_reset_email:
     path: /private/user/reset/email
     defaults: { _controller: ApiBundle:PrivateUser:resetEmail, _format:json}
     methods:  [POST]
+    
+public_api_user_reset_telephone:
+    path: /private/user/reset/telephone
+    defaults: { _controller: ApiBundle:PrivateUser:resetTelephone, _format:json}
+    methods:  [POST]    
