@@ -13,6 +13,11 @@ class Mpost
     private $id;
 
     /**
+     * @var integer
+     */
+    private $userId;
+
+    /**
      * @var string
      */
     private $internalId;
@@ -91,6 +96,16 @@ class Mpost
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get user_id
+     *
+     * @return integer
+     */
+    public function getUserId()
+    {
+        return $this->userId;
     }
 
     /**

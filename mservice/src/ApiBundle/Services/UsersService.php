@@ -597,7 +597,10 @@ class UsersService
                 $this->utileService->setResponseMessage('user.token.wrong');
                 return $this->utileService->response;
             }
-            $user->setWebsite($request->get('website'));
+
+            /**
+             * timezone, country, location
+             */
             if(strlen($request->get('timezone')) > 0){
                 $user->setTimezone($request->get('timezone'));
             }
@@ -610,23 +613,67 @@ class UsersService
             if(strlen($request->get('post_number')) > 0){
                 $user->setPostNumber($request->get('post_number'));
             }
-            $user->setDescription($request->get('description'));
-            $user->setTranslatedDescription($request->get('translated_description'));
+            if(strlen($request->get('country_id')) > 0){
+                $user->setCountryId((int)$request->get('country_id'));
+            }
+            if(strlen($request->get('location_id')) > 0){
+                $user->setLocationId((int)$request->get('location_id'));
+            }
+            /*
+             * end of location
+             */
+            if($request->get('website')){
+                $user->setWebsite($request->get('website'));
+            }
+            if($request->get('description')){
+                $user->setDescription($request->get('description'));
+            }
+            if($request->get('translated_description')){
+                $user->setTranslatedDescription($request->get('translated_description'));
+            }
             if($request->get('is_single') == 1){
-                $user->setNickname($request->get('nickname'));
-                $user->setWechat($request->get('wechat'));
-                $user->setFacebook($request->get('facebook'));
-                $user->setInstagram($request->get('instagram'));
-                $user->setSkinColor($request->get('skin_color'));
-                $user->setWeight($request->get('weight'));
-                $user->setHeight($request->get('height'));
-                $user->setBirthday($request->get('birthday'));
-                $user->setHourPrice($request->get('hour_price'));
-                $user->setHourPriceUnit($request->get('hour_price_unit'));
-                $user->setNightPrice($request->get('night_price'));
-                $user->setNightPriceUnit($request->get('night_price_unit'));
+                if($request->get('nickname')){
+                    $user->setNickname($request->get('nickname'));
+                }
+                if($request->get('wechat')){
+                    $user->setWechat($request->get('wechat'));
+                }
+                if($request->get('facebook')){
+                    $user->setFacebook($request->get('facebook'));
+                }
+                if($request->get('instagram')){
+                    $user->setInstagram($request->get('instagram'));
+                }
+                if($request->get('skin_color')){
+                    $user->setSkinColor($request->get('skin_color'));
+                }
+                if($request->get('weight')){
+                    $user->setWeight($request->get('weight'));
+                }
+                if($request->get('height')){
+                    $user->setHeight($request->get('height'));
+                }
+                if($request->get('birthday')){
+                    $user->setBirthday($request->get('birthday'));
+                }
+                if($request->get('hour_price')){
+                    $user->setHourPrice($request->get('hour_price'));
+                }
+                if($request->get('hour_price_unit')){
+                    $user->setHourPriceUnit($request->get('hour_price_unit'));
+                }
+                if($request->get('night_price')){
+                    $user->setNightPrice($request->get('night_price'));
+                }
+                if($request->get('night_price_unit')){
+                    $user->setNightPriceUnit($request->get('night_price_unit'));
+                }
             } else {
-                $user->setShopAddress($request->get('shop_address'));
+                if($request->get('shop_address')){
+                    $user->setShopAddress($request->get('shop_address'));
+                }
+
+                // set shop name
             }
             
             $this->em->persist($user);

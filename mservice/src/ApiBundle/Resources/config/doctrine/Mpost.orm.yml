@@ -25,6 +25,13 @@ ApiBundle\Entity\Mpost:
             generator:
                 strategy: IDENTITY
     fields:
+        userId:
+            type: string
+            nullable: false
+            length: 11
+            options:
+                fixed: false
+            column: user_id
         internalId:
             type: string
             nullable: false

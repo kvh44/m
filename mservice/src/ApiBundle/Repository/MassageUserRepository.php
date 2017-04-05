@@ -13,7 +13,8 @@ class MassageUserRepository extends EntityRepository implements UserLoaderInterf
             ->where('u.username = :username or u.email = :email or u.telephone = :telephone')
             ->setParameter('username', $identifier)
             ->setParameter('email', $identifier)
-            ->setParameter('telephone', $identifier)    
+            ->setParameter('telephone', $identifier)
+            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
     }
@@ -51,6 +52,7 @@ class MassageUserRepository extends EntityRepository implements UserLoaderInterf
         return $this->createQueryBuilder('u') 
             ->where('u.username = :username')
             ->setParameter('username', $username)
+            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
     }
@@ -59,6 +61,7 @@ class MassageUserRepository extends EntityRepository implements UserLoaderInterf
         return $this->createQueryBuilder('u') 
             ->where('u.email = :email')
             ->setParameter('email', $email)
+            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
     }
@@ -67,6 +70,7 @@ class MassageUserRepository extends EntityRepository implements UserLoaderInterf
         return $this->createQueryBuilder('u') 
             ->where('u.telephone = :telephone')
             ->setParameter('telephone', $telephone)
+            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
     }
@@ -75,6 +79,7 @@ class MassageUserRepository extends EntityRepository implements UserLoaderInterf
         return $this->createQueryBuilder('u') 
             ->where('u.token = :token')
             ->setParameter('token', $token)
+            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
     }
@@ -83,6 +88,7 @@ class MassageUserRepository extends EntityRepository implements UserLoaderInterf
         return $this->createQueryBuilder('u') 
             ->where('u.internalToken = :internal_token')
             ->setParameter('internal_token', $internal_token)
+            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
     }
