@@ -7,7 +7,7 @@ use ApiBundle\Services\UtileService;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use AppBundle\Mailer;
+use ApiBundle\Services\Mailer;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
@@ -65,7 +65,7 @@ class UsersService
 
     const MIN_LENGTH_TOKEN = 32;
 
-    public function __construct(Registry $doctrine, Session $session, Translator $translator, RecursiveValidator $validator, UtileService $utileService, ApiBundle\Services\Mailer $mailer)
+    public function __construct(Registry $doctrine, Session $session, Translator $translator, RecursiveValidator $validator, UtileService $utileService, Mailer $mailer)
     {
         $this->doctrine = $doctrine;
         $this->em = $this->doctrine->getManager();
@@ -365,6 +365,7 @@ class UsersService
                 $this->utileService->setResponseState(true);
                 $this->utileService->setResponseData($user);
                 $this->utileService->setResponseMessage(null);
+                $this->mailer->sendNewUserMail('bryant.qin@gmail.com', 'bryant.qin@gmail.com', 'haha', $user);
             } else {
                 $this->utileService->setResponseState(false);
                 $this->utileService->setResponseData(array());
