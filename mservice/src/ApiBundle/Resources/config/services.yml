@@ -3,13 +3,20 @@ services:
 #        class: ApiBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
 
+    parameters:
+        app.mailer.transport:  sendmail
+
     api_massage.UtileService:
             class: ApiBundle\Services\UtileService
             arguments: ["@translator.default"]
+            
+    api_massage.mailer:
+        class:        ApiBundle\Services\Mailer
+        arguments:    ['%app.mailer.transport%']        
 
     api_massage.UsersService:
             class: ApiBundle\Services\UsersService
-            arguments: ["@doctrine","@session","@translator.default","@validator", "@api_massage.UtileService"]
+            arguments: ["@doctrine","@session","@translator.default","@validator", "@api_massage.UtileService", "@api_massage.mailer"]
 #  "@service_container"
 
 
