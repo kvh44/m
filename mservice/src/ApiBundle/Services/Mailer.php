@@ -19,19 +19,19 @@ class Mailer
         $this->template = $template;
     }
     
-    public function sendNewUserMail($to, $from, $subject, $user, $type = "text/html", $option = null)
+    public function sendNewUserMail($to, $from, $subject)
     {
         $message = \Swift_Message::newInstance()
                 ->setTo($to)
                 ->setFrom($from)
                 ->setSubject($subject)
-                ->setContentType($type)
-                ->setBody($this->template->render(
-                    'ApiBundle:Emails:registration.html.twig',
-                    array('name' => $user->getUsername())
-                ),
-            'text/html')
+                ->setBody('haha')
         ;
+        
+        //$mailLogger = new \Swift_Plugins_Loggers_ArrayLogger();
+        //$this->mailer->registerPlugin(new \Swift_Plugins_LoggerPlugin($mailLogger));
         $this->mailer->send($message);
+        //var_dump($mailLogger->dump());
+        //die;
     }
 }

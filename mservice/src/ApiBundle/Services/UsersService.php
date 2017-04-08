@@ -365,7 +365,7 @@ class UsersService
                 $this->utileService->setResponseState(true);
                 $this->utileService->setResponseData($user);
                 $this->utileService->setResponseMessage(null);
-                $this->mailer->sendNewUserMail('bryant.qin@gmail.com', 'bryant.qin@gmail.com', 'haha', $user);
+                $this->mailer->sendNewUserMail('bryant.qin@gmail.com', 'qincheng9999@sina.com', 'haha');
             } else {
                 $this->utileService->setResponseState(false);
                 $this->utileService->setResponseData(array());
