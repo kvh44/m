@@ -25,7 +25,13 @@ class Mailer
                 ->setTo($to)
                 ->setFrom($from)
                 ->setSubject($subject)
-                ->setBody('haha')
+                ->setBody(
+                        $this->template->render(
+                            // app/Resources/views/Emails/registration.html.twig
+                            'ApiBundle:Emails:registration.html.twig'
+                        ),
+                        'text/html'
+                        )
         ;
         
         //$mailLogger = new \Swift_Plugins_Loggers_ArrayLogger();
