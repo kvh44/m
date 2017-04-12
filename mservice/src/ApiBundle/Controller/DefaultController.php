@@ -17,18 +17,6 @@ class DefaultController extends Controller
     
     public function testEmailAction(Request $request)
     {
-        $message = \Swift_Message::newInstance()
-                ->setTo('bryant.qin@gmail.com')
-                ->setFrom('bryant.qin@gmail.com')
-                ->setSubject('haha')
-                ->setBody('haha')
-        ;
-        
-        $mailLogger = new \Swift_Plugins_Loggers_ArrayLogger();
-        $this->get('mailer')->registerPlugin(new \Swift_Plugins_LoggerPlugin($mailLogger));
-        $this->get('mailer')->send($message);
-        var_dump($mailLogger->dump());
-        die;
-        return $this->render('ApiBundle:Default:index.html.twig');
+        return $this->render('ApiBundle:Emails:registration.html.twig');
     }        
 }

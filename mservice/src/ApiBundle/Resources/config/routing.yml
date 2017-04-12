@@ -1,10 +1,6 @@
 api_homepage:
     path:     /
     defaults: { _controller: ApiBundle:Default:index }
-
-api_test_email:
-    path:     /email
-    defaults: { _controller: ApiBundle:Default:testEmail }
     
 public_api_login:
     path: /public/user/login
