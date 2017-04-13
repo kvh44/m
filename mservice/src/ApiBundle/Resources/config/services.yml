@@ -13,7 +13,7 @@ services:
 
     api_massage.UsersService:
             class: ApiBundle\Services\UsersService
-            arguments: ["@doctrine","@session","@translator.default","@validator", "@api_massage.UtileService", "@api_massage.mailer"]
+            arguments: ["@doctrine","@session","@translator.default","@validator", "@service_container","@api_massage.UtileService", "@api_massage.mailer"]
 #  "@service_container"
 
 

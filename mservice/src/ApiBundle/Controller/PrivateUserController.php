@@ -39,5 +39,12 @@ class PrivateUserController extends FOSRestController
     {
         return $this->container->get('api_massage.UsersService')->updateUserInfo($request);
     }        
+    
+    public function sendNewUserMailAction(Request $request)
+    {
+        $internal_id = $request->get('internal_id');
+        $internal_token = $request->headers->get('internal_token');
+        return $this->container->get('api_massage.UsersService')->sendNewUserMail($internal_id, $internal_token);
+    }        
 
 }

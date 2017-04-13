@@ -12,7 +12,7 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\Validator\Validator\RecursiveValidator;
-//use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\Container;
 
 
 class UsersService
@@ -40,7 +40,11 @@ class UsersService
      * @var Validator
      */
     protected $validator;
-
+    
+    /**
+     * @var Container
+     */
+    protected $container;
 
     /**
      *
@@ -48,6 +52,11 @@ class UsersService
      */
     protected $utileService;
     
+    
+    /**
+     *
+     * @var Mailer 
+     */
     protected $mailer;
 
 
@@ -65,13 +74,14 @@ class UsersService
 
     const MIN_LENGTH_TOKEN = 32;
 
-    public function __construct(Registry $doctrine, Session $session, Translator $translator, RecursiveValidator $validator, UtileService $utileService, Mailer $mailer)
+    public function __construct(Registry $doctrine, Session $session, Translator $translator, RecursiveValidator $validator, Container $container,UtileService $utileService, Mailer $mailer)
     {
         $this->doctrine = $doctrine;
         $this->em = $this->doctrine->getManager();
         $this->session = $session;
         $this->translator = $translator;
         $this->validator = $validator;
+        $this->container = $container;
         $this->utileService = $utileService;
         $this->mailer = $mailer;
     }
@@ -289,6 +299,16 @@ class UsersService
     public function findUserByUsername($username)
     {
         return $this->em->getRepository('ApiBundle:Muser')->loadUserByUsername($username);
+    }
+    
+    /**
+     *
+     * @param type $internal_id
+     * @return Muser or NULL
+     */
+    public function findUserByInternalId($internal_id)
+    {
+        return $this->em->getRepository('ApiBundle:Muser')->loadUserByInternalId($internal_id);
     }
 
     /**
@@ -696,4 +716,47 @@ class UsersService
         $this->utileService->setResponseMessage('user.information.updated');
         return $this->utileService->response;
     }        
+    
+    public function sendNewUserMail($internal_id, $internal_token)
+    {
+        try{
+            $user = $this->findUserByInternalId($internal_id);
+            if(!$user){
+                $this->utileService->setResponseData(array());
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage('user.internal_id.not_exist');
+                return $this->utileService->response;
+            }
+
+            if($user->getInternalToken() !== $internal_token){
+                $this->utileService->setResponseData(array());
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage('user.token.wrong');
+                return $this->utileService->response;
+            }
+
+            if(count($user->getEmail()) === 0){
+                $this->utileService->setResponseData(array());
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage('user.email.empty');
+                return $this->utileService->response;
+            }
+
+            $password = $this->findPasswordIndicationByIdentifier($user->getUsername());
+            $data['username'] = $user->getUsername();
+            $data['email'] = $user->getEmail();
+            $data['telephone'] = $user->getTelephone();
+            $data['indication'] = $password['indication'];
+            $data['created'] = $user->getCreated()->format('Y-m-d H:i:s');
+            $this->mailer->sendNewUserMail($user->getEmail(), $this->container->getParameter('service_mail'), $this->container->getParameter('cc_mail'), $this->translator->trans('messages.email.title'), $data);
+
+            $this->utileService->setResponseState(true);
+            $this->utileService->setResponseMessage('user.email.sent');
+            return $this->utileService->response;
+        } catch (\Exception $e) {
+            $this->utileService->setResponseState(false);
+            $this->utileService->setResponseMessage($e->getMessage());
+            return $this->utileService->response;
+        }
+    }
 }

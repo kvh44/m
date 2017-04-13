@@ -75,6 +75,15 @@ class MassageUserRepository extends EntityRepository implements UserLoaderInterf
             ->getOneOrNullResult();
     }
     
+    public function loadUserByInternalId($internal_id) {
+        return $this->createQueryBuilder('u') 
+            ->where('u.internalId = :internal_id')
+            ->setParameter('internal_id', $internal_id)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+    
     public function loadUserByToken($token) {
         return $this->createQueryBuilder('u') 
             ->where('u.token = :token')
