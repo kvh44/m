@@ -17,27 +17,37 @@ public_api_user_forget_password:
     defaults: { _controller: ApiBundle:PublicUser:forgetPassword, _format:json}
     methods:  [POST]  
     
-public_api_user_reset_password:
+private_api_user_reset_password:
     path: /private/user/reset/password
     defaults: { _controller: ApiBundle:PrivateUser:resetPassword, _format:json}
     methods:  [POST]
 
-public_api_user_reset_email:
+private_api_user_reset_email:
     path: /private/user/reset/email
     defaults: { _controller: ApiBundle:PrivateUser:resetEmail, _format:json}
     methods:  [POST]
     
-public_api_user_reset_telephone:
+private_api_user_reset_telephone:
     path: /private/user/reset/telephone
     defaults: { _controller: ApiBundle:PrivateUser:resetTelephone, _format:json}
     methods:  [POST]    
     
-public_api_user_update_info:
+private_api_user_update_info:
     path: /private/user/update/info
     defaults: { _controller: ApiBundle:PrivateUser:updateUserInfo, _format:json}
     methods:  [POST]  
     
-public_api_new_user_send_mail:
+private_api_new_user_send_mail:
     path: /private/user/new/send/mail
     defaults: { _controller: ApiBundle:PrivateUser:sendNewUserMail, _format:json}
+    methods:  [POST]   
+    
+private_api_password_changed_send_mail:
+    path: /private/user/password/changed/send/mail
+    defaults: { _controller: ApiBundle:PrivateUser:sendPasswordChangedMail, _format:json}
+    methods:  [POST]   
+    
+public_api_password_forget_send_mail:
+    path: /private/user/password/forget/send/mail
+    defaults: { _controller: ApiBundle:PrivateUser:sendPasswordForgetMail, _format:json}
     methods:  [POST]     

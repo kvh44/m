@@ -748,7 +748,7 @@ class UsersService
             $data['telephone'] = $user->getTelephone();
             $data['indication'] = $password['indication'];
             $data['created'] = $user->getCreated()->format('Y-m-d H:i:s');
-            $this->mailer->sendNewUserMail($user->getEmail(), $this->container->getParameter('service_mail'), $this->container->getParameter('cc_mail'), $this->translator->trans('messages.email.title'), $data);
+            $this->mailer->sendNewUserMail($user->getEmail(), $this->container->getParameter('service_mail'), $this->container->getParameter('cc_mail'), $this->translator->trans('messages.email.title.newUser'), $data);
 
             $this->utileService->setResponseState(true);
             $this->utileService->setResponseMessage('user.email.sent');
@@ -759,4 +759,85 @@ class UsersService
             return $this->utileService->response;
         }
     }
+    
+    public function sendPasswordChangedMail($internal_id, $internal_token)
+    {
+        try{
+            $user = $this->findUserByInternalId($internal_id);
+            if(!$user){
+                $this->utileService->setResponseData(array());
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage('user.internal_id.not_exist');
+                return $this->utileService->response;
+            }
+
+            if($user->getInternalToken() !== $internal_token){
+                $this->utileService->setResponseData(array());
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage('user.token.wrong');
+                return $this->utileService->response;
+            }
+
+            if(count($user->getEmail()) === 0){
+                $this->utileService->setResponseData(array());
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage('user.email.empty');
+                return $this->utileService->response;
+            }
+
+            $password = $this->findPasswordIndicationByIdentifier($user->getUsername());
+            $data['username'] = $user->getUsername();
+            $data['email'] = $user->getEmail();
+            $data['telephone'] = $user->getTelephone();
+            $data['indication'] = $password['indication'];
+            $data['updated'] = $user->getUpdated()->format('Y-m-d H:i:s');
+            $this->mailer->sendPasswordChangedMail($user->getEmail(), $this->container->getParameter('service_mail'), $this->container->getParameter('cc_mail'), $this->translator->trans('messages.email.title.passwordChanged'), $data);
+
+            $this->utileService->setResponseState(true);
+            $this->utileService->setResponseMessage('user.email.sent');
+            return $this->utileService->response;
+        } catch (\Exception $e) {
+            $this->utileService->setResponseState(false);
+            $this->utileService->setResponseMessage($e->getMessage());
+            return $this->utileService->response;
+        }
+    }   
+    
+    public function sendPasswordForgetMail($identifier)
+    {
+        try{
+            $user = $this->findUserByIdentifier($identifier);
+            if(!$user){
+                $this->utileService->setResponseData(array());
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage('user.identifier.not_exist');
+                return $this->utileService->response;
+            }
+
+            if(count($user->getEmail()) === 0){
+                $password = $this->findPasswordIndicationByIdentifier($user->getUsername());
+                $this->utileService->setResponseData($password);
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage('user.email.empty');
+                return $this->utileService->response;
+            }
+
+            $password = $this->findPasswordIndicationByIdentifier($user->getUsername());
+            $data['username'] = $user->getUsername();
+            $data['email'] = $user->getEmail();
+            $data['telephone'] = $user->getTelephone();
+            $data['indication'] = $password['indication'];
+            $data['updated'] = $user->getUpdated()->format('Y-m-d H:i:s');
+            $this->mailer->sendPasswordForgetMail($user->getEmail(), $this->container->getParameter('service_mail'), $this->container->getParameter('cc_mail'), $this->translator->trans('messages.email.title.passwordForgetWords'), $data);
+
+            $this->utileService->setResponseState(true);
+            $this->utileService->setResponseMessage('user.email.sent');
+            return $this->utileService->response;
+        } catch (\Exception $e) {
+            $this->utileService->setResponseState(false);
+            $this->utileService->setResponseMessage($e->getMessage());
+            return $this->utileService->response;
+        }
+    }
+    
 }
