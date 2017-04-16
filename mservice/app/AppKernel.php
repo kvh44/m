@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             new FrontBundle\FrontBundle(),
             new AdminBundle\AdminBundle(),
             new MobileBundle\MobileBundle(),
+            new TestBundle\TestBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
