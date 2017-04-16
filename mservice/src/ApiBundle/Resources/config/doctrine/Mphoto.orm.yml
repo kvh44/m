@@ -28,6 +28,13 @@ ApiBundle\Entity\Mphoto:
             generator:
                 strategy: IDENTITY
     fields:
+        userId:
+            type: string
+            nullable: false
+            length: 11
+            options:
+                fixed: false
+            column: user_id
         photoType:
             type: string
             nullable: false

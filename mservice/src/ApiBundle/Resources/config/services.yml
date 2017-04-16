@@ -6,8 +6,23 @@ services:
     api_massage.UtileService:
             class: ApiBundle\Services\UtileService
             arguments: ["@translator.default"]
+            
+    api_massage.mailer:
+        class:        ApiBundle\Services\Mailer
+        arguments:    ["@mailer", "@templating"]        
 
     api_massage.UsersService:
             class: ApiBundle\Services\UsersService
-            arguments: ["@doctrine","@session","@translator.default","@validator", "@api_massage.UtileService"]
+            arguments: ["@doctrine","@session","@translator.default","@validator", "@service_container","@api_massage.UtileService", "@api_massage.mailer"]
 #  "@service_container"
+
+
+    api_massage.dataCreateListener:
+            class: ApiBundle\EventListener\DataPersist
+            tags:
+                - { name: doctrine.event_listener, event: prePersist }
+
+    api_massage.dataUpdateListener:
+            class: ApiBundle\EventListener\DataPersist
+            tags:
+                - { name: doctrine.event_listener, event: preUPdate }

@@ -1,0 +1,29 @@
+messages:
+    email:
+        title:
+            newUser: 法国休闲按摩社区欢迎您
+            passwordChanged: 您的密码更改成功,法国休闲按摩社区
+            passwordForget: 您忘记密码了?法国休闲按摩社区
+        hello: 你好
+        welcome:
+            words: 法国休闲按摩社区欢迎您的到来,我们将尽力为您找到更多的本地客户,让更多的老外看到您的联系方式,诚心为您服务。
+        username: 您的用户名   
+        email: 您的电子邮箱
+        telephone: 您的电话
+        password: 您的密码
+        created: 您注册的时间
+        updated: 更改时间
+        homepage: 社区主页
+        mypage: 我的小站
+        mycard: 我的名信片
+        contactus: 联系我们
+        passwordChangedWords: 您的密码已经成功改为%password%,如果刚刚不是您本人修改的密码,请尽快联系我们。
+        passwordForgetWords: 您忘记密码了?您的密码提示为%password%,如果还没有想起来,请点击下面的链接进行修改。
+user:
+    email:
+        forget:
+            sent: 您的密码提示将在5分钟以内被发送到您的邮箱%email%,快去看看吧。
+        empty: 用户电子邮箱为空        
+    identifier:
+        not:
+            exist: %identifier%此用户名不存在。
