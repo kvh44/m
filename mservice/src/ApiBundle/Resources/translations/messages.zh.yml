@@ -19,3 +19,11 @@ messages:
         contactus: 联系我们
         passwordChangedWords: 您的密码已经成功改为%password%,如果刚刚不是您本人修改的密码,请尽快联系我们。
         passwordForgetWords: 您忘记密码了?您的密码提示为%password%,如果还没有想起来,请点击下面的链接进行修改。
+user:
+    email:
+        forget:
+            sent: 您的密码提示将在5分钟以内被发送到您的邮箱%email%,快去看看吧。
+        empty: 用户电子邮箱为空        
+    identifier:
+        not:
+            exist: %identifier%此用户名不存在。

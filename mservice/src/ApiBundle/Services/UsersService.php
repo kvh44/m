@@ -808,17 +808,16 @@ class UsersService
         try{
             $user = $this->findUserByIdentifier($identifier);
             if(!$user){
-                $this->utileService->setResponseData(array());
                 $this->utileService->setResponseState(false);
-                $this->utileService->setResponseMessage('user.identifier.not_exist');
+                $this->utileService->setResponseMessage($this->translator->trans('user.identifier.not.exist', array('%identifier%' => $identifier)));
                 return $this->utileService->response;
             }
 
             if(count($user->getEmail()) === 0){
                 $password = $this->findPasswordIndicationByIdentifier($user->getUsername());
                 $this->utileService->setResponseData($password);
-                $this->utileService->setResponseState(false);
-                $this->utileService->setResponseMessage('user.email.empty');
+                $this->utileService->setResponseState(true);
+                $this->utileService->setResponseMessage($this->translator->trans('user.email.empty'));
                 return $this->utileService->response;
             }
 
@@ -828,10 +827,10 @@ class UsersService
             $data['telephone'] = $user->getTelephone();
             $data['indication'] = $password['indication'];
             $data['updated'] = $user->getUpdated()->format('Y-m-d H:i:s');
-            $this->mailer->sendPasswordForgetMail($user->getEmail(), $this->container->getParameter('service_mail'), $this->container->getParameter('cc_mail'), $this->translator->trans('messages.email.title.passwordForgetWords'), $data);
+            $this->mailer->sendPasswordForgetMail($user->getEmail(), $this->container->getParameter('service_mail'), $this->container->getParameter('cc_mail'), $this->translator->trans('messages.email.title.passwordForget'), $data);
 
             $this->utileService->setResponseState(true);
-            $this->utileService->setResponseMessage('user.email.sent');
+            $this->utileService->setResponseMessage($this->translator->trans('user.email.forget.sent', array('%email%' => $user->getEmail())));
             return $this->utileService->response;
         } catch (\Exception $e) {
             $this->utileService->setResponseState(false);
