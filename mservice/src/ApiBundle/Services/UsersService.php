@@ -378,46 +378,59 @@ class UsersService
      */
     public function login($request)
     {
-        $user = $this->findUserByIdentifier($request->get('identifier'));
-        if ($user) {
-            $mPassword = $this->findPasswordByUserInternalId($user->getInternalId());
-            if (password_verify($request->get('password'), $mPassword['password'])) {
-                $this->utileService->setResponseState(true);
-                $this->utileService->setResponseData($user);
-                $this->utileService->setResponseMessage(null);
-                //$this->mailer->sendNewUserMail('bryant.qin@gmail.com', 'qincheng9999@sina.com', 'haha');
+        try{
+            $user = $this->findUserByIdentifier($request->get('identifier'));
+            if ($user) {
+                $mPassword = $this->findPasswordByUserInternalId($user->getInternalId());
+                if (password_verify($request->get('password'), $mPassword['password'])) {
+                    $this->utileService->setResponseState(true);
+                    $this->utileService->setResponseData($user);
+                    $this->utileService->setResponseMessage(null);
+                    //$this->mailer->sendNewUserMail('bryant.qin@gmail.com', 'qincheng9999@sina.com', 'haha');
+                } else {
+                    $this->utileService->setResponseState(false);
+                    $this->utileService->setResponseData(array());
+                    $this->utileService->setResponseMessage('user.password.incorrect');
+                }
             } else {
                 $this->utileService->setResponseState(false);
                 $this->utileService->setResponseData(array());
-                $this->utileService->setResponseMessage('user.password.incorrect');
+                $this->utileService->setResponseMessage('user.username.incorrect');
             }
-        } else {
+            return $this->utileService->response;
+        
+        } catch (\Exception $e) {
             $this->utileService->setResponseState(false);
-            $this->utileService->setResponseData(array());
-            $this->utileService->setResponseMessage('user.username.incorrect');
+            $this->utileService->setResponseMessage($e->getMessage());
+            return $this->utileService->response;
         }
-        return $this->utileService->response;
     }
 
     public function forgetPassword($request)
     {
-        $user = $this->findUserByIdentifier($request->get('identifier'));
-        if ($user) {
-            if (count($user->getEmail()) > 0) {
-                $this->utileService->setResponseState(true);
-                $this->utileService->setResponseData(array());
-                $this->utileService->setResponseMessage('user.email.indication_change_password.will_be_sent');
+        try{
+            $user = $this->findUserByIdentifier($request->get('identifier'));
+            if ($user) {
+                if (count($user->getEmail()) > 0) {
+                    $this->utileService->setResponseState(true);
+                    $this->utileService->setResponseData(array());
+                    $this->utileService->setResponseMessage('user.email.indication_change_password.will_be_sent');
+                } else {
+                    $indication = $this->findPasswordIndicationByIdentifier($request->get('identifier'));
+                    $this->utileService->setResponseData($indication);
+                    $this->utileService->setResponseState(true);
+                }
             } else {
-                $indication = $this->findPasswordIndicationByIdentifier($request->get('identifier'));
-                $this->utileService->setResponseData($indication);
-                $this->utileService->setResponseState(true);
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseData(array());
+                $this->utileService->setResponseMessage('user.identifier.not.exist');
             }
-        } else {
+            return $this->utileService->response;
+        } catch (\Exception $e) {
             $this->utileService->setResponseState(false);
-            $this->utileService->setResponseData(array());
-            $this->utileService->setResponseMessage('user.identifier.not_exist');
+            $this->utileService->setResponseMessage($e->getMessage());
+            return $this->utileService->response;
         }
-        return $this->utileService->response;
     }
 
     public function resetPassword($password, $password1, $password2, $internal_token)
