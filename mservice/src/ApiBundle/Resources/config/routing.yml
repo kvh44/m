@@ -55,4 +55,4 @@ public_api_password_forget_send_mail:
 private_api_uploader:
     path: /private/user/upload/photo
     defaults: { _controller: ApiBundle:PrivateUser:upload, _format:json}
-    methods:  [GET,POST]  
+    methods:  [POST]  

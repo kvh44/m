@@ -1,8 +1,8 @@
 <?php
-namespace ApiBundle\Util;
+namespace ApiBundle\Util\Qq;
 
-use ApiBundle\Util\qqUploadedFileXhr;
-use ApiBundle\Util\qqUploadedFileForm;
+use ApiBundle\Util\Qq\qqUploadedFileXhr;
+use ApiBundle\Util\Qq\qqUploadedFileForm;
 /****************************************
 Example of how to use this uploader class...
 You can uncomment the following lines (minus the require) to use these as your defaults.
@@ -46,10 +46,10 @@ class qqFileUploader {
         }
     }
     
-	public function getName(){
-		if ($this->file)
-			return $this->file->getName();
-	}
+    public function getName(){
+            if ($this->file)
+                    return $this->file->getName();
+    }
     
     private function checkServerSettings(){        
         $postSize = $this->toBytes(ini_get('post_max_size'));
@@ -85,7 +85,7 @@ class qqFileUploader {
         }
         
         $size = $this->file->getSize();
-        
+
         if ($size == 0) {
             return array('error' => 'File is empty');
         }
@@ -99,6 +99,7 @@ class qqFileUploader {
         //$filename = md5(uniqid());
         $ext = @$pathinfo['extension'];		// hide notices if extension is empty
 
+        return strtolower($ext);
         if($this->allowedExtensions && !in_array(strtolower($ext), $this->allowedExtensions)){
             $these = implode(', ', $this->allowedExtensions);
             return array('error' => 'File has an invalid extension, it should be one of '. $these . '.');

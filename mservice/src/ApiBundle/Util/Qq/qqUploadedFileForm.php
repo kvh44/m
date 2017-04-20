@@ -1,5 +1,5 @@
 <?php
-
+namespace ApiBundle\Util\Qq;
 /**
  * Handle file uploads via regular form post (uses the $_FILES array)
  */

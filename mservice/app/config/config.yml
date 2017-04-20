@@ -16,6 +16,7 @@ parameters:
     locale: zh
     service_mail: service@xxx.com
     cc_mail: cc@xxx.com
+    upload_directory: "uploads/"
 
 framework:
     #esi:             ~

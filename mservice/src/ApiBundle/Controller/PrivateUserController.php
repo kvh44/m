@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\View;
-use ApiBundle\Util\qqFileUploader;
+use ApiBundle\Util\Qq\qqFileUploader;
 
 class PrivateUserController extends FOSRestController
 {
@@ -68,10 +68,11 @@ class PrivateUserController extends FOSRestController
         # define size limit constraint here
         $sizeLimit = 2 * 1024 * 1024;
         # upload
+        //$filename = $this->file->getName();
         $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
-        $uploader->handleUpload('/uploads/');
-        //$photo_path = '/uploads/'.$uploader->getUploadName();
-        return $uploader;
+        $uploader->handleUpload($this->getParameter('upload_directory'));
+        $photo_path = $this->getParameter('upload_directory').$uploader->getName();
+        return array('success' => true, 'origin_path' => $photo_path);
     }        
 
 }
