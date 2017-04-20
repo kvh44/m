@@ -14,7 +14,8 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: zh
-    
+    service_mail: service@xxx.com
+    cc_mail: cc@xxx.com
 
 framework:
     #esi:             ~
