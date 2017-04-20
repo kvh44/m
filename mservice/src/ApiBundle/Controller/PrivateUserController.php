@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\View;
+use ApiBundle\Util\qqFileUploader;
 
 class PrivateUserController extends FOSRestController
 {
@@ -59,5 +60,18 @@ class PrivateUserController extends FOSRestController
         $identifier = $request->get('identifier');
         return $this->container->get('api_massage.UsersService')->sendPasswordForgetMail($identifier);
     } 
+    
+    public function uploadAction(Request $request)
+    {
+        $qqfile_name = $request->query->get('qqfile');
+        $allowedExtensions = array("jpeg","jpg","bmp","gif","png","png8","png24");
+        # define size limit constraint here
+        $sizeLimit = 2 * 1024 * 1024;
+        # upload
+        $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
+        $uploader->handleUpload('/uploads/');
+        //$photo_path = '/uploads/'.$uploader->getUploadName();
+        return $uploader;
+    }        
 
 }
