@@ -23,7 +23,6 @@ echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
 
 /******************************************/
 
-
 class qqFileUploader {
     private $allowedExtensions = array();
     private $sizeLimit = 10485760;
