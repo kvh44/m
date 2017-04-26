@@ -41,6 +41,11 @@ class Mphoto
      * @var string
      */
     private $photoSmall;
+    
+    /**
+     * @var string
+     */
+    private $photoIcon;
 
     /**
      * @var string
@@ -221,6 +226,30 @@ class Mphoto
     public function getPhotoSmall()
     {
         return $this->photoSmall;
+    }
+    
+    /**
+     * Set photoIcon
+     *
+     * @param string $photoIcon
+     *
+     * @return Mphoto
+     */
+    public function setPhotoIcon($photoIcon)
+    {
+        $this->photoIcon = $photoIcon;
+
+        return $this;
+    }
+    
+    /**
+     * Get photoIcon
+     *
+     * @return string
+     */
+    public function getPhotoIcon()
+    {
+        return $this->photoIcon;
     }
 
     /**
