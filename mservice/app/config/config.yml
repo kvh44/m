@@ -17,6 +17,14 @@ parameters:
     service_mail: service@xxx.com
     cc_mail: cc@xxx.com
     upload_directory: "uploads/"
+    profile_photo_directory: "profile/"
+    user_photo_directory: "user/"
+    post_photo_directory: "post/"
+    original_directory: "original/"
+    big_directory: "big/"
+    small_directory: "small/"
+    size_limit_photo: 2 * 1024 * 1024
+
 
 framework:
     #esi:             ~

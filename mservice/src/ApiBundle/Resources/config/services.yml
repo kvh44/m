@@ -16,6 +16,9 @@ services:
             arguments: ["@doctrine","@session","@translator.default","@validator", "@service_container","@api_massage.UtileService", "@api_massage.mailer"]
 #  "@service_container"
 
+    api_massage.PhotoService:
+            class: ApiBundle\Services\PhotoService
+            arguments: ["@mailer", "@templating", "@api_massage.UsersService", "@api_massage.UtileService", "%size_limit_photo%", "%upload_directory%", "%profile_photo_directory%", "%user_photo_directory%", "%post_photo_directory%", "%original_directory%", "%big_directory%", "%small_directory%"]
 
     api_massage.dataCreateListener:
             class: ApiBundle\EventListener\DataPersist

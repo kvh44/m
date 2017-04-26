@@ -74,7 +74,7 @@ class qqFileUploader {
     /**
      * Returns array('success' => true, 'newFilename' => 'myDoc123.doc') or array('error' => 'error message')
      */
-    function handleUpload($uploadDirectory, $replaceOldFile = FALSE){
+    function handleUpload($uploadDirectory, $myFilename = null, $replaceOldFile = FALSE){
         if (!is_writable($uploadDirectory)){
             return array('error' => "Server error. Upload directory isn't writable.");
         }
@@ -94,11 +94,15 @@ class qqFileUploader {
         }
         
         $pathinfo = pathinfo($this->file->getName());
-        $filename = $pathinfo['filename'];
+        if($myFilename === null){
+            $filename = $pathinfo['filename'];
+        } else {
+            $filename = $myFilename;
+        }
         //$filename = md5(uniqid());
         $ext = @$pathinfo['extension'];		// hide notices if extension is empty
 
-        return strtolower($ext);
+        //return strtolower($ext);
         if($this->allowedExtensions && !in_array(strtolower($ext), $this->allowedExtensions)){
             $these = implode(', ', $this->allowedExtensions);
             return array('error' => 'File has an invalid extension, it should be one of '. $these . '.');
