@@ -23,7 +23,7 @@ parameters:
     original_directory: "original/"
     big_directory: "big/"
     small_directory: "small/"
-    size_limit_photo: 2 * 1024 * 1024
+    size_limit_photo: 2097152
 
 
 framework:

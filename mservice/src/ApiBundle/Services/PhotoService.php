@@ -58,7 +58,7 @@ class PhotoService {
         $this->template = $template;
         $this->usersService = $usersService;
         $this->utileService = $utileService;
-        $this->sizeLimitPhoto = $size_limit_photo;
+        $this->sizeLimitPhoto = (int)$size_limit_photo;
         $this->uploadDirectory = $upload_directory;
         $this->profilePhotoDirectory = $profile_photo_directory;
         $this->userPhotoDirectory = $user_photo_directory;
