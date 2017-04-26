@@ -188,7 +188,7 @@ class PhotoService {
                 ->fromFile($photo_path)                     // load image.jpg
                 ->autoOrient()                              // adjust orientation based on exif data
                 ->resize($width, $height)                          // resize to 320x200 pixels
-                //->flip('x')                                 // flip horizontally
+                ->flip('x')                                 // flip horizontally
                 //->colorize('DarkBlue')                      // tint dark blue
                 //->border('black', 10)                       // add a 10 pixel black border
                 //->overlay('watermark.png', 'bottom right')  // add a watermark image
