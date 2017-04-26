@@ -28,6 +28,7 @@ parameters:
     small_photo_max_width: 150
     icon_photo_max_width: 50
     photo_default_mime_type: "image/png"
+    photo_default_type: ".png"
 
 
 

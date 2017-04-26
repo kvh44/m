@@ -35,6 +35,8 @@ class PhotoService {
     protected $bigDirectory;
 
     protected $smallDirectory;
+    
+    protected $iconDirectory;
 
     protected $bigPhotoMaxWidth;
 
@@ -43,6 +45,8 @@ class PhotoService {
     protected $iconPhotoMaxWidth;
 
     protected $photoDefaultMimeType;
+
+    protected $photoDefaultType;
 
     protected $user;
 
@@ -63,7 +67,9 @@ class PhotoService {
     const MIN_LENGTH_FILE = 8;
 
     public function __construct($mailer, $template, UsersService $usersService, UtileService $utileService, $size_limit_photo, $upload_directory,
-                                $profile_photo_directory, $user_photo_directory, $post_photo_directory, $original_directory, $big_directory, $small_directory, $big_photo_max_width, $small_photo_max_width, $icon_photo_max_width, $photo_default_mime_type)
+                                $profile_photo_directory, $user_photo_directory, $post_photo_directory, $original_directory, $big_directory, 
+                                $small_directory, $big_photo_max_width, $small_photo_max_width, $icon_photo_max_width, $photo_default_mime_type,
+                                $photo_default_type)
     {
         $this->mailer = $mailer;
         $this->template = $template;
@@ -81,9 +87,10 @@ class PhotoService {
         $this->smallPhotoMaxWidth = (int)$small_photo_max_width;
         $this->iconPhotoMaxWidth = (int)$icon_photo_max_width;
         $this->photoDefaultMimeType = $photo_default_mime_type;
+        $this->photoDefaultType = $photo_default_type;
     }
 
-    public function uploadEntry(Request $request)
+    public function uploadEntry(Request $request, $is_local)
     {
         $this->user = $this->findUserByInternalToken($request->get('internal_token'));
         if(!$this->user){
@@ -91,7 +98,7 @@ class PhotoService {
             $this->utileService->setResponseState(false);
             return $this->utileService->response;
         }
-        return $this->uploadFile($request);
+        return $this->uploadFile($request, $is_local);
     }
 
     public function findUserByInternalToken($internal_token)
@@ -100,14 +107,17 @@ class PhotoService {
     }
 
 
-    protected function uploadFile(Request $request)
+    protected function uploadFile(Request $request, $is_local)
     {
         $qqfile_name = $request->query->get('qqfile');
-        //$filename = $this->file->getName();
+
         $uploader = new qqFileUploader($this->allowedExtensionsPhoto, $this->sizeLimitPhoto);
         $file_name = UtileService::RandomString(self::MIN_LENGTH_FILE) . UtileService::getDateTimeMicroseconds();
         $directory_original = $this->getDirectory($request->get('type'), self::ORIGINAL_LEVEL, $this->user->getId());
-        $result_upload = $uploader->handleUpload($directory_original, $file_name);
+        if(is_array($directory_original)){
+            return $directory_original;
+        }
+        $result_upload = $uploader->handleUpload($directory_original, $file_name, $is_local);
         if(array_key_exists('success',$result_upload)){
             $original_photo_path = $directory_original . $result_upload['newFilename'];
         } else {
@@ -118,8 +128,13 @@ class PhotoService {
             return $this->utileService->response;
         }
 
+        
+        
         // generate big
         $directory_big = $this->getDirectory($request->get('type'), self::BIG_LEVEL, $this->user->getId());
+        if(is_array($directory_big)){
+            return $directory_big;
+        }
         $imageinformation=getimagesize($original_photo_path);
         if($imageinformation[0] > $this->bigPhotoMaxWidth){
             $width = $this->bigPhotoMaxWidth;
@@ -128,14 +143,19 @@ class PhotoService {
             $width = $imageinformation[0];
             $height = $imageinformation[0] * ( $imageinformation[1] / $imageinformation[0]);
         }
-        $file_name_big = $file_name . '-' . $width . 'x' . $height;
+        $file_name_big = $file_name . '-' . $width . 'x' . $height . $this->photoDefaultType;
         $big_photo_path = $this->generateSmallPhoto($original_photo_path, $directory_big, $file_name_big, $this->photoDefaultMimeType, $width, $height);
         if(is_array($big_photo_path)){
             return $big_photo_path;
         }
 
+        
+        
         // generate small
         $directory_small = $this->getDirectory($request->get('type'), self::SMALL_LEVEL, $this->user->getId());
+        if(is_array($directory_small)){
+            return $directory_small;
+        }
         $imageinformation=getimagesize($original_photo_path);
         if($imageinformation[0] > $this->smallPhotoMaxWidth){
             $width = $this->smallPhotoMaxWidth;
@@ -144,14 +164,19 @@ class PhotoService {
             $width = $imageinformation[0];
             $height = $imageinformation[0] * ( $imageinformation[1] / $imageinformation[0]);
         }
-        $file_name_small = $file_name . '-' . $width . 'x' . $height;
+        $file_name_small = $file_name . '-' . $width . 'x' . $height . $this->photoDefaultType;
         $small_photo_path = $this->generateSmallPhoto($original_photo_path, $directory_small, $file_name_small, $this->photoDefaultMimeType, $width, $height);
         if(is_array($small_photo_path)){
             return $small_photo_path;
         }
 
+        
+        
         // generate icon
         $directory_icon = $this->getDirectory($request->get('type'), self::ICON_LEVEL, $this->user->getId());
+        if(is_array($directory_icon)){
+            return $directory_icon;
+        }
         $imageinformation=getimagesize($original_photo_path);
         if($imageinformation[0] > $this->iconPhotoMaxWidth){
             $width = $this->iconPhotoMaxWidth;
@@ -160,7 +185,7 @@ class PhotoService {
             $width = $imageinformation[0];
             $height = $imageinformation[0] * ( $imageinformation[1] / $imageinformation[0]);
         }
-        $file_name_icon = $file_name . '-' . $width . 'x' . $height;
+        $file_name_icon = $file_name . '-' . $width . 'x' . $height . $this->photoDefaultType;
         $icon_photo_path = $this->generateSmallPhoto($original_photo_path, $directory_icon, $file_name_icon, $this->photoDefaultMimeType, $width, $height);
         if(is_array($icon_photo_path)){
             return $icon_photo_path;
@@ -238,6 +263,9 @@ class PhotoService {
                 break;
             case self::SMALL_LEVEL:
                 $return .= $this->smallDirectory;
+                break;
+            case self::ICON_LEVEL:
+                $return .= $this->iconDirectory;
                 break;
             default:
                 $this->utileService->setResponseMessage('upload.directory.level.invalid');

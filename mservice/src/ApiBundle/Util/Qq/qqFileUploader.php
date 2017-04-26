@@ -74,7 +74,7 @@ class qqFileUploader {
     /**
      * Returns array('success' => true, 'newFilename' => 'myDoc123.doc') or array('error' => 'error message')
      */
-    function handleUpload($uploadDirectory, $myFilename = null, $replaceOldFile = FALSE){
+    function handleUpload($uploadDirectory, $myFilename = null, $isLocal = false, $replaceOldFile = FALSE){
         if (!is_writable($uploadDirectory)){
             return array('error' => "Server error. Upload directory isn't writable.");
         }
@@ -83,14 +83,16 @@ class qqFileUploader {
             return array('error' => 'No files were uploaded.');
         }
         
-        $size = $this->file->getSize();
+        if(!$isLocal){
+            $size = $this->file->getSize();
 
-        if ($size == 0) {
-            return array('error' => 'File is empty');
-        }
-        
-        if ($size > $this->sizeLimit) {
-            return array('error' => 'File is too large');
+            if ($size == 0) {
+                return array('error' => 'File is empty');
+            }
+
+            if ($size > $this->sizeLimit) {
+                return array('error' => 'File is too large');
+            }
         }
         
         $pathinfo = pathinfo($this->file->getName());
