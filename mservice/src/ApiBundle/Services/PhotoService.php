@@ -6,7 +6,7 @@ use ApiBundle\Services\UtileService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
-
+use ApiBundle\Util\Qq\qqFileUploader;
 
 class PhotoService {
     protected $mailer;
@@ -34,6 +34,8 @@ class PhotoService {
     protected $bigDirectory;
 
     protected $smallDirectory;
+
+    protected $user;
 
     const PROFILE_PHOTO_TYPE = 1;
 
@@ -68,7 +70,18 @@ class PhotoService {
 
     public function uploadEntry(Request $request)
     {
+        $this->user = $this->findUserByInternalToken($request->get('internal_token'));
+        if(!$this->user){
+            $this->utileService->setResponseMessage('user.token.wrong');
+            $this->utileService->setResponseState(false);
+            return $this->utileService->response;
+        }
         return $this->uploadFile($request);
+    }
+
+    public function findUserByInternalToken($internal_token)
+    {
+        return $this->usersService->findUserByInternalToken($internal_token);
     }
 
 
@@ -78,9 +91,10 @@ class PhotoService {
         //$filename = $this->file->getName();
         $uploader = new qqFileUploader($this->allowedExtensionsPhoto, $this->sizeLimitPhoto);
         $file_name = UtileService::RandomString(self::MIN_LENGTH_FILE) . UtileService::getDateTimeMicroseconds();
-        $result_upload = $uploader->handleUpload($this->getDirectory($request->get('type'), self::ORIGINAL_LEVEL), $file_name);
+        $directory = $this->getDirectory($request->get('type'), self::ORIGINAL_LEVEL, $this->user->getId());
+        $result_upload = $uploader->handleUpload($directory, $file_name);
         if(array_key_exists('success',$result_upload)){
-            $photo_path = $this->getDirectory($request->get('type'), self::ORIGINAL_LEVEL).$result_upload['newFilename'];
+            $photo_path = $directory . $result_upload['newFilename'];
         } else {
             $this->utileService->setResponseState(false);
             if(array_key_exists('error',$result_upload)) {
@@ -133,6 +147,14 @@ class PhotoService {
 
         if($user_id){
             $return .= $user_id.'/';
+        }
+
+        if(!is_dir($return)){
+            mkdir($return);
+        }
+
+        if(!is_writable($return)){
+            chmod($return, 777);
         }
 
         return $return;
