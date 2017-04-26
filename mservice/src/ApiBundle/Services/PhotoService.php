@@ -66,7 +66,13 @@ class PhotoService {
         $this->smallDirectory = $small_directory;
     }
 
-    protected function upload(Request $request)
+    public function uploadEntry(Request $request)
+    {
+        return $this->uploadFile($request);
+    }
+
+
+    protected function uploadFile(Request $request)
     {
         $qqfile_name = $request->query->get('qqfile');
         //$filename = $this->file->getName();

@@ -63,16 +63,7 @@ class PrivateUserController extends FOSRestController
     
     public function uploadAction(Request $request)
     {
-        $qqfile_name = $request->query->get('qqfile');
-        $allowedExtensions = array("jpeg","jpg","bmp","gif","png","png8","png24");
-        # define size limit constraint here
-        $sizeLimit = 2 * 1024 * 1024;
-        # upload
-        //$filename = $this->file->getName();
-        $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
-        $uploader->handleUpload($this->getParameter('upload_directory'));
-        $photo_path = $this->getParameter('upload_directory').$uploader->getName();
-        return array('success' => true, 'origin_path' => $photo_path);
+        return $this->container->get('api_massage.PhotoService')->uploadEntry($request);
     }        
 
 }
