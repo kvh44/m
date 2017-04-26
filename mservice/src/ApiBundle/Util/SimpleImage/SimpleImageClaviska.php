@@ -450,7 +450,7 @@ class SimpleImageClaviska {
   //
   public function autoOrient() {
     $exif = $this->getExif();
-    if(array_key_exists(Orientation, $exif)){
+    if(array_key_exists('Orientation', $exif)){
         $orientation = $exif['Orientation'];
     }
 
