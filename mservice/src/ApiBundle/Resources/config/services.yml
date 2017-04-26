@@ -18,7 +18,7 @@ services:
 
     api_massage.PhotoService:
             class: ApiBundle\Services\PhotoService
-            arguments: ["@mailer", "@templating", "@api_massage.UsersService", "@api_massage.UtileService", "%size_limit_photo%", "%upload_directory%", "%profile_photo_directory%", "%user_photo_directory%", "%post_photo_directory%", "%original_directory%", "%big_directory%", "%small_directory%"]
+            arguments: ["@mailer", "@templating", "@api_massage.UsersService", "@api_massage.UtileService", "%size_limit_photo%", "%upload_directory%", "%profile_photo_directory%", "%user_photo_directory%", "%post_photo_directory%", "%original_directory%", "%big_directory%", "%small_directory%", "%big_photo_max_width%", "%small_photo_max_width%", "%icon_photo_max_width%", "%photo_default_mime_type%"]
 
     api_massage.dataCreateListener:
             class: ApiBundle\EventListener\DataPersist
