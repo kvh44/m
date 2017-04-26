@@ -150,7 +150,7 @@ class PhotoService {
         }
 
         if(!is_dir($return)){
-            mkdir($return);
+            mkdir($return, 0777, true);
         }
 
         if(!is_writable($return)){
