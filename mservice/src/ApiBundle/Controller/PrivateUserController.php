@@ -62,7 +62,7 @@ class PrivateUserController extends FOSRestController
     
     public function uploadAction(Request $request)
     {
-        $is_local = ($this->getParameter('is_local') !== null) ? $is_local = $this->getParameter('is_local') : null ;
+        $is_local = $request->get('is_local') ;
         return $this->container->get('api_massage.PhotoService')->uploadEntry($request, $is_local);
     }        
 
