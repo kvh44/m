@@ -94,7 +94,7 @@ class PhotoService {
         $this->originalDirectory = $original_directory;
         $this->mediumDirectory = $medium_directory;
         $this->smallDirectory = $small_directory;
-        $this->bigPhotoMaxWidth = (int)$medium_photo_max_width;
+        $this->mediumPhotoMaxWidth = (int)$medium_photo_max_width;
         $this->smallPhotoMaxWidth = (int)$small_photo_max_width;
         $this->iconPhotoMaxWidth = (int)$icon_photo_max_width;
         $this->photoDefaultMimeType = $photo_default_mime_type;
@@ -143,7 +143,7 @@ class PhotoService {
 
 
 
-            // generate big
+            // generate medium
             $directory_medium = $this->getDirectory($request->get('type'), self::MEDIUM_LEVEL, $this->user->getId());
             if(is_array($directory_medium)){
                 return $directory_medium;
