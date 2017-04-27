@@ -21,10 +21,10 @@ parameters:
     user_photo_directory: "user/"
     post_photo_directory: "post/"
     original_directory: "original/"
-    big_directory: "big/"
+    medium_directory: "medium/"
     small_directory: "small/"
     size_limit_photo: 2097152
-    big_photo_max_width: 500
+    medium_photo_max_width: 500
     small_photo_max_width: 150
     icon_photo_max_width: 50
     photo_default_mime_type: "image/png"
