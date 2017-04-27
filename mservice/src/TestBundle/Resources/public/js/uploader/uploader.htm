@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href='../fineuploader.jquery-3.0/fineuploader.css' type="text/css" media="all" />
+        <script type="text/javascript" src='/assets/vendor/jquery/dist/jquery.js'></script>
+        <script type="text/javascript" src='../fineuploader.jquery-3.0/jquery.fineuploader-3.0.js'></script>
+        
+    </head>
+    <body>
+        <div>TODO write content</div>
+        <div id="upload_photo_block">
+            <div id="choose_photo_qq"></div>
+
+            <div id="fine-uploader">
+              <noscript>
+                <p>Please enable JavaScript to use the Uploader</p>
+                <!-- or put a simple form for upload here -->
+              </noscript>
+            </div>
+      </div>
+        <script>
+            
+            jQuery('#choose_photo_qq').show();
+    var galleryUploader =  new qq.FineUploader({
+    // pass the dom node (ex. $(selector)[0] for jQuery users)
+    element: document.getElementById('choose_photo_qq'),
+    request: {
+      endpoint: '/app_dev.php/api/private/user/upload/photo',
+        params: {internal_token: 'b7BEhLIkP68aVv0PuKJXbKKRJjD08FSR20170420120006.1186390', type: 1, is_local: true}
+    },
+    validation: {
+        allowedExtensions: ["jpeg","jpg","bmp","gif","png","png8","png24"],
+        sizeLimit: 2000*1024
+    },
+    messages: {
+        typeError: 'type error',
+        sizeError: 'size error',
+        emptyError: 'empty error',
+        noFilesError: 'no file error',
+        onLeave: 'leave error',
+    },
+    template: '<div class="qq-uploader">' +
+            '<div class="qq-upload-drop-area"><span>{dragZoneText}</span></div>' +
+            '<br><div class="qq-upload-button btn btn-danger btn-large"><div>{uploadButtonText}</div></div>' +
+            '<ul class="qq-upload-list"></ul>' +
+            '</div>',
+    text: {
+        uploadButton: '<i class="icon-cloud icon-white"></i> uploader',
+        formatProgress: '{percent}%'
+        },
+        multiple: false,
+        disableCancelForFormUploads: true,
+        maxConnections: 1,
+          callbacks: {
+                onComplete: function(id, fileName, responseJSON) {
+                  if (responseJSON.success) {
+                      console.log(responseJSON);
+                  }
+                }
+      }
+  });
+            
+        </script>
+    </body>
+</html>

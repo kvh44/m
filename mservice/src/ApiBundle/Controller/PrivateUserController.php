@@ -59,5 +59,11 @@ class PrivateUserController extends FOSRestController
         $identifier = $request->get('identifier');
         return $this->container->get('api_massage.UsersService')->sendPasswordForgetMail($identifier);
     } 
+    
+    public function uploadAction(Request $request)
+    {
+        $is_local = $request->get('is_local') ;
+        return $this->container->get('api_massage.PhotoService')->uploadEntry($request, $is_local);
+    }        
 
 }

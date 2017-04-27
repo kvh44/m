@@ -1,3 +1,8 @@
+test:
+    resource: "@TestBundle/Controller/"
+    type:     annotation
+    prefix:   /test
+
 mobile:
     resource: "@MobileBundle/Resources/config/routing.yml"
     prefix:   /mobile
@@ -21,3 +26,4 @@ api:
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+    prefix:   /

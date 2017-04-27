@@ -69,6 +69,13 @@ ApiBundle\Entity\Mphoto:
             options:
                 fixed: false
             column: photo_small
+        photoIcon:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: photo_icon   
         title:
             type: string
             nullable: true
