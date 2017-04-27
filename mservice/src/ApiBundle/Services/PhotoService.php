@@ -41,13 +41,13 @@ class PhotoService {
 
     protected $originalDirectory;
 
-    protected $bigDirectory;
+    protected $mediumDirectory;
 
     protected $smallDirectory;
     
     protected $iconDirectory;
 
-    protected $bigPhotoMaxWidth;
+    protected $mediumPhotoMaxWidth;
 
     protected $smallPhotoMaxWidth;
 
@@ -69,7 +69,7 @@ class PhotoService {
 
     const ORIGINAL_LEVEL = 1;
 
-    const BIG_LEVEL = 2;
+    const MEDIUM_LEVEL = 2;
 
     const SMALL_LEVEL = 3;
 
@@ -78,8 +78,8 @@ class PhotoService {
     const MIN_LENGTH_FILE = 8;
 
     public function __construct(Registry $doctrine, UsersService $usersService, UtileService $utileService, $size_limit_photo, $upload_directory,
-                                $profile_photo_directory, $user_photo_directory, $post_photo_directory, $original_directory, $big_directory, 
-                                $small_directory, $big_photo_max_width, $small_photo_max_width, $icon_photo_max_width, $photo_default_mime_type,
+                                $profile_photo_directory, $user_photo_directory, $post_photo_directory, $original_directory, $medium_directory, 
+                                $small_directory, $medium_photo_max_width, $small_photo_max_width, $icon_photo_max_width, $photo_default_mime_type,
                                 $photo_default_type)
     {
         $this->doctrine = $doctrine;
@@ -92,9 +92,9 @@ class PhotoService {
         $this->userPhotoDirectory = $user_photo_directory;
         $this->postPhotoDirectory = $post_photo_directory;
         $this->originalDirectory = $original_directory;
-        $this->bigDirectory = $big_directory;
+        $this->mediumDirectory = $medium_directory;
         $this->smallDirectory = $small_directory;
-        $this->bigPhotoMaxWidth = (int)$big_photo_max_width;
+        $this->bigPhotoMaxWidth = (int)$medium_photo_max_width;
         $this->smallPhotoMaxWidth = (int)$small_photo_max_width;
         $this->iconPhotoMaxWidth = (int)$icon_photo_max_width;
         $this->photoDefaultMimeType = $photo_default_mime_type;
@@ -144,22 +144,22 @@ class PhotoService {
 
 
             // generate big
-            $directory_big = $this->getDirectory($request->get('type'), self::BIG_LEVEL, $this->user->getId());
-            if(is_array($directory_big)){
-                return $directory_big;
+            $directory_medium = $this->getDirectory($request->get('type'), self::MEDIUM_LEVEL, $this->user->getId());
+            if(is_array($directory_medium)){
+                return $directory_medium;
             }
             $imageinformation=getimagesize($original_photo_path);
-            if($imageinformation[0] > $this->bigPhotoMaxWidth){
-                $width = $this->bigPhotoMaxWidth;
-                $height = $this->bigPhotoMaxWidth * ( $imageinformation[1] / $imageinformation[0]);
+            if($imageinformation[0] > $this->mediumPhotoMaxWidth){
+                $width = $this->mediumPhotoMaxWidth;
+                $height = $this->mediumPhotoMaxWidth * ( $imageinformation[1] / $imageinformation[0]);
             } else {
                 $width = $imageinformation[0];
                 $height = $imageinformation[0] * ( $imageinformation[1] / $imageinformation[0]);
             }
-            $file_name_big = $file_name . '-' . $width . 'x' . $height . $this->photoDefaultType;
-            $big_photo_path = $this->generateSmallPhoto($original_photo_path, $directory_big, $file_name_big, $this->photoDefaultMimeType, $width, $height);
-            if(is_array($big_photo_path)){
-                return $big_photo_path;
+            $file_name_medium = $file_name . '-' . $width . 'x' . $height . $this->photoDefaultType;
+            $medium_photo_path = $this->generateSmallPhoto($original_photo_path, $directory_medium, $file_name_medium, $this->photoDefaultMimeType, $width, $height);
+            if(is_array($medium_photo_path)){
+                return $medium_photo_path;
             }
 
 
@@ -222,7 +222,7 @@ class PhotoService {
                 $this->mPhoto->setPostId($request->get('post_id'));
             }
             $this->mPhoto->setPhotoOrigin($file_name_origin);
-            $this->mPhoto->setPhotoMedium($file_name_big);
+            $this->mPhoto->setPhotoMedium($file_name_medium);
             $this->mPhoto->setPhotoSmall($file_name_small);
             $this->mPhoto->setPhotoIcon($file_name_icon);
             $this->mPhoto->setInternalId(UtileService::RandomString(self::MIN_LENGTH_FILE) . UtileService::getDateTimeMicroseconds());
@@ -230,7 +230,18 @@ class PhotoService {
             $this->em->flush();
 
 
-            $this->utileService->setResponseData(array('mPhoto' => $this->mPhoto, 'icon_photo_path' => $icon_photo_path, 'small_photo_path' => $small_photo_path, 'big_photo_path' => $big_photo_path));
+            $this->utileService->setResponseData(
+                    array(
+                        'user_id' => $this->mPhoto->getUser()->getId(), 
+                        'user_internal_id' => $this->mPhoto->getUser()->getInternalId(),
+                        'photo_id' => $this->mPhoto->getId(), 
+                        'photo_internal_id' => $this->mPhoto->getInternalId(),
+                        'original_photo_path' => $original_photo_path,
+                        'icon_photo_path' => $icon_photo_path, 
+                        'small_photo_path' => $small_photo_path, 
+                        'medium_photo_path' => $medium_photo_path
+                    )
+            );
             $this->utileService->setResponseState(true);
             return $this->utileService->response;
         } catch(\Exception $err) {
@@ -276,7 +287,7 @@ class PhotoService {
 
     /*
      * $type : 1 ==> profile, 2 ==> user; 3 ==> post
-     * $level: 1 ==> original, 2 ==> big, 3 ==> small
+     * $level: 1 ==> original, 2 ==> medium, 3 ==> small
      */
     protected function getDirectory($type, $level, $user_id = null)
     {
@@ -301,8 +312,8 @@ class PhotoService {
             case self::ORIGINAL_LEVEL:
                 $return .= $this->originalDirectory;
                 break;
-            case self::BIG_LEVEL:
-                $return .= $this->bigDirectory;
+            case self::MEDIUM_LEVEL:
+                $return .= $this->mediumDirectory;
                 break;
             case self::SMALL_LEVEL:
                 $return .= $this->smallDirectory;
