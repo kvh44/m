@@ -24,7 +24,7 @@ class UtileService {
     const FROM_SQL = 'sql';
     const FROM_CACHE = 'cache';
     const FROM_SEARCH = 'search';
-
+    
     public $response= array('data' => array(), 'state' => true, 'message' => null, 'path' => null, 'from' => null,'code' => 0);
     
     public $errors = array();

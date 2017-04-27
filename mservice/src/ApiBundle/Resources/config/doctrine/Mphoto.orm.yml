@@ -1,6 +1,7 @@
 ApiBundle\Entity\Mphoto:
     type: entity
     table: mphoto
+    repositoryClass: ApiBundle\Repository\MassagePhotoRepository
     indexes:
         photo_type:
             columns:

@@ -341,6 +341,12 @@ class PhotoService {
 
         return $return;
     }
+    
+    
+    public function findPhotosByUserId($user_id, $type = null)
+    {
+        return $this->em->getRepository('ApiBundle:Mphoto')->loadPhotosByUserId($user_id, $type);
+    }        
 
 
 }
