@@ -55,4 +55,14 @@ public_api_password_forget_send_mail:
 private_api_uploader:
     path: /private/user/upload/photo
     defaults: { _controller: ApiBundle:PrivateUser:upload, _format:json}
-    methods:  [POST]  
+    methods:  [POST]
+
+public_api_user_single_page:
+    path: /public/user/single/page
+    defaults: { _controller: ApiBundle:PublicUser:getSingleUserPage, _format:json}
+    methods:  [POST]
+
+public_api__remove_user_single_page_cache:
+    path: /public/user/single/page/remove/cache
+    defaults: { _controller: ApiBundle:PublicUser:removeSingleUserPageCache, _format:json}
+    methods:  [POST]

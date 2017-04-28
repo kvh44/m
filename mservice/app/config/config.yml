@@ -105,17 +105,17 @@ snc_redis:
         user:
             type: predis
             alias: user
-            dsn: redis://localhost/user
+            dsn: redis://localhost/1
             logging: true
         post:
             type: predis
             alias: post
-            dsn: redis://localhost/post
+            dsn: redis://localhost/2
             logging: true
-        photos:
+        userPhotos:
             type: predis
-            alias: photos
-            dsn: redis://localhost/photos
+            alias: userPhotos
+            dsn: redis://localhost/3
             logging: true
     session:
             client: default

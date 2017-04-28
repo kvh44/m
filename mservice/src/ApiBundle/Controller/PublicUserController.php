@@ -33,6 +33,16 @@ class PublicUserController extends FOSRestController
     public function resetPasswordAction(Request $request)
     {
         return $this->container->get('api_massage.UsersService')->resetPassword($request);
-    }        
+    }
+
+    public function getSingleUserPageAction(Request $request)
+    {
+        return $this->container->get('api_massage.UsersService')->getSingleUserPageByUsername($request->get('username'));
+    }
+
+    public function removeSingleUserPageCacheAction(Request $request)
+    {
+        return $this->container->get('api_massage.CacheService')->removeSingleUserByUsernameCache($request->get('username'));
+    }
             
 }

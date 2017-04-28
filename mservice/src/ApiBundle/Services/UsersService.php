@@ -4,6 +4,7 @@ namespace ApiBundle\Services;
 use ApiBundle\Entity\Muser;
 use ApiBundle\Entity\Mpassword;
 use ApiBundle\Services\UtileService;
+use ApiBundle\Services\CacheService;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,6 +52,11 @@ class UsersService
      * @var UtileService
      */
     protected $utileService;
+
+
+
+
+    protected $cacheService;
     
     
     /**
@@ -74,7 +80,7 @@ class UsersService
 
     const MIN_LENGTH_TOKEN = 32;
 
-    public function __construct(Registry $doctrine, Session $session, Translator $translator, RecursiveValidator $validator, Container $container,UtileService $utileService, Mailer $mailer)
+    public function __construct(Registry $doctrine, Session $session, Translator $translator, RecursiveValidator $validator, Container $container,UtileService $utileService, Mailer $mailer, CacheService $cacheService)
     {
         $this->doctrine = $doctrine;
         $this->em = $this->doctrine->getManager();
@@ -84,6 +90,7 @@ class UsersService
         $this->container = $container;
         $this->utileService = $utileService;
         $this->mailer = $mailer;
+        $this->cacheService = $cacheService;
     }
 
     public function createUser($request)
@@ -380,23 +387,22 @@ class UsersService
     {
         try{
             $user = $this->findUserByIdentifier($request->get('identifier'));
-            if ($user) {
-                $mPassword = $this->findPasswordByUserInternalId($user->getInternalId());
-                if (password_verify($request->get('password'), $mPassword['password'])) {
-                    $this->utileService->setResponseState(true);
-                    $this->utileService->setResponseData($user);
-                    $this->utileService->setResponseMessage(null);
-                    //$this->mailer->sendNewUserMail('bryant.qin@gmail.com', 'qincheng9999@sina.com', 'haha');
-                } else {
-                    $this->utileService->setResponseState(false);
-                    $this->utileService->setResponseData(array());
-                    $this->utileService->setResponseMessage('user.password.incorrect');
-                }
+            if(!$user){
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage('user.username.incorrect');
+                $this->utileService->setResponseFrom(UtileService::FROM_SQL);
+                return $this->utileService->response;
+            }
+
+            $mPassword = $this->findPasswordByUserInternalId($user->getInternalId());
+            if (password_verify($request->get('password'), $mPassword['password'])) {
+                $this->utileService->setResponseState(true);
+                $this->utileService->setResponseData($user);
             } else {
                 $this->utileService->setResponseState(false);
-                $this->utileService->setResponseData(array());
-                $this->utileService->setResponseMessage('user.username.incorrect');
+                $this->utileService->setResponseMessage('user.password.incorrect');
             }
+
             return $this->utileService->response;
         
         } catch (\Exception $e) {
@@ -844,6 +850,38 @@ class UsersService
 
             $this->utileService->setResponseState(true);
             $this->utileService->setResponseMessage($this->translator->trans('user.email.forget.sent', array('%email%' => $user->getEmail())));
+            return $this->utileService->response;
+        } catch (\Exception $e) {
+            $this->utileService->setResponseState(false);
+            $this->utileService->setResponseMessage($e->getMessage());
+            return $this->utileService->response;
+        }
+    }
+
+    public function getSingleUserPageByUsername($username)
+    {
+        try{
+            $user = $this->cacheService->getSingleUserByUsernameCache($username);
+            $this->utileService->setResponseFrom(UtileService::FROM_CACHE);
+
+            if(count($user) === 0){
+                $user = $this->findUserByUsername($username);
+                $this->utileService->setResponseFrom(UtileService::FROM_SQL);
+
+                if(!$user){
+                    $this->utileService->setResponseState(false);
+                    $this->utileService->setResponseMessage('user.username.wrong');
+                    return $this->utileService->response;
+                }
+
+                $this->cacheService->setSingleUserByUsernameCache($username, serialize($user));
+            } else {
+                $user = unserialize($user);
+            }
+
+            $this->utileService->setResponseState(true);
+            $array = array('user' => $user);
+            $this->utileService->setResponseData($array);
             return $this->utileService->response;
         } catch (\Exception $e) {
             $this->utileService->setResponseState(false);
