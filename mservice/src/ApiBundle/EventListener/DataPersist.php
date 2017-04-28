@@ -65,15 +65,15 @@ class DataPersist
     public function persistData($entity)
     {
         $entity->setUpdated($this->getUpdated());
-        $entity->setCreated($this->getCreated());
-
+        if(!$entity->getCreated()){
+            $entity->setCreated($this->getCreated());
+        }
         return $entity;
     }
 
     public function updateData($entity)
     {
         $entity->setUpdated($this->getUpdated());
-
         return $entity;
     }
 

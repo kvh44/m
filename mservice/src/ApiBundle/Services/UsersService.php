@@ -342,6 +342,11 @@ class UsersService
     {
         return $this->em->getRepository('ApiBundle:Muser')->loadUserByInternalToken($internal_token);
     }
+    
+    public function findPhotosByUserId($user_id, $type = null)
+    {
+        return $this->em->getRepository('ApiBundle:Mphoto')->loadPhotosByUserId($user_id, $type);
+    }
 
     private function refreshAlltokensForUser($internalId, $internalToken)
     {
@@ -861,10 +866,14 @@ class UsersService
     public function getSingleUserPageByUsername($username)
     {
         try{
-            $user = $this->cacheService->getSingleUserByUsernameCache($username);
             $this->utileService->setResponseFrom(UtileService::FROM_CACHE);
+            /*
+             * user
+             */
+            $user = $this->cacheService->getSingleUserByUsernameCache($username);
+            $user = unserialize($user);
 
-            if(count($user) === 0){
+            if($user === array() || !$user ){
                 $user = $this->findUserByUsername($username);
                 $this->utileService->setResponseFrom(UtileService::FROM_SQL);
 
@@ -875,18 +884,30 @@ class UsersService
                 }
 
                 $this->cacheService->setSingleUserByUsernameCache($username, serialize($user));
-            } else {
-                $user = unserialize($user);
             }
+            
+            /*
+             * photos
+             */
+            $photos = $this->cacheService->getSingleUserPhotosByUserIdCache($user->getId());
+            $photos = unserialize($photos);
+            
+            if(!$photos || $photos === array()){
+                $photos = $this->findPhotosByUserId($user->getId());
+                $this->utileService->setResponseFrom(UtileService::FROM_SQL);
+                
+                $this->cacheService->setSingleUserPhotosByUserIdCache($user->getId(), serialize($photos));
+            } 
+            
 
             $this->utileService->setResponseState(true);
-            $array = array('user' => $user);
-            $this->utileService->setResponseData($array);
-            return $this->utileService->response;
+            $data = array('user' => $user, 'photos' => $photos);
+            $this->utileService->setResponseData($data);
+            return $this->utileService->getResponse();
         } catch (\Exception $e) {
             $this->utileService->setResponseState(false);
             $this->utileService->setResponseMessage($e->getMessage());
-            return $this->utileService->response;
+            return $this->utileService->getResponse();
         }
     }
     
