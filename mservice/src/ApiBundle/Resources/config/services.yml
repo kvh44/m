@@ -20,9 +20,9 @@ services:
             class: ApiBundle\Services\PhotoService
             arguments: ["@doctrine", "@api_massage.UsersService", "@api_massage.UtileService", "%size_limit_photo%", "%upload_directory%", "%profile_photo_directory%", "%user_photo_directory%", "%post_photo_directory%", "%original_directory%", "%medium_directory%", "%small_directory%", "%medium_photo_max_width%", "%small_photo_max_width%", "%icon_photo_max_width%", "%photo_default_mime_type%", "%photo_default_type%"]
 
-    api_massage.frontService:
-            class: ApiBundle\Services\pageService
-            arguments: ["@doctrine", "@translator.default", "@api_massage.UtileService", "@api_massage.UsersService", "@api_massage.PhotoService"]
+    api_massage.cacheService:
+            class: ApiBundle\Services\cacheService
+            arguments: ["@doctrine", "@translator.default", "@api_massage.UtileService"]
             
     api_massage.dataCreateListener:
             class: ApiBundle\EventListener\DataPersist

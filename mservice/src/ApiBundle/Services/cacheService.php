@@ -2,14 +2,10 @@
 namespace ApiBundle\Services;
 
 use ApiBundle\Services\UtileService;
-use ApiBundle\Services\UsersService;
-use ApiBundle\Services\PhotoService;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 
-class FrontService
+class cacheService
 {
     /**
      * @var Registry
@@ -31,32 +27,24 @@ class FrontService
      * @var UtileService
      */
     protected $utileService;
-    
-    
-    
-    protected $usersService;
-    
-    
-    
-    protected $photoService;
 
 
 
 
-    public function __construct(Registry $doctrine, Translator $translator, UtileService $utileService, UsersService $usersService, PhotoService $photoService)
+
+    public function __construct(Registry $doctrine, Translator $translator, UtileService $utileService)
     {
         $this->doctrine = $doctrine;
         $this->em = $this->doctrine->getManager();
         $this->translator = $translator;
         $this->utileService = $utileService;
-        $this->usersService = $usersService;
-        $this->photoService = $photoService;
     }
     
     public function getSingleUserPageByIdentifier($identifier)
     {
         $user = $this->getSingleUserByIdentifierCache($identifier);
         $this->utileService->setResponseFrom(UtileService::FROM_CACHE);
+        /*
         if(!$user){
             $user = $this->refreshSingleUserByIdentifierCache($identifier);
             $this->utileService->setResponseFrom(UtileService::FROM_SQL);
@@ -72,8 +60,8 @@ class FrontService
             $photos = $this->refreshSingleUserPhotosByUserIdCache($user->getId());
             $this->utileService->setResponseFrom(UtileService::FROM_SQL);
         }
-        
-        $this->utileService->setResponseData(array('user' => $user, 'photos' => $photos));
+        */
+        $this->utileService->setResponseData(array('user' => $user));
         $this->utileService->setResponseState(true);
         return $this->utileService->response;
     } 
@@ -92,7 +80,7 @@ class FrontService
     {
         
     } 
-    
+    /*
     public function refreshSingleUserByIdentifierCache($identifier)
     {
         $user = $this->usersService->findUserByIdentifier($identifier);
@@ -102,7 +90,7 @@ class FrontService
         $this->setSingleUserByIdentifierCache($identifier, $user);
         return $user;
     }
-
+    */
     public function getSingleUserPhotosByUserIdCache($user_id)
     {
         
@@ -117,7 +105,7 @@ class FrontService
     {
         
     }
-    
+    /*
     public function refreshSingleUserPhotosByUserIdCache($user_id)
     {
         $photos = $this->photoService->findPhotosByUserId($user_id);
@@ -127,4 +115,5 @@ class FrontService
         $this->setSingleUserPhotosByUserIdCache($user_id, $photos);
         return $photos;
     }
+    */
 }
