@@ -64,7 +64,7 @@ class CacheService
         if(!$this->checkRedisRunning($this->redisUser)){
             return;
         }
-        $this->redisUser->hSet($this->userWithUsername, $username, $user);
+        return $this->redisUser->hSet($this->userWithUsername, $username, $user);
     }  
     
     public function removeSingleUserByUsernameCache($username)
@@ -93,7 +93,7 @@ class CacheService
         if(!$this->checkRedisRunning($this->redisUserPhotos)){
             return;
         }
-        $this->redisUserPhotos->hSet($this->userPhotos, $user_id, $photos);
+        return $this->redisUserPhotos->hSet($this->userPhotos, $user_id, $photos);
     }
     
     public function removeSingleUserPhotosByUserIdCache($user_id)

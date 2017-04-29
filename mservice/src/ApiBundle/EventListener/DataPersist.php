@@ -8,12 +8,15 @@ use ApiBundle\Entity\Mphoto;
 use ApiBundle\Entity\Mpost;
 use ApiBundle\Entity\Mdraft;
 use ApiBundle\Services\CacheService;
+use ApiBundle\Services\PhotoService;
 
 class DataPersist
 {
     protected $cacheService;
-     
     
+    protected $photoService;
+
+
     public function prePersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
@@ -33,6 +36,7 @@ class DataPersist
 
         if($entity instanceof Mphoto){
             $this->persistDate($entity);
+            $this->updateUserPhotosCache($entity);
         }
 
         if($entity instanceof Mdraft){
@@ -60,6 +64,7 @@ class DataPersist
 
         if($entity instanceof Mphoto){
             $this->updateDate($entity);
+            $this->updateUserPhotosCache($entity);
         }
 
         if($entity instanceof Mdraft){
@@ -68,9 +73,10 @@ class DataPersist
 
     }
     
-    public function __construct(CacheService $cacheService)
+    public function __construct(CacheService $cacheService, PhotoService $photoService)
     {
         $this->cacheService = $cacheService;
+        $this->photoService = $photoService;
     }
     /*
     public function setCacheService(CacheService $cacheService)
@@ -81,8 +87,21 @@ class DataPersist
     public function updateUserCache($entity)
     {
         $this->cacheService->setSingleUserByUsernameCache($entity->getUsername(), serialize($entity));
+        if($entity->getIsSynchronizedByCache() !== 1){
+            $entity->setIsSynchronizedByCache(1);
+        }
+    }
+    
+    public function updateUserPhotosCache($entity)
+    {
+        if($entity->getPhotoType() !== PhotoService::PROFILE_PHOTO_TYPE && $entity->getPhotoType() !== PhotoService::USER_PHOTO_TYPE){
+            return;
+        }
+        $photos = $this->photoService->findPhotosByUserId($entity->getUserId());
+        $this->cacheService->setSingleUserPhotosByUserIdCache($entity->getUserId(), serialize($photos));
     }        
 
+    
     public function persistDate($entity)
     {
         $entity->setUpdated($this->getUpdated());

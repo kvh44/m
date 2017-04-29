@@ -28,7 +28,7 @@ services:
             class: ApiBundle\EventListener\DataPersist
             #calls:
             #    - [setCacheService, ["@api_massage.CacheService"]]
-            arguments: ["@api_massage.CacheService"]
+            arguments: ["@api_massage.CacheService", "@api_massage.PhotoService"]
             tags:
                 - { name: doctrine.event_listener, event: prePersist }
 
