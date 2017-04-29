@@ -44,5 +44,10 @@ class PublicUserController extends FOSRestController
     {
         return $this->container->get('api_massage.CacheService')->removeSingleUserByUsernameCache($request->get('username'));
     }
+    
+    public function getSingleUserPhotosAction(Request $request)
+    {
+        return $this->container->get('api_massage.PhotoService')->findPhotosByUserIdCache($request->get('user_id'));
+    }
             
 }

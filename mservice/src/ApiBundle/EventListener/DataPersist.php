@@ -7,31 +7,36 @@ use ApiBundle\Entity\Mpassword;
 use ApiBundle\Entity\Mphoto;
 use ApiBundle\Entity\Mpost;
 use ApiBundle\Entity\Mdraft;
+use ApiBundle\Services\CacheService;
 
 class DataPersist
 {
+    protected $cacheService;
+     
+    
     public function prePersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
 
         if($entity instanceof Muser){
-            $this->persistData($entity);
+            $this->persistDate($entity);
+            $this->updateUserCache($entity);
         }
 
         if($entity instanceof Mpassword){
-            $this->persistData($entity);
+            $this->persistDate($entity);
         }
 
         if($entity instanceof Mpost){
-            $this->persistData($entity);
+            $this->persistDate($entity);
         }
 
         if($entity instanceof Mphoto){
-            $this->persistData($entity);
+            $this->persistDate($entity);
         }
 
         if($entity instanceof Mdraft){
-            $this->persistData($entity);
+            $this->persistDate($entity);
         }
 
     }
@@ -41,37 +46,51 @@ class DataPersist
         $entity = $args->getEntity();
 
         if($entity instanceof Muser){
-            $this->updateData($entity);
+            $this->updateDate($entity);
+            $this->updateUserCache($entity);
         }
 
         if($entity instanceof Mpassword){
-            $this->updateData($entity);
+            $this->updateDate($entity);
         }
 
         if($entity instanceof Mpost){
-            $this->updateData($entity);
+            $this->updateDate($entity);
         }
 
         if($entity instanceof Mphoto){
-            $this->updateData($entity);
+            $this->updateDate($entity);
         }
 
         if($entity instanceof Mdraft){
-            $this->updateData($entity);
+            $this->updateDate($entity);
         }
 
     }
+    
+    public function __construct(CacheService $cacheService)
+    {
+        $this->cacheService = $cacheService;
+    }
+    /*
+    public function setCacheService(CacheService $cacheService)
+    {
+        $this->cacheService = $cacheService;
+    }        
+    */
+    public function updateUserCache($entity)
+    {
+        $this->cacheService->setSingleUserByUsernameCache($entity->getUsername(), serialize($entity));
+    }        
 
-    public function persistData($entity)
+    public function persistDate($entity)
     {
         $entity->setUpdated($this->getUpdated());
-        if(!$entity->getCreated()){
-            $entity->setCreated($this->getCreated());
-        }
+        $entity->setCreated($this->getCreated());
         return $entity;
     }
 
-    public function updateData($entity)
+    public function updateDate($entity)
     {
         $entity->setUpdated($this->getUpdated());
         return $entity;

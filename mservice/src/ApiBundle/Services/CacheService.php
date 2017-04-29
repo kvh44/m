@@ -2,28 +2,11 @@
 namespace ApiBundle\Services;
 
 use ApiBundle\Services\UtileService;
-use Doctrine\Bundle\DoctrineBundle\Registry;
-use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\DependencyInjection\Container;
 
 
 class CacheService
 {
-    /**
-     * @var Registry
-     */
-    protected $doctrine;
-
-    /*
-     * @var em
-     */
-    protected $em;
-    
-    /**
-     * @var Translator
-     */
-    protected $translator;
-    
     /**
      *
      * @var UtileService
@@ -40,19 +23,21 @@ class CacheService
     
     
     protected $redisUserPhotos;
+    
+    
+    protected $userWithUsername;
 
 
+    protected $userPhotos;
 
-
-    public function __construct(Registry $doctrine, Translator $translator, Container $container, UtileService $utileService)
+    public function __construct(Container $container, UtileService $utileService, $userWithUsername, $userPhotos)
     {
-        $this->doctrine = $doctrine;
-        $this->em = $this->doctrine->getManager();
-        $this->translator = $translator;
         $this->container = $container;
         $this->utileService = $utileService;
         $this->redisUser = $this->container->get('snc_redis.user');
         $this->redisUserPhotos = $this->container->get('snc_redis.userPhotos');
+        $this->userWithUsername = $userWithUsername;
+        $this->userPhotos = $userPhotos;
     }
     
     public function checkRedisRunning($redis)
@@ -71,8 +56,7 @@ class CacheService
         if(!$this->checkRedisRunning($this->redisUser)){
             return;
         }
-        $user = $this->redisUser->hGet('userWithUsername',$username);
-        return $user;
+        return $this->redisUser->hGet($this->userWithUsername,$username);
     }  
     
     public function setSingleUserByUsernameCache($username, $user)
@@ -80,8 +64,7 @@ class CacheService
         if(!$this->checkRedisRunning($this->redisUser)){
             return;
         }
-        $this->redisUser->hSet('userWithUsername', $username, $user);
-        
+        $this->redisUser->hSet($this->userWithUsername, $username, $user);
     }  
     
     public function removeSingleUserByUsernameCache($username)
@@ -89,7 +72,7 @@ class CacheService
         if(!$this->checkRedisRunning($this->redisUser)){
             return;
         }
-        return $this->redisUser->hDel('userWithUsername',$username);
+        return $this->redisUser->hDel($this->userWithUsername,$username);
     } 
     /*
     public function refreshSingleUserByIdentifierCache($identifier)
@@ -102,8 +85,7 @@ class CacheService
         if(!$this->checkRedisRunning($this->redisUserPhotos)){
             return;
         }
-        $photos = $this->redisUserPhotos->hGet('userPhotos',$user_id);
-        return $photos;
+        return $this->redisUserPhotos->hGet($this->userPhotos,$user_id);
     }
     
     public function setSingleUserPhotosByUserIdCache($user_id, $photos)
@@ -111,7 +93,7 @@ class CacheService
         if(!$this->checkRedisRunning($this->redisUserPhotos)){
             return;
         }
-        $this->redisUserPhotos->hSet('userPhotos', $user_id, $photos);
+        $this->redisUserPhotos->hSet($this->userPhotos, $user_id, $photos);
     }
     
     public function removeSingleUserPhotosByUserIdCache($user_id)
@@ -119,7 +101,7 @@ class CacheService
         if(!$this->checkRedisRunning($this->redisUserPhotos)){
             return;
         }
-        return $this->redisUserPhotos->hDel('userPhotos',$user_id);
+        return $this->redisUserPhotos->hDel($this->userPhotos,$user_id);
     }
     /*
     public function refreshSingleUserPhotosByUserIdCache($user_id)

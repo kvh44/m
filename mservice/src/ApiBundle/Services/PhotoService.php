@@ -3,6 +3,7 @@ namespace ApiBundle\Services;
 
 use ApiBundle\Services\UtileService;
 use ApiBundle\Entity\Mphoto;
+use ApiBundle\Services\CacheService;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -60,6 +61,8 @@ class PhotoService {
     protected $user;
     
     protected $mPhoto;
+    
+    protected $cacheService;
 
     const PROFILE_PHOTO_TYPE = 1;
 
@@ -77,13 +80,13 @@ class PhotoService {
 
     const MIN_LENGTH_FILE = 8;
 
-    public function __construct(Registry $doctrine, UsersService $usersService, UtileService $utileService, $size_limit_photo, $upload_directory,
+    public function __construct(Registry $doctrine, UsersService $usersService, CacheService $cacheService, UtileService $utileService, $size_limit_photo, $upload_directory,
                                 $profile_photo_directory, $user_photo_directory, $post_photo_directory, $original_directory, $medium_directory, 
                                 $small_directory, $medium_photo_max_width, $small_photo_max_width, $icon_photo_max_width, $photo_default_mime_type,
                                 $photo_default_type)
     {
         $this->doctrine = $doctrine;
-        $this->em = $this->doctrine->getManager();
+        $this->em = $this->doctrine->getManager('default');
         $this->usersService = $usersService;
         $this->utileService = $utileService;
         $this->sizeLimitPhoto = (int)$size_limit_photo;
@@ -99,6 +102,7 @@ class PhotoService {
         $this->iconPhotoMaxWidth = (int)$icon_photo_max_width;
         $this->photoDefaultMimeType = $photo_default_mime_type;
         $this->photoDefaultType = $photo_default_type;
+        $this->cacheService = $cacheService;
     }
 
     public function uploadEntry(Request $request, $is_local)
@@ -343,10 +347,28 @@ class PhotoService {
     }
     
     
-    public function findPhotosByUserId($user_id, $type = null)
+    public function findPhotosByUserId($user_id)
     {
-        return $this->em->getRepository('ApiBundle:Mphoto')->loadPhotosByUserId($user_id, $type);
+        return $this->em->getRepository('ApiBundle:Mphoto')->loadPhotosByUserId($user_id);
     }        
 
-
+    public function findPhotosByUserIdCache($user_id)
+    {
+        $userPhotos = $this->cacheService->getSingleUserPhotosByUserIdCache($user_id);
+        $this->utileService->setResponseFrom(UtileService::FROM_CACHE);
+        
+        
+        if(!$userPhotos){
+            $userPhotos = $this->findPhotosByUserId($user_id);
+            $this->utileService->setResponseFrom(UtileService::FROM_SQL);
+            $this->cacheService->setSingleUserPhotosByUserIdCache($user_id, serialize($userPhotos));
+        } else {
+            $userPhotos = unserialize($userPhotos);
+        }
+        
+        $this->utileService->setResponseState(true);
+        $data = array('photos' => $userPhotos);
+        $this->utileService->setResponseData($data);
+        return $this->utileService->getResponse();
+    }        
 }

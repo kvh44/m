@@ -75,15 +75,15 @@ class UsersService
      * @var Mpassword
      */
     protected $mPassword;
-
+    
+    
     const MIN_LENGTH_PASSWORD = 8;
-
     const MIN_LENGTH_TOKEN = 32;
 
     public function __construct(Registry $doctrine, Session $session, Translator $translator, RecursiveValidator $validator, Container $container,UtileService $utileService, Mailer $mailer, CacheService $cacheService)
     {
         $this->doctrine = $doctrine;
-        $this->em = $this->doctrine->getManager();
+        $this->em = $this->doctrine->getManager('default');
         $this->session = $session;
         $this->translator = $translator;
         $this->validator = $validator;
@@ -642,7 +642,6 @@ class UsersService
              */
             $user = $this->findUserByInternalToken($request->headers->get('internal_token'));
             if(!$user){
-                $this->utileService->setResponseData(array());
                 $this->utileService->setResponseState(false);
                 $this->utileService->setResponseMessage('user.token.wrong');
                 return $this->utileService->response;
@@ -725,20 +724,18 @@ class UsersService
 
                 // set shop name
             }
-            
+
             $this->em->persist($user);
             $this->em->flush();
             
         } catch (\Exception $e) {
-            $this->utileService->setResponseData(array());
             $this->utileService->setResponseState(false);
             $this->utileService->setResponseMessage($e->getMessage());
-            return $this->utileService->response;
+            return $this->utileService->getResponse();
         }
-        $this->utileService->setResponseData(array());
         $this->utileService->setResponseState(true);
         $this->utileService->setResponseMessage('user.information.updated');
-        return $this->utileService->response;
+        return $this->utileService->getResponse();
     }        
     
     public function sendNewUserMail($internal_id, $internal_token)
@@ -871,9 +868,8 @@ class UsersService
              * user
              */
             $user = $this->cacheService->getSingleUserByUsernameCache($username);
-            $user = unserialize($user);
 
-            if($user === array() || !$user ){
+            if(!$user ){
                 $user = $this->findUserByUsername($username);
                 $this->utileService->setResponseFrom(UtileService::FROM_SQL);
 
@@ -884,20 +880,23 @@ class UsersService
                 }
 
                 $this->cacheService->setSingleUserByUsernameCache($username, serialize($user));
+            } else {
+                $user = unserialize($user);
             }
             
             /*
              * photos
              */
             $photos = $this->cacheService->getSingleUserPhotosByUserIdCache($user->getId());
-            $photos = unserialize($photos);
             
-            if(!$photos || $photos === array()){
+            if(!$photos){
                 $photos = $this->findPhotosByUserId($user->getId());
                 $this->utileService->setResponseFrom(UtileService::FROM_SQL);
                 
                 $this->cacheService->setSingleUserPhotosByUserIdCache($user->getId(), serialize($photos));
-            } 
+            } else {
+                $photos = unserialize($photos);
+            }
             
 
             $this->utileService->setResponseState(true);
