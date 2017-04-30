@@ -83,7 +83,7 @@ class UsersService
     public function __construct(Registry $doctrine, Session $session, Translator $translator, RecursiveValidator $validator, Container $container,UtileService $utileService, Mailer $mailer, CacheService $cacheService)
     {
         $this->doctrine = $doctrine;
-        $this->em = $this->doctrine->getManager('default');
+        $this->em = $this->doctrine->getManager();
         $this->session = $session;
         $this->translator = $translator;
         $this->validator = $validator;

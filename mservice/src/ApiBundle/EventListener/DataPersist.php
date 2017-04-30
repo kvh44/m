@@ -13,8 +13,6 @@ use ApiBundle\Services\PhotoService;
 class DataPersist
 {
     protected $cacheService;
-    
-    protected $photoService;
 
 
     public function prePersist(LifecycleEventArgs $args)
@@ -36,7 +34,6 @@ class DataPersist
 
         if($entity instanceof Mphoto){
             $this->persistDate($entity);
-            $this->updateUserPhotosCache($entity);
         }
 
         if($entity instanceof Mdraft){
@@ -44,6 +41,15 @@ class DataPersist
         }
 
     }
+    
+    public function postPersist(LifecycleEventArgs $args)
+    {
+        $entity = $args->getEntity();
+        
+        if($entity instanceof Mphoto){
+            $this->updateUserPhotosCache($entity);
+        }
+    }        
 
     public function preUpdate(LifecycleEventArgs $args)
     {
@@ -64,7 +70,6 @@ class DataPersist
 
         if($entity instanceof Mphoto){
             $this->updateDate($entity);
-            $this->updateUserPhotosCache($entity);
         }
 
         if($entity instanceof Mdraft){
@@ -73,10 +78,18 @@ class DataPersist
 
     }
     
-    public function __construct(CacheService $cacheService, PhotoService $photoService)
+    public function postUpdate(LifecycleEventArgs $args)
     {
-        $this->cacheService = $cacheService;
-        $this->photoService = $photoService;
+        $entity = $args->getEntity();
+        
+        if($entity instanceof Mphoto){
+            $this->updateUserPhotosCache($entity);
+        }
+    } 
+    
+    public function __construct(CacheService $cacheService)
+    {
+        $this->cacheService = $cacheService; 
     }
     /*
     public function setCacheService(CacheService $cacheService)
@@ -94,11 +107,11 @@ class DataPersist
     
     public function updateUserPhotosCache($entity)
     {
-        if($entity->getPhotoType() !== PhotoService::PROFILE_PHOTO_TYPE && $entity->getPhotoType() !== PhotoService::USER_PHOTO_TYPE){
+        if($entity->getPhotoType() != PhotoService::PROFILE_PHOTO_TYPE && $entity->getPhotoType() != PhotoService::USER_PHOTO_TYPE){
             return;
         }
-        $photos = $this->photoService->findPhotosByUserId($entity->getUserId());
-        $this->cacheService->setSingleUserPhotosByUserIdCache($entity->getUserId(), serialize($photos));
+        $photos = $this->cacheService->container->get('doctrine')->getManager()->getRepository('ApiBundle:Mphoto')->loadPhotosByUserId($entity->getUser()->getId());
+        $this->cacheService->setSingleUserPhotosByUserIdCache($entity->getUser()->getId(), serialize($photos));
     }        
 
     

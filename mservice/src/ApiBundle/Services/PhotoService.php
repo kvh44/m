@@ -86,7 +86,7 @@ class PhotoService {
                                 $photo_default_type)
     {
         $this->doctrine = $doctrine;
-        $this->em = $this->doctrine->getManager('default');
+        $this->em = $this->doctrine->getManager();
         $this->usersService = $usersService;
         $this->utileService = $utileService;
         $this->sizeLimitPhoto = (int)$size_limit_photo;

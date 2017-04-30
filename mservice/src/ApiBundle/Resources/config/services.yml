@@ -24,16 +24,30 @@ services:
             class: ApiBundle\Services\CacheService
             arguments: ["@service_container", "@api_massage.UtileService", "%cache.userWithUsername%", "%cache.userPhotos%"]
             
-    api_massage.dataCreateListener:
+    api_massage.dataPreCreateListener:
             class: ApiBundle\EventListener\DataPersist
             #calls:
             #    - [setCacheService, ["@api_massage.CacheService"]]
-            arguments: ["@api_massage.CacheService", "@api_massage.PhotoService"]
+            arguments: ["@api_massage.CacheService"]
             tags:
                 - { name: doctrine.event_listener, event: prePersist }
+                
+    api_massage.dataPostCreateListener:
+            class: ApiBundle\EventListener\DataPersist
+            #calls:
+            #    - [setCacheService, ["@api_massage.CacheService"]]
+            arguments: ["@api_massage.CacheService"]
+            tags:
+                - { name: doctrine.event_listener, event: postPersist }            
 
-    api_massage.dataUpdateListener:
+    api_massage.dataPreUpdateListener:
             class: ApiBundle\EventListener\DataPersist
             arguments: ["@api_massage.CacheService"]
             tags:
                 - { name: doctrine.event_listener, event: preUpdate }
+                
+    api_massage.dataPostUpdateListener:
+            class: ApiBundle\EventListener\DataPersist
+            arguments: ["@api_massage.CacheService"]
+            tags:
+                - { name: doctrine.event_listener, event: postUpdate }            

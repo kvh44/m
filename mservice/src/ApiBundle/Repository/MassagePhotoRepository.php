@@ -8,6 +8,7 @@ class MassagePhotoRepository extends EntityRepository {
     
     public function loadPhotosByUserId($user_id) {
         return $this->createQueryBuilder('p') 
+            ->select('p.id, p.photoType, p.photoOrigin, p.photoMedium, p.photoSmall, p.photoIcon, p.title, p.internalId, p.created')    
             ->where('p.userId = :user_id AND p.isDeleted IS NULL AND p.postId IS NULL')
             ->setParameter('user_id', $user_id)
             ->getQuery()
@@ -18,6 +19,7 @@ class MassagePhotoRepository extends EntityRepository {
     
     public function loadPhotosByPostId($post_id) {
         return $this->createQueryBuilder('p') 
+            ->select('p.id, p.photoType, p.photoOrigin, p.photoMedium, p.photoSmall, p.photoIcon, p.title, p.internalId, p.created')        
             ->where('p.postId = :post_id AND p.isDeleted != :is_deleted AND p.postId IS NOT NULL')
             ->setParameter('post_id', $post_id)
             ->setParameter('is_deleted', 1)

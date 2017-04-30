@@ -16,7 +16,7 @@ class CacheService
     /**
      * @var Container
      */
-    protected $container;
+    public $container;
 
 
     protected $redisUser;
