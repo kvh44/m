@@ -127,3 +127,31 @@ snc_redis:
             client: default
             prefix: session
             ttl: 36000
+
+
+fos_elastica:
+    clients:
+        default: { host: localhost, port: 9200 }
+    indexes:
+        app: 
+            use_alias: true
+            index_name: app_massage_%kernel.environment%
+            types:
+                user:
+                    properties:
+                                username: ~
+                                email: ~
+                                telephone: ~
+                    persistence:
+                                driver: orm
+                                model: ApiBundle\Entity\Muser
+                                provider: 
+                                    debug_logging: false
+                                finder: ~   
+                                listener: 
+                                    insert: true
+                                    update: true
+                                    delete: true
+                                    logger: false
+                                elastica_to_model_transformer:
+                                    ignore_missing: true

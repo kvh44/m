@@ -57,5 +57,12 @@ class PublicUserController extends FOSRestController
     {
         return $this->container->get('api_massage.PhotoService')->findPhotosByUserIdCache($request->get('user_id'));
     }
+    
+    public function searchUserAction(Request $request)
+    {
+        $finder = $this->container->get('fos_elastica.finder.app.user');
+        $results = $finder->find($request->get('username'));
+        return $results;
+    }        
             
 }

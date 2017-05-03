@@ -70,4 +70,9 @@ public_api__remove_user_page_cache:
 public_api_user_photos:
     path: /public/user/photos
     defaults: { _controller: ApiBundle:PublicUser:getSingleUserPhotos, _format:json}
-    methods:  [POST]    
+    methods:  [POST] 
+    
+public_api_user_search:
+    path: /public/user/search
+    defaults: { _controller: ApiBundle:PublicUser:searchUser, _format:json}
+    methods:  [POST]     

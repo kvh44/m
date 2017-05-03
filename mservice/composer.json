@@ -33,7 +33,8 @@
         "jms/serializer-bundle": "^1.2",
         "nelmio/cors-bundle": "^1.5",
         "predis/predis": "^1.0",
-        "snc/redis-bundle": "2.x-dev"
+        "snc/redis-bundle": "2.x-dev",
+        "friendsofsymfony/elastica-bundle": "^4.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
