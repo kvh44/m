@@ -31,7 +31,8 @@ parameters:
     photo_default_type: ".png"
     cache.userWithUsername: "userWithUsername"
     cache.userPhotos: "userPhotos"
-
+    search.user.numberResults: 15
+    search.post.numberResults: 15
 
 
 framework:
@@ -123,6 +124,11 @@ snc_redis:
             alias: userPhotos
             dsn: redis://localhost/3
             logging: true
+        userPhotos:
+            type: predis
+            alias: postPhotos
+            dsn: redis://localhost/4
+            logging: true
     session:
             client: default
             prefix: session
@@ -133,25 +139,133 @@ fos_elastica:
     clients:
         default: { host: localhost, port: 9200 }
     indexes:
-        app: 
+        app:
+            client: default
             use_alias: true
             index_name: app_massage_%kernel.environment%
             types:
                 user:
                     mappings:
                                 id:
-                                    type: integer
+                                    type: keyword
                                     index: not_analyzed
                                 username: 
-                                    type: string
+                                    type: keyword
                                     index: not_analyzed
                                 email: 
-                                    type: string
+                                    type: keyword
                                     index: not_analyzed
                                 telephone: 
+                                    type: keyword
+                                    index: not_analyzed
+                                nickname:
                                     type: string
+                                    boost: 5
+                                wechat:
+                                    type: string
+                                    boost: 5
+                                facebook:
+                                    type: string
+                                    boost: 1
+                                instagram:
+                                    type: string
+                                    boost: 1
+                                website:
+                                    type: string
+                                    boost: 1
+                                timezone:
+                                    type: keyword
+                                    index: not_analyzed
+                                country:
+                                    type: string
+                                city:
+                                    type: string
+                                postNumber:
+                                    type: keyword
+                                    index: not_analyzed
+                                countryId:
+                                    type: keyword
+                                    index: not_analyzed
+                                locationId:
+                                    type: keyword
+                                    index: not_analyzed
+                                skinColor:
+                                    type: keyword
+                                    index: not_analyzed
+                                birthday:
+                                    type: date
+                                    format: "yyyy-MM-dd"
+                                    index: not_analyzed
+                                shopAddress:
+                                    type: text
+                                    boost: 10
+                                description:
+                                    type: text
+                                    boost: 5
+                                translatedDescription:
+                                    type: text
+                                    boost: 5
+                                isActive:
+                                    type: keyword
+                                    index: not_analyzed
+                                isDeleted:
+                                    type: keyword
+                                    index: not_analyzed
+                                isPremium:
+                                    type: keyword
+                                    index: not_analyzed
+                                isSingle:
+                                    type: keyword
+                                    index: not_analyzed
+                                isShop:
+                                    type: keyword
+                                    index: not_analyzed
+                                isZh:
+                                    type: keyword
+                                    index: not_analyzed
+                                isEn:
+                                    type: keyword
+                                    index: not_analyzed
+                                isFr:
+                                    type: keyword
+                                    index: not_analyzed
+                                isTest:
+                                    type: keyword
+                                    index: not_analyzed
+                                isFromOtherWeb:
+                                    type: keyword
+                                    index: not_analyzed
+                                otherWeb:
+                                    type: keyword
+                                    index: not_analyzed
+                                slug:
+                                    type: keyword
+                                    index: not_analyzed
+                                internalId:
+                                    type: keyword
+                                    index: not_analyzed
+                                topTime:
+                                    type: date
+                                    format: date_hour_minute_second
+                                    index: not_analyzed
+                                lastSynchronizedFromOtherWebTime:
+                                    type: date
+                                    format: date_hour_minute_second
+                                    index: not_analyzed
+                                paymentExpiredTime:
+                                    type: date
+                                    format: date_hour_minute_second
+                                    index: not_analyzed
+                                created:
+                                    type: date
+                                    format: date_hour_minute_second
+                                    index: not_analyzed
+                                updated:
+                                    type: date
+                                    format: date_hour_minute_second
                                     index: not_analyzed
                     persistence:
+                                identifier: internalId
                                 driver: orm
                                 model: ApiBundle\Entity\Muser
                                 provider: 
