@@ -650,75 +650,85 @@ class UsersService
             /**
              * timezone, country, location
              */
-            if(strlen($request->get('timezone')) > 0){
+            if($request->get('timezone') !== NULL){
                 $user->setTimezone($request->get('timezone'));
             }
-            if(strlen($request->get('country')) > 0){
+            if($request->get('country') !== NULL){
                 $user->setCountry($request->get('country'));
             }
-            if(strlen($request->get('city')) > 0){
+            if($request->get('city') !== NULL){
                 $user->setCity($request->get('city'));
             }
-            if(strlen($request->get('post_number')) > 0){
-                $user->setPostNumber($request->get('post_number'));
+            if($request->get('post_number') !== NULL && $request->get('post_number') !== ""){
+                $user->setPostNumber((int)$request->get('post_number'));
+            } else {
+                $user->setPostNumber(NULL);
             }
-            if(strlen($request->get('country_id')) > 0){
+            if($request->get('country_id') !== NULL && $request->get('country_id') !== ""){
                 $user->setCountryId((int)$request->get('country_id'));
+            } else {
+                $user->setCountryId(NULL);
             }
-            if(strlen($request->get('location_id')) > 0){
+            if($request->get('location_id') !== NULL && $request->get('location_id') !== ""){
                 $user->setLocationId((int)$request->get('location_id'));
+            } else {
+                $user->setLocationId(NULL);
             }
             /*
              * end of location
              */
-            if($request->get('website')){
+            if($request->get('website') !== NULL){
                 $user->setWebsite($request->get('website'));
             }
-            if($request->get('description')){
+            if($request->get('description') !== NULL){
                 $user->setDescription($request->get('description'));
             }
-            if($request->get('translated_description')){
+            if($request->get('translated_description') !== NULL){
                 $user->setTranslatedDescription($request->get('translated_description'));
             }
             if($request->get('is_single') == 1){
-                if($request->get('nickname')){
+                if($request->get('nickname') !== NULL){
                     $user->setNickname($request->get('nickname'));
                 }
-                if($request->get('wechat')){
+                if($request->get('wechat') !== NULL){
                     $user->setWechat($request->get('wechat'));
                 }
-                if($request->get('facebook')){
+                if($request->get('facebook') !== NULL){
                     $user->setFacebook($request->get('facebook'));
                 }
-                if($request->get('instagram')){
+                if($request->get('instagram') !== NULL){
                     $user->setInstagram($request->get('instagram'));
                 }
-                if($request->get('skin_color')){
+                if($request->get('skin_color') !== NULL){
                     $user->setSkinColor($request->get('skin_color'));
                 }
-                if($request->get('weight')){
+                if($request->get('weight') !== NULL){
                     $user->setWeight($request->get('weight'));
                 }
-                if($request->get('height')){
+                if($request->get('height') !== NULL){
                     $user->setHeight($request->get('height'));
                 }
-                if($request->get('birthday')){
+                if($request->get('birthday') !== NULL){
                     $user->setBirthday($request->get('birthday'));
                 }
-                if($request->get('hour_price')){
+                if($request->get('hour_price') !== NULL && $request->get('hour_price')!== ""){
                     $user->setHourPrice($request->get('hour_price'));
+                } else {
+                    $user->setHourPrice(NULL);
                 }
-                if($request->get('hour_price_unit')){
+                if($request->get('hour_price_unit') !== NULL){
                     $user->setHourPriceUnit($request->get('hour_price_unit'));
-                }
-                if($request->get('night_price')){
+                } 
+                if($request->get('night_price') !== NULL && $request->get('night_price')!== ""){
                     $user->setNightPrice($request->get('night_price'));
+                } else {
+                    $user->setNightPrice(NULL);
                 }
-                if($request->get('night_price_unit')){
+                if($request->get('night_price_unit') !== NULL){
                     $user->setNightPriceUnit($request->get('night_price_unit'));
                 }
             } else {
-                if($request->get('shop_address')){
+                if($request->get('shop_address') !== NULL){
                     $user->setShopAddress($request->get('shop_address'));
                 }
 

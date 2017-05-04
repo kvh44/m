@@ -50,4 +50,18 @@ services:
             class: ApiBundle\EventListener\DataPersist
             arguments: ["@api_massage.CacheService"]
             tags:
-                - { name: doctrine.event_listener, event: postUpdate }            
+                - { name: doctrine.event_listener, event: postUpdate }          
+                
+    api_massage.dataUserIndexlistener:
+        class: ApiBundle\EventListener\IndexListener
+        arguments:
+            - "@fos_elastica.object_persister.app.user"
+            - "@fos_elastica.indexable"
+            - { index: app, type: user, identifier: id }
+        tags:
+            - { name: doctrine.event_subscriber }
+            
+    api_massage.listener.customPropertyIndexlistener:
+        class: ApiBundle\EventListener\IndexCustomPropertyListener
+        tags:
+            - { name: kernel.event_subscriber }        

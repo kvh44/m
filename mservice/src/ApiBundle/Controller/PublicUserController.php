@@ -60,9 +60,24 @@ class PublicUserController extends FOSRestController
     
     public function searchUserAction(Request $request)
     {
+        /*
         $finder = $this->container->get('fos_elastica.finder.app.user');
-        $results = $finder->find($request->get('username'));
-        return $results;
+        $results = $finder->find('anya17');
+        */
+        
+        $mngr = $this->get('fos_elastica.index_manager');
+
+        $search = $mngr->getIndex('app')->createSearch();
+        $search->addType('user');
+        
+        $boolQuery = new \Elastica\Query\BoolQuery();
+        $categoryQuery = new \Elastica\Query\Terms();
+        $categoryQuery->setTerms('isActive', array("1",true));
+        $boolQuery->addMust($categoryQuery);
+        
+        $results = $search->search($boolQuery);
+
+        return $results->getResults();
     }        
             
 }

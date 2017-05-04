@@ -145,6 +145,13 @@ fos_elastica:
             index_name: app_massage_%kernel.environment%
             types:
                 user:
+                    properties:
+                                token:
+                                    property_path: false
+                                internalToken:
+                                    property_path: false
+                                externalToken:    
+                                    property_path: false
                     mappings:
                                 id:
                                     type: keyword
@@ -178,8 +185,10 @@ fos_elastica:
                                     index: not_analyzed
                                 country:
                                     type: string
+                                    boost: 1
                                 city:
                                     type: string
+                                    boost: 1
                                 postNumber:
                                     type: keyword
                                     index: not_analyzed
@@ -265,7 +274,7 @@ fos_elastica:
                                     format: date_hour_minute_second
                                     index: not_analyzed
                     persistence:
-                                identifier: internalId
+                                #identifier: internalId
                                 driver: orm
                                 model: ApiBundle\Entity\Muser
                                 provider: 
@@ -277,4 +286,5 @@ fos_elastica:
                                     delete: false
                                     logger: false
                                 elastica_to_model_transformer:
+                                    #hydrate: false
                                     ignore_missing: true
