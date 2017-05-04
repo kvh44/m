@@ -10,10 +10,20 @@ use ApiBundle\Entity\Mdraft;
 use ApiBundle\Services\CacheService;
 use ApiBundle\Services\PhotoService;
 
-class DataPersist
+use FOS\ElasticaBundle\Doctrine\Listener;
+use FOS\ElasticaBundle\Persister\ObjectPersisterInterface;
+use FOS\ElasticaBundle\Provider\IndexableInterface;
+//use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+
+class DataPersist extends Listener
 {
     protected $cacheService;
+    
+    protected $propertyAccessor;
 
+    private $indexable;
+    private $config;
 
     public function prePersist(LifecycleEventArgs $args)
     {
@@ -87,9 +97,15 @@ class DataPersist
         }
     } 
     
-    public function __construct(CacheService $cacheService)
+    public function __construct(CacheService $cacheService, ObjectPersisterInterface $postPersister,
+        IndexableInterface $indexable,
+        array $config)
     {
         $this->cacheService = $cacheService; 
+        $this->objectPersister = $postPersister;
+        $this->indexable = $indexable;
+        $this->config = $config;
+        $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
     }
     /*
     public function setCacheService(CacheService $cacheService)
@@ -138,5 +154,19 @@ class DataPersist
     public function getUpdated()
     {
         return new \DateTime('now');
+    }
+    
+    public function getSubscribedEvents()
+    {
+        return ['postPersist', 'postUpdate'];
+    }
+    
+    private function isObjectIndexable($object)
+    {
+        return $this->indexable->isObjectIndexable(
+            $this->config['index'],
+            $this->config['type'],
+            $object
+        );
     }
 }
