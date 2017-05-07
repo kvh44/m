@@ -3,6 +3,7 @@ namespace ApiBundle\Services;
 
 use ApiBundle\Services\UtileService;
 use Symfony\Component\DependencyInjection\Container;
+use FOS\ElasticaBundle\Transformer\ElasticaToModelTransformerInterface;
 
 class SearchService {
     /**
@@ -17,12 +18,14 @@ class SearchService {
     
     protected $indexManager;
 
-
-    public function __construct(Container $container, UtileService $utileService, $indexManager)
+    protected $transformer;
+    
+    public function __construct(Container $container, UtileService $utileService, $indexManager) //, ElasticaToModelTransformerInterface $transformer)
     {
         $this->container = $container;
         $this->utileService = $utileService;
         $this->indexManager = $indexManager;
+        //$this->transformer = $transformer;
     }
     
     public function searchManager($offset, $length, $country_id, $location_id, $color,
@@ -127,8 +130,8 @@ class SearchService {
         }
          
         
-        $results = $search->search($boolQuery);
-        return $results->getResults($offset, $length);
+        return $results = $search->search($boolQuery)->getResults($offset, $length);
+        //return $this->transformer->hybridTransform($results);
     }        
 }
 
