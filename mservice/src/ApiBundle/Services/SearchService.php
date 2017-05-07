@@ -25,7 +25,15 @@ class SearchService {
         $this->indexManager = $indexManager;
     }
     
-    public function searchUserByIndex($offset = 0, $length = 15, $country_id = null, $location_id = null, $color = null, $lang = null, $is_single = null, $age_period = array(), $word = null)
+    public function searchManager($offset, $length, $country_id, $location_id, $color,
+                $lang, $is_single, $age_period, $word)
+    {
+        return $this->searchUserByIndex($offset, $length, $country_id, $location_id, $color,
+                $lang, $is_single, $age_period, $word);
+    }        
+
+    public function searchUserByIndex($offset = 0, $length = 15, $country_id = null, $location_id = null, 
+            $color = null, $lang = null, $is_single = null, $age_period = array(), $word = null)
     {
         $search = $this->container->get($this->indexManager)->getIndex('app')->createSearch();
         $search->addType('user');
@@ -120,7 +128,7 @@ class SearchService {
          
         
         $results = $search->search($boolQuery);
-        return $results->getResults();
+        return $results->getResults($offset, $length);
     }        
 }
 
