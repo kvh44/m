@@ -33,6 +33,7 @@ parameters:
     cache.userPhotos: "userPhotos"
     search.user.numberResults: 15
     search.post.numberResults: 15
+    fos_elastica.index_manager: "fos_elastica.index_manager"
 
 
 framework:
@@ -146,6 +147,9 @@ fos_elastica:
             types:
                 user:
                     properties:
+                                birthday:
+                                    type: date
+                                    format: "yyyy-MM-dd"
                                 token:
                                     property_path: false
                                 internalToken:

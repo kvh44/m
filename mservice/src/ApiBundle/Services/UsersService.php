@@ -677,6 +677,15 @@ class UsersService
             /*
              * end of location
              */
+            if ($request->get('is_zh')) {
+                $user->setIsZh(1);
+            }
+            if ($request->get('is_fr')) {
+                $user->setIsFr(1);
+            }
+            if ($request->get('is_en')) {
+                $user->setIsEn(1);
+            }
             if($request->get('website') !== NULL){
                 $user->setWebsite($request->get('website'));
             }
@@ -709,7 +718,10 @@ class UsersService
                     $user->setHeight($request->get('height'));
                 }
                 if($request->get('birthday') !== NULL){
-                    $user->setBirthday($request->get('birthday'));
+                    $time = strtotime($request->get('birthday'));
+                    $time = date('Y-m-d',$time);
+                    $time = new \DateTime($time);
+                    $user->setBirthday($time);
                 }
                 if($request->get('hour_price') !== NULL && $request->get('hour_price')!== ""){
                     $user->setHourPrice($request->get('hour_price'));

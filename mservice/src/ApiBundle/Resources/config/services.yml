@@ -23,6 +23,11 @@ services:
     api_massage.CacheService:
             class: ApiBundle\Services\CacheService
             arguments: ["@service_container", "@api_massage.UtileService", "%cache.userWithUsername%", "%cache.userPhotos%"]
+    
+    api_massage.SearchService:
+            class: ApiBundle\Services\SearchService
+            arguments: ["@service_container", "@api_massage.UtileService", "%fos_elastica.index_manager%"]
+            
             
     api_massage.dataPreCreateListener:
             class: ApiBundle\EventListener\DataPersist

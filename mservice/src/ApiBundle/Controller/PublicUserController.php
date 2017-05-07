@@ -64,20 +64,15 @@ class PublicUserController extends FOSRestController
         $finder = $this->container->get('fos_elastica.finder.app.user');
         $results = $finder->find('anya17');
         */
-        
-        $mngr = $this->get('fos_elastica.index_manager');
-
-        $search = $mngr->getIndex('app')->createSearch();
-        $search->addType('user');
-        
-        $boolQuery = new \Elastica\Query\BoolQuery();
-        $categoryQuery = new \Elastica\Query\Terms();
-        $categoryQuery->setTerms('isActive', array("1",true));
-        $boolQuery->addMust($categoryQuery);
-        
-        $results = $search->search($boolQuery);
-
-        return $results->getResults();
+        $country_id = $request->get('country_id');
+        $location_id = $request->get('location_id');
+        $color = $request->get('color');
+        $lang = $request->get('lang');
+        $is_single = $request->get('is_single');
+        $age_period = $request->get('age_period');
+        $word = $request->get('word');
+        return $this->container->get('api_massage.SearchService')->searchUserByIndex(0, 15, $country_id, $location_id, $color,
+                $lang, $is_single, $age_period, $word);
     }        
             
 }

@@ -25,6 +25,18 @@ class UtileService {
     const FROM_CACHE = 'cache';
     const FROM_SEARCH = 'search';
     
+    const CONST_NULL = NULL;
+    const BOOL_TRUE = true;
+    const TINY_INT_TRUE = 1;
+    const TINY_INT_TRUE_STRING = '1';
+    const BOOL_FALSE = false;
+    const TINY_INT_FALSE = 0;
+    const TINY_INT_FALSE_STRING = '0';
+    
+    const LANG_ZH = 'zh';
+    const LANG_FR = 'fr';
+    const LANG_EN = 'en';
+    
     public $response= array('data' => array(), 'state' => true, 'message' => null, 'path' => null, 'from' => null,'code' => 0);
     
     public $errors = array();
