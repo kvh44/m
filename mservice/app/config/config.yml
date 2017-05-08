@@ -29,8 +29,17 @@ parameters:
     icon_photo_max_width: 50
     photo_default_mime_type: "image/png"
     photo_default_type: ".png"
+    cache.dsn.default: "redis://localhost"
+    cache.dsn.user: "redis://localhost/1"
+    cache.dsn.post: "redis://localhost/2"
+    cache.dsn.userPhotos: "redis://localhost/3"
+    cache.dsn.postPhotos: "redis://localhost/4"
+    cache.dsn.profilePhotos: "redis://localhost/5"
     cache.userWithUsername: "userWithUsername"
     cache.userPhotos: "userPhotos"
+    cache.profilePhotos: "profilePhotos"
+    search.host: "localhost"
+    search.port: 9200
     search.user.numberResults: 15
     search.post.numberResults: 15
     fos_elastica.index_manager: "fos_elastica.index_manager"
@@ -108,28 +117,33 @@ snc_redis:
         default:
             type: predis
             alias: default
-            dsn: redis://localhost
+            dsn: %cache.dsn.default%
             logging: %kernel.debug%
         user:
             type: predis
             alias: user
-            dsn: redis://localhost/1
+            dsn: %cache.dsn.user%
             logging: true
         post:
             type: predis
             alias: post
-            dsn: redis://localhost/2
+            dsn: %cache.dsn.post%
             logging: true
         userPhotos:
             type: predis
             alias: userPhotos
-            dsn: redis://localhost/3
+            dsn: %cache.dsn.userPhotos%
             logging: true
-        userPhotos:
+        postPhotos:
             type: predis
             alias: postPhotos
-            dsn: redis://localhost/4
+            dsn: %cache.dsn.postPhotos%
             logging: true
+        profilePhotos:
+            type: predis
+            alias: profilePhotos
+            dsn: %cache.dsn.profilePhotos%
+            logging: true     
     session:
             client: default
             prefix: session
@@ -138,7 +152,7 @@ snc_redis:
 
 fos_elastica:
     clients:
-        default: { host: localhost, port: 9200 }
+        default: { host: %search.host%, port: %search.port% }
     indexes:
         app:
             client: default
@@ -162,13 +176,13 @@ fos_elastica:
                                     index: not_analyzed
                                 username: 
                                     type: keyword
-                                    index: not_analyzed
+                                    boost: 5
                                 email: 
                                     type: keyword
-                                    index: not_analyzed
+                                    boost: 1
                                 telephone: 
                                     type: keyword
-                                    index: not_analyzed
+                                    boost: 1
                                 nickname:
                                     type: string
                                     boost: 5
@@ -177,13 +191,13 @@ fos_elastica:
                                     boost: 5
                                 facebook:
                                     type: string
-                                    boost: 1
+                                    index: not_analyzed
                                 instagram:
                                     type: string
-                                    boost: 1
+                                    index: not_analyzed
                                 website:
                                     type: string
-                                    boost: 1
+                                    index: not_analyzed
                                 timezone:
                                     type: keyword
                                     index: not_analyzed

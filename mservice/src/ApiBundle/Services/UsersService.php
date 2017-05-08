@@ -343,9 +343,14 @@ class UsersService
         return $this->em->getRepository('ApiBundle:Muser')->loadUserByInternalToken($internal_token);
     }
     
-    public function findPhotosByUserId($user_id, $type = null)
+    public function findUserPhotosByUserId($user_id)
     {
-        return $this->em->getRepository('ApiBundle:Mphoto')->loadPhotosByUserId($user_id, $type);
+        return $this->em->getRepository('ApiBundle:Mphoto')->loadUserPhotosByUserId($user_id);
+    }
+    
+    public function findProfilePhotoByUserId($user_id)
+    {
+        return $this->em->getRepository('ApiBundle:Mphoto')->loadProfilePhotosByUserId($user_id);
     }
 
     private function refreshAlltokensForUser($internalId, $internalToken)
@@ -907,12 +912,12 @@ class UsersService
             }
             
             /*
-             * photos
+             * user photos
              */
             $photos = $this->cacheService->getSingleUserPhotosByUserIdCache($user->getId());
             
             if(!$photos){
-                $photos = $this->findPhotosByUserId($user->getId());
+                $photos = $this->findUserPhotosByUserId($user->getId());
                 $this->utileService->setResponseFrom(UtileService::FROM_SQL);
                 
                 $this->cacheService->setSingleUserPhotosByUserIdCache($user->getId(), serialize($photos));
@@ -920,9 +925,23 @@ class UsersService
                 $photos = unserialize($photos);
             }
             
+            /*
+             * profile photo
+             */
+            $profile_photo = $this->cacheService->getProfilePhotoByUserIdCache($user->getId());
+            
+            if(!$profile_photo){
+                $profile_photo = $this->findProfilePhotoByUserId($user->getId());
+                $this->utileService->setResponseFrom(UtileService::FROM_SQL);
+                
+                $this->cacheService->setProfilePhotoByUserIdCache($user->getId(), serialize($profile_photo));
+            } else {
+                $profile_photo = unserialize($profile_photo);
+            }
+            
 
             $this->utileService->setResponseState(true);
-            $data = array('user' => $user, 'photos' => $photos);
+            $data = array('user' => $user, 'user_photos' => $photos, 'profile_photo' => $profile_photo);
             $this->utileService->setResponseData($data);
             return $this->utileService->getResponse();
         } catch (\Exception $e) {

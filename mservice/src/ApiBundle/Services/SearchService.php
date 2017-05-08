@@ -31,8 +31,18 @@ class SearchService {
     public function searchManager($offset, $length, $country_id, $location_id, $color,
                 $lang, $is_single, $age_period, $word)
     {
-        return $this->searchUserByIndex($offset, $length, $country_id, $location_id, $color,
-                $lang, $is_single, $age_period, $word);
+        try{
+            $searchResult = $this->searchUserByIndex($offset, $length, $country_id, $location_id, $color,
+                    $lang, $is_single, $age_period, $word);
+            $this->utileService->setResponseFrom(UtileService::FROM_SEARCH);
+            $this->utileService->setResponseData($searchResult);
+            $this->utileService->setResponseState(true);
+            return $this->utileService->getResponse();
+        } catch(\Exception $e) {
+            $this->utileService->setResponseState(false);
+            $this->utileService->setResponseMessage($e->getMessage());
+            return $this->utileService->getResponse();
+        }
     }        
 
     public function searchUserByIndex($offset = 0, $length = 15, $country_id = null, $location_id = null, 

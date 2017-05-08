@@ -72,6 +72,11 @@ public_api_user_photos:
     defaults: { _controller: ApiBundle:PublicUser:getSingleUserPhotos, _format:json}
     methods:  [POST] 
     
+public_api_profile_photo:
+    path: /public/profile/photo
+    defaults: { _controller: ApiBundle:PublicUser:getProfilePhoto, _format:json}
+    methods:  [POST]     
+    
 public_api_user_search:
     path: /public/user/search
     defaults: { _controller: ApiBundle:PublicUser:searchUser, _format:json}

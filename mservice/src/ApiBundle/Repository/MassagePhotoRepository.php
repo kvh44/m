@@ -3,14 +3,30 @@
 namespace ApiBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use ApiBundle\Services\PhotoService;
 
 class MassagePhotoRepository extends EntityRepository {
     
-    public function loadPhotosByUserId($user_id) {
+    public function loadUserPhotosByUserId($user_id) {
         return $this->createQueryBuilder('p') 
             ->select('p.id, p.photoType, p.photoOrigin, p.photoMedium, p.photoSmall, p.photoIcon, p.title, p.internalId, p.created')    
-            ->where('p.userId = :user_id AND p.isDeleted IS NULL AND p.postId IS NULL')
+            ->where('p.userId = :user_id AND p.photoType = :type AND p.isDeleted IS NULL AND p.postId IS NULL')
             ->setParameter('user_id', $user_id)
+            ->setParameter('type', PhotoService::USER_PHOTO_TYPE)
+            ->getQuery()
+            ->getResult()
+        ;
+
+    }
+    
+    public function loadProfilePhotosByUserId($user_id) {
+        return $this->createQueryBuilder('p') 
+            ->select('p.id, p.photoType, p.photoOrigin, p.photoMedium, p.photoSmall, p.photoIcon, p.title, p.internalId, p.created')    
+            ->where('p.userId = :user_id AND p.photoType = :type AND p.isDeleted IS NULL AND p.postId IS NULL')
+            ->setParameter('user_id', $user_id)
+            ->setParameter('type', PhotoService::PROFILE_PHOTO_TYPE)
+            ->orderBy('p.id','DESC')  
+            ->setMaxResults(1)
             ->getQuery()
             ->getResult()
         ;
@@ -20,9 +36,8 @@ class MassagePhotoRepository extends EntityRepository {
     public function loadPhotosByPostId($post_id) {
         return $this->createQueryBuilder('p') 
             ->select('p.id, p.photoType, p.photoOrigin, p.photoMedium, p.photoSmall, p.photoIcon, p.title, p.internalId, p.created')        
-            ->where('p.postId = :post_id AND p.isDeleted != :is_deleted AND p.postId IS NOT NULL')
+            ->where('p.postId = :post_id AND p.isDeleted IS NULL AND p.postId IS NOT NULL')
             ->setParameter('post_id', $post_id)
-            ->setParameter('is_deleted', 1)
             ->getQuery()
             ->getResult()
         ;

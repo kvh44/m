@@ -232,8 +232,13 @@ class PhotoService {
             $this->mPhoto->setInternalId(UtileService::RandomString(self::MIN_LENGTH_FILE) . UtileService::getDateTimeMicroseconds());
             $this->em->persist($this->mPhoto);
             $this->em->flush();
-
-
+            
+            // update user updated time
+            $user = $this->usersService->findUserByInternalId($this->mPhoto->getUser()->getInternalId());
+            $user->setUpdated($user->getUpdated()->format('Y-m-d H:i:s'));
+            $this->em->persist($user);
+            $this->em->flush();
+            
             $this->utileService->setResponseData(
                     array(
                         'user_id' => $this->mPhoto->getUser()->getId(), 
@@ -347,19 +352,24 @@ class PhotoService {
     }
     
     
-    public function findPhotosByUserId($user_id)
+    public function findUserPhotosByUserId($user_id)
     {
-        return $this->em->getRepository('ApiBundle:Mphoto')->loadPhotosByUserId($user_id);
+        return $this->em->getRepository('ApiBundle:Mphoto')->loadUserPhotosByUserId($user_id);
+    }        
+    
+    public function findProfilePhotosByUserId($user_id)
+    {
+        return $this->em->getRepository('ApiBundle:Mphoto')->loadProfilePhotosByUserId($user_id);
     }        
 
-    public function findPhotosByUserIdCache($user_id)
+    public function findUserPhotosByUserIdCache($user_id)
     {
         $userPhotos = $this->cacheService->getSingleUserPhotosByUserIdCache($user_id);
         $this->utileService->setResponseFrom(UtileService::FROM_CACHE);
         
         
         if(!$userPhotos){
-            $userPhotos = $this->findPhotosByUserId($user_id);
+            $userPhotos = $this->findUserPhotosByUserId($user_id);
             $this->utileService->setResponseFrom(UtileService::FROM_SQL);
             $this->cacheService->setSingleUserPhotosByUserIdCache($user_id, serialize($userPhotos));
         } else {
@@ -367,8 +377,28 @@ class PhotoService {
         }
         
         $this->utileService->setResponseState(true);
-        $data = array('photos' => $userPhotos);
+        $data = array('user_photos' => $userPhotos);
         $this->utileService->setResponseData($data);
         return $this->utileService->getResponse();
-    }        
+    } 
+    
+    public function findProfilePhotosByUserIdCache($user_id)
+    {
+        $profilePhoto = $this->cacheService->getProfilePhotoByUserIdCache($user_id);
+        $this->utileService->setResponseFrom(UtileService::FROM_CACHE);
+        
+        
+        if(!$profilePhoto){
+            $profilePhoto = $this->findProfilePhotosByUserId($user_id);
+            $this->utileService->setResponseFrom(UtileService::FROM_SQL);
+            $this->cacheService->setProfilePhotoByUserIdCache($user_id, serialize($profilePhoto));
+        } else {
+            $profilePhoto = unserialize($profilePhoto);
+        }
+        
+        $this->utileService->setResponseState(true);
+        $data = array('profile_photo' => $profilePhoto);
+        $this->utileService->setResponseData($data);
+        return $this->utileService->getResponse();
+    } 
 }

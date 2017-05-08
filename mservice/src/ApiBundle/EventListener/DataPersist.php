@@ -49,6 +49,7 @@ class DataPersist
         
         if($entity instanceof Mphoto){
             $this->updateUserPhotosCache($entity);
+            $this->updateProfilePhotoCache($entity);
         }
     }        
 
@@ -85,6 +86,7 @@ class DataPersist
         
         if($entity instanceof Mphoto){
             $this->updateUserPhotosCache($entity);
+            $this->updateProfilePhotoCache($entity);
         }
     } 
     
@@ -110,11 +112,20 @@ class DataPersist
     
     public function updateUserPhotosCache($entity)
     {
-        if($entity->getPhotoType() != PhotoService::PROFILE_PHOTO_TYPE && $entity->getPhotoType() != PhotoService::USER_PHOTO_TYPE){
+        if($entity->getPhotoType() != PhotoService::USER_PHOTO_TYPE){
             return;
         }
-        $photos = $this->cacheService->container->get('doctrine')->getManager()->getRepository('ApiBundle:Mphoto')->loadPhotosByUserId($entity->getUser()->getId());
-        $this->cacheService->setSingleUserPhotosByUserIdCache($entity->getUser()->getId(), serialize($photos));
+        $user_photos = $this->cacheService->container->get('doctrine')->getManager()->getRepository('ApiBundle:Mphoto')->loadUserPhotosByUserId($entity->getUser()->getId());
+        $this->cacheService->setSingleUserPhotosByUserIdCache($entity->getUser()->getId(), serialize($user_photos));
+    }       
+    
+    public function updateProfilePhotoCache($entity)
+    {
+        if($entity->getPhotoType() != PhotoService::PROFILE_PHOTO_TYPE){
+            return;
+        }
+        $profile_photo = $this->cacheService->container->get('doctrine')->getManager()->getRepository('ApiBundle:Mphoto')->loadProfilePhotosByUserId($entity->getUser()->getId());
+        $this->cacheService->setProfilePhotoByUserIdCache($entity->getUser()->getId(), serialize($profile_photo));
     }        
 
     

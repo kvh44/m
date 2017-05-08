@@ -25,19 +25,28 @@ class CacheService
     protected $redisUserPhotos;
     
     
+    protected $redisProfilePhoto;
+
+
     protected $userWithUsername;
 
 
     protected $userPhotos;
+    
+    
+    protected $profilePhotos;
 
-    public function __construct(Container $container, UtileService $utileService, $userWithUsername, $userPhotos)
+    
+    public function __construct(Container $container, UtileService $utileService, $userWithUsername, $userPhotos, $profilePhotos)
     {
         $this->container = $container;
         $this->utileService = $utileService;
         $this->redisUser = $this->container->get('snc_redis.user');
         $this->redisUserPhotos = $this->container->get('snc_redis.userPhotos');
+        $this->redisProfilePhoto = $this->container->get('snc_redis.profilePhotos');
         $this->userWithUsername = $userWithUsername;
         $this->userPhotos = $userPhotos;
+        $this->profilePhotos = $profilePhotos;
     }
     
     public function checkRedisRunning($redis)
@@ -79,6 +88,38 @@ class CacheService
     } 
     /*
     public function refreshSingleUserByIdentifierCache($identifier)
+    {
+
+    }
+    */
+    public function getProfilePhotoByUserIdCache($user_id)
+    {
+        try{
+            return $this->redisProfilePhoto->hGet($this->profilePhotos,$user_id);
+        } catch(\Exception $e) {
+            return false;
+        }
+    }
+    
+    public function setProfilePhotoByUserIdCache($user_id, $photo)
+    {
+        try{
+            return $this->redisProfilePhoto->hSet($this->profilePhotos, $user_id, $photo);
+        } catch(\Exception $e) {
+            return false;
+        }
+    }
+    
+    public function removeProfilePhotoByUserIdCache($user_id)
+    {
+        try{
+            return $this->redisProfilePhoto->hDel($this->profilePhotos,$user_id);
+        } catch(\Exception $e) {
+            return false;
+        }
+    }
+    /*
+    public function refreshProfilePhotoByUserIdCache($user_id)
     {
 
     }

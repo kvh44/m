@@ -22,7 +22,7 @@ services:
 
     api_massage.CacheService:
             class: ApiBundle\Services\CacheService
-            arguments: ["@service_container", "@api_massage.UtileService", "%cache.userWithUsername%", "%cache.userPhotos%"]
+            arguments: ["@service_container", "@api_massage.UtileService", "%cache.userWithUsername%", "%cache.userPhotos%", "%cache.profilePhotos%"]
     
     api_massage.SearchService:
             class: ApiBundle\Services\SearchService
@@ -68,5 +68,6 @@ services:
             
     api_massage.listener.customPropertyIndexlistener:
         class: ApiBundle\EventListener\IndexCustomPropertyListener
+        arguments: ["@api_massage.PhotoService"]
         tags:
             - { name: kernel.event_subscriber }        
