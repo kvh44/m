@@ -72,7 +72,7 @@ class PublicUserController extends FOSRestController
         $results = $finder->find('anya17');
         */
         $offset = $request->get('offset');
-        $length = $request->get('length');
+        $limit = $request->get('limit');
         $country_id = $request->get('country_id');
         $location_id = $request->get('location_id');
         $color = $request->get('color');
@@ -81,7 +81,7 @@ class PublicUserController extends FOSRestController
         $age_period = $request->get('age_period');
         $word = $request->get('word');
         return $this->container->get('api_massage.SearchService')->searchManager(
-                $offset, $length, $country_id, $location_id, $color,
+                $offset, $limit, $country_id, $location_id, $color,
                 $lang, $is_single, $age_period, $word);
     }        
             

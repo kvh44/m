@@ -37,6 +37,9 @@ class UtileService {
     const LANG_FR = 'fr';
     const LANG_EN = 'en';
     
+    const DATA_STRUCTURE_PROFILE_PHOTO = 'profile_photo';
+    const DATA_STRUCTURE_USER_PHOTOS = 'user_photos';
+    
     public $response= array('data' => array(), 'state' => true, 'message' => null, 'path' => null, 'from' => null,'code' => 0);
     
     public $errors = array();

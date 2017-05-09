@@ -377,7 +377,7 @@ class PhotoService {
         }
         
         $this->utileService->setResponseState(true);
-        $data = array('user_photos' => $userPhotos);
+        $data = array(UtileService::DATA_STRUCTURE_USER_PHOTOS => $userPhotos);
         $this->utileService->setResponseData($data);
         return $this->utileService->getResponse();
     } 
@@ -397,7 +397,7 @@ class PhotoService {
         }
         
         $this->utileService->setResponseState(true);
-        $data = array('profile_photo' => $profilePhoto);
+        $data = array(UtileService::DATA_STRUCTURE_PROFILE_PHOTO => $profilePhoto);
         $this->utileService->setResponseData($data);
         return $this->utileService->getResponse();
     } 

@@ -28,11 +28,11 @@ class SearchService {
         //$this->transformer = $transformer;
     }
     
-    public function searchManager($offset, $length, $country_id, $location_id, $color,
+    public function searchManager($offset, $limit, $country_id, $location_id, $color,
                 $lang, $is_single, $age_period, $word)
     {
         try{
-            $searchResult = $this->searchUserByIndex($offset, $length, $country_id, $location_id, $color,
+            $searchResult = $this->searchUserByIndex($offset, $limit, $country_id, $location_id, $color,
                     $lang, $is_single, $age_period, $word);
             $this->utileService->setResponseFrom(UtileService::FROM_SEARCH);
             $this->utileService->setResponseData($searchResult);
@@ -45,7 +45,7 @@ class SearchService {
         }
     }        
 
-    public function searchUserByIndex($offset = 0, $length = 15, $country_id = null, $location_id = null, 
+    public function searchUserByIndex($offset = 0, $limit = 15, $country_id = null, $location_id = null, 
             $color = null, $lang = null, $is_single = null, $age_period = array(), $word = null)
     {
         $search = $this->container->get($this->indexManager)->getIndex('app')->createSearch();
@@ -140,7 +140,7 @@ class SearchService {
         }
          
         
-        return $results = $search->search($boolQuery)->getResults($offset, $length);
+        return $results = $search->search($boolQuery)->getResults($offset, $limit);
         //return $this->transformer->hybridTransform($results);
     }        
 }

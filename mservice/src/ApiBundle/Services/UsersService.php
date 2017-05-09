@@ -682,15 +682,24 @@ class UsersService
             /*
              * end of location
              */
-            if ($request->get('is_zh')) {
+            if ($request->get('is_zh') == 1) {
                 $user->setIsZh(1);
+            } else {
+                $user->setIsZh(0);
             }
-            if ($request->get('is_fr')) {
+            
+            if ($request->get('is_fr') == 1) {
                 $user->setIsFr(1);
+            } else {
+                $user->setIsFr(0);
             }
-            if ($request->get('is_en')) {
+            
+            if ($request->get('is_en') == 1) {
                 $user->setIsEn(1);
+            } else {
+                $user->setIsEn(0);
             }
+            
             if($request->get('website') !== NULL){
                 $user->setWebsite($request->get('website'));
             }

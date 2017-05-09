@@ -184,28 +184,28 @@ fos_elastica:
                                     type: keyword
                                     boost: 1
                                 nickname:
-                                    type: string
+                                    type: text
                                     boost: 5
                                 wechat:
-                                    type: string
+                                    type: text
                                     boost: 5
                                 facebook:
-                                    type: string
+                                    type: text
                                     index: not_analyzed
                                 instagram:
-                                    type: string
+                                    type: text
                                     index: not_analyzed
                                 website:
-                                    type: string
+                                    type: text
                                     index: not_analyzed
                                 timezone:
                                     type: keyword
                                     index: not_analyzed
                                 country:
-                                    type: string
+                                    type: text
                                     boost: 1
                                 city:
-                                    type: string
+                                    type: text
                                     boost: 1
                                 postNumber:
                                     type: keyword
@@ -221,7 +221,7 @@ fos_elastica:
                                     index: not_analyzed
                                 birthday:
                                     type: date
-                                    format: "yyyy-MM-dd"
+                                    #format: "yyyy-MM-dd"
                                     index: not_analyzed
                                 shopAddress:
                                     type: text
@@ -273,23 +273,23 @@ fos_elastica:
                                     index: not_analyzed
                                 topTime:
                                     type: date
-                                    format: date_hour_minute_second
+                                    #format: date_hour_minute_second
                                     index: not_analyzed
                                 lastSynchronizedFromOtherWebTime:
                                     type: date
-                                    format: date_hour_minute_second
+                                    #format: date_hour_minute_second
                                     index: not_analyzed
                                 paymentExpiredTime:
                                     type: date
-                                    format: date_hour_minute_second
+                                    #format: date_hour_minute_second
                                     index: not_analyzed
                                 created:
                                     type: date
-                                    format: date_hour_minute_second
+                                    #format: date_hour_minute_second
                                     index: not_analyzed
                                 updated:
                                     type: date
-                                    format: date_hour_minute_second
+                                    #format: date_hour_minute_second
                                     index: not_analyzed
                     persistence:
                                 #identifier: internalId

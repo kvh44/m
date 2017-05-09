@@ -70,4 +70,11 @@ services:
         class: ApiBundle\EventListener\IndexCustomPropertyListener
         arguments: ["@api_massage.PhotoService"]
         tags:
-            - { name: kernel.event_subscriber }        
+            - { name: kernel.event_subscriber }       
+            
+    api_massage.dataUserIndexProvider:
+        class: ApiBundle\Provider\UserProvider
+        arguments:
+            - "@fos_elastica.index.app.user"
+        tags:
+            - { name: fos_elastica.provider, index: app, type: user }        

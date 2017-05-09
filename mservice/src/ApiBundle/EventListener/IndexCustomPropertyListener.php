@@ -5,6 +5,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use FOS\ElasticaBundle\Event\TransformEvent;
 
 use ApiBundle\Services\PhotoService;
+use ApiBundle\Services\UtileService;
 
 class IndexCustomPropertyListener implements EventSubscriberInterface
 {
@@ -22,10 +23,10 @@ class IndexCustomPropertyListener implements EventSubscriberInterface
             $data = $document->getData();
             $profile_photo = $this->photoService->findProfilePhotosByUserIdCache($data['id']);
             if(array_key_exists('data', $profile_photo)){
-                if(array_key_exists('profile_photo', $profile_photo['data'])){
-                    $document->set('profile_photo', $profile_photo['data']['profile_photo']);
+                if(array_key_exists(UtileService::DATA_STRUCTURE_PROFILE_PHOTO, $profile_photo['data'])){
+                    $document->set(UtileService::DATA_STRUCTURE_PROFILE_PHOTO, $profile_photo['data'][UtileService::DATA_STRUCTURE_PROFILE_PHOTO]);
                 } else {
-                    $document->set('profile_photo', $profile_photo['data']);
+                    $document->set(UtileService::DATA_STRUCTURE_PROFILE_PHOTO, $profile_photo['data']);
                 }
             }
         }       
