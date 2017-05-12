@@ -960,4 +960,12 @@ class UsersService
         }
     }
     
+    public function getSingleShopPageByUsername($username)
+    {
+        $userData = $this->getSingleUserPageByUsername($username);
+        // add shop hours
+        // add shop price details
+        return $userData;
+    }        
+    
 }

@@ -37,6 +37,11 @@ private_api_user_update_info:
     defaults: { _controller: ApiBundle:PrivateUser:updateUserInfo, _format:json}
     methods:  [POST]  
     
+private_api_shop_update_info:
+    path: /private/shop/update/info
+    defaults: { _controller: ApiBundle:PrivateUser:updateShopInfo, _format:json}
+    methods:  [POST]      
+    
 private_api_new_user_send_mail:
     path: /private/user/new/send/mail
     defaults: { _controller: ApiBundle:PrivateUser:sendNewUserMail, _format:json}
@@ -61,6 +66,11 @@ public_api_user_page:
     path: /public/user/single/page
     defaults: { _controller: ApiBundle:PublicUser:getSingleUserPage, _format:json}
     methods:  [POST]
+    
+public_api_shop_page:
+    path: /public/shop/single/page
+    defaults: { _controller: ApiBundle:PublicUser:getSingleShopPage, _format:json}
+    methods:  [POST]    
 
 public_api__remove_user_page_cache:
     path: /public/user/single/page/remove/cache

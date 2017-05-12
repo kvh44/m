@@ -39,6 +39,12 @@ class PublicUserController extends FOSRestController
     {
         return $this->container->get('api_massage.UsersService')->getSingleUserPageByUsername($request->get('username'));
     }
+    
+    public function getSingleShopPageAction(Request $request)
+    {
+        $shop = $this->container->get('api_massage.UsersService')->getSingleShopPageByUsername($request->get('username'));
+        return $shop;
+    }
 
     public function removeSingleUserPageCacheAction(Request $request)
     {
@@ -80,8 +86,9 @@ class PublicUserController extends FOSRestController
         $is_single = $request->get('is_single');
         $age_period = $request->get('age_period');
         $word = $request->get('word');
+        $only_total = $request->get('only_total');
         return $this->container->get('api_massage.SearchService')->searchManager(
-                $offset, $limit, $country_id, $location_id, $color,
+                $only_total, $offset, $limit, $country_id, $location_id, $color,
                 $lang, $is_single, $age_period, $word);
     }        
             

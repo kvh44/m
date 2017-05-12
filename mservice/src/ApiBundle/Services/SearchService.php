@@ -32,11 +32,11 @@ class SearchService {
         //$this->transformer = $transformer;
     }
     
-    public function searchManager($offset, $limit, $country_id, $location_id, $color,
+    public function searchManager($only_total, $offset, $limit, $country_id, $location_id, $color,
                 $lang, $is_single, $age_period, $word)
     {
         try{
-            $searchResult = $this->searchUserByIndex($offset, $limit, $country_id, $location_id, $color,
+            $searchResult = $this->searchUserByIndex($only_total, $offset, $limit, $country_id, $location_id, $color,
                     $lang, $is_single, $age_period, $word);
             $this->utileService->setResponseFrom(UtileService::FROM_SEARCH);
             $this->utileService->setResponseData($searchResult);
@@ -49,7 +49,7 @@ class SearchService {
         }
     }        
 
-    public function searchUserByIndex($offset = 0, $limit = 15, $country_id = null, $location_id = null, 
+    public function searchUserByIndex($only_total = false, $offset = 0, $limit = 15, $country_id = null, $location_id = null, 
             $color = null, $lang = null, $is_single = null, $age_period = array(), $word = null)
     {
         $search = $this->container->get($this->indexManager)->getIndex('app')->createSearch();
@@ -60,25 +60,25 @@ class SearchService {
         $activeQuery->setTerms('isActive', array(UtileService::TINY_INT_TRUE, UtileService::TINY_INT_TRUE_STRING, UtileService::BOOL_TRUE));
         $boolQuery->addMust($activeQuery);
         
-        if($country_id){
+        if(strlen($country_id) > 0){
             $countryQuery = new \Elastica\Query\Terms();
             $countryQuery->setTerms('countryId', array($country_id));
             $boolQuery->addMust($countryQuery);
         }
         
-        if($location_id){
+        if(strlen($location_id) > 0){
             $locationQuery = new \Elastica\Query\Terms();
             $locationQuery->setTerms('locationId', array($location_id));
             $boolQuery->addMust($locationQuery);
         }
-        
-        if($color){
+
+        if(strlen($color) > 0){
             $colorQuery = new \Elastica\Query\Terms();
             $colorQuery->setTerms('skinColor', array($color));
             $boolQuery->addMust($colorQuery);
         }
-        
-        if($lang){
+       
+        if(strlen($lang) > 0){
             $langQuery = new \Elastica\Query\Terms();
             
             switch ($lang){
@@ -101,11 +101,19 @@ class SearchService {
             
         }
         
-        if($is_single){
-            $singleQuery = new \Elastica\Query\Terms();
-            $singleQuery->setTerms('isSingle', array(UtileService::BOOL_TRUE, UtileService::TINY_INT_TRUE, UtileService::TINY_INT_TRUE_STRING));
-            $boolQuery->addMust($singleQuery);
-        }
+        if(strlen($is_single) > 0) {
+            if($is_single == 1){
+                $singleQuery = new \Elastica\Query\Terms();
+                $singleQuery->setTerms('isSingle', array(UtileService::BOOL_TRUE, UtileService::TINY_INT_TRUE, UtileService::TINY_INT_TRUE_STRING));
+                $boolQuery->addMust($singleQuery);
+            }
+
+            if($is_single == 0){
+                $singleQuery = new \Elastica\Query\Terms();
+                $singleQuery->setTerms('isSingle', array(UtileService::BOOL_FALSE, UtileService::TINY_INT_FALSE, UtileService::TINY_INT_FALSE_STRING));
+                $boolQuery->addMust($singleQuery);
+            }
+        }       
         
         if(count($age_period) > 0){
             $thisYear = date('Y');
@@ -123,27 +131,17 @@ class SearchService {
                 $boolQuery->addFilter(new \Elastica\Filter\Range('birthday', array('gte' => $time)));
             }
         }
-        
-        if($word){
-            /*
-            $wordQuery = new \Elastica\Query\Match();
-            $wordQuery->setFieldQuery('nickname', $word);    
-            $wordQuery->setFieldQuery('wechat', $word);   
-            $wordQuery->setFieldQuery('facebook', $word);   
-            $wordQuery->setFieldQuery('instagram', $word);   
-            $wordQuery->setFieldQuery('website', $word);   
-            $wordQuery->setFieldQuery('country', $word);   
-            $wordQuery->setFieldQuery('city', $word);   
-            $wordQuery->setFieldQuery('shopAddress', $word);   
-            $wordQuery->setFieldQuery('description', $word);   
-            $wordQuery->setFieldQuery('translatedDescription', $word);   
+
+        if(strlen($word)){
+            $wordQuery = new \Elastica\Query\QueryString();
+            $wordQuery->setQuery($word); 
             $boolQuery->addShould($wordQuery);
-             *
-             */
-            $boolQuery = $word;
         }
-         
-        $this->resultSet = $search->search($boolQuery)->getResults();
+        
+        if($only_total){
+            return $search->search($boolQuery)->getTotalHits(); 
+        }
+        $this->resultSet = $search->search($boolQuery)->getResults($offset, $limit);
         return $this->getSourceArray();
         //return $this->transformer->hybridTransform($results);
     }

@@ -38,7 +38,12 @@ class PrivateUserController extends FOSRestController
     public function updateUserInfoAction(Request $request)
     {
         return $this->container->get('api_massage.UsersService')->updateUserInfo($request);
-    }        
+    }   
+    
+    public function updateShopInfoAction(Request $request)
+    {
+        return $this->container->get('api_massage.UsersService')->updateUserInfo($request);
+    } 
     
     public function sendNewUserMailAction(Request $request)
     {
