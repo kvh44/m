@@ -4,6 +4,7 @@ namespace ApiBundle\Services;
 use ApiBundle\Services\UtileService;
 use Symfony\Component\DependencyInjection\Container;
 use FOS\ElasticaBundle\Transformer\ElasticaToModelTransformerInterface;
+use Elastica\Result;
 
 class SearchService {
     /**
@@ -20,6 +21,9 @@ class SearchService {
 
     protected $transformer;
     
+    protected $resultSet;
+
+
     public function __construct(Container $container, UtileService $utileService, $indexManager) //, ElasticaToModelTransformerInterface $transformer)
     {
         $this->container = $container;
@@ -139,9 +143,16 @@ class SearchService {
             $boolQuery = $word;
         }
          
-        
-        return $results = $search->search($boolQuery)->getResults($offset, $limit);
+        $this->resultSet = $search->search($boolQuery)->getResults();
+        return $this->getSourceArray();
         //return $this->transformer->hybridTransform($results);
+    }
+    
+    public function getSourceArray()
+    {
+        return array_map(function (Result $result) {
+            return $result->getSource();
+        }, $this->resultSet);
     }        
 }
 
