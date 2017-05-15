@@ -401,4 +401,9 @@ class PhotoService {
         $this->utileService->setResponseData($data);
         return $this->utileService->getResponse();
     } 
+    
+    public function deletePhoto($internal_id, $internal_token)
+    {
+        
+    }        
 }

@@ -966,6 +966,11 @@ class UsersService
         // add shop hours
         // add shop price details
         return $userData;
-    }        
+    }     
     
+    // to do
+    public function topUser($internal_id, $internal_token)
+    {
+        
+    }        
 }

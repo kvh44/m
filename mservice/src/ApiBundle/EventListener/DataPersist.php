@@ -103,7 +103,7 @@ class DataPersist
     public function updateUserCache($entity)
     {
         $result = $this->cacheService->setSingleUserByUsernameCache($entity->getUsername(), serialize($entity));
-        if($result){
+        if($result !== false){
             $entity->setIsSynchronizedByCache(1);
         } else {
             $entity->setIsSynchronizedByCache(0);

@@ -19,6 +19,7 @@ class IndexCustomPropertyListener implements EventSubscriberInterface
     public function addCustomProperty(TransformEvent $event)
     {
         $document = $event->getDocument();
+        // user or shop
         if(array_key_exists('username', $document->getData())){
             $data = $document->getData();
             $profile_photo = $this->photoService->findProfilePhotosByUserIdCache($data['id']);
@@ -29,7 +30,9 @@ class IndexCustomPropertyListener implements EventSubscriberInterface
                     $document->set(UtileService::DATA_STRUCTURE_PROFILE_PHOTO, $profile_photo['data']);
                 }
             }
-        }       
+        }
+        
+        //post
     }
     
     public static function getSubscribedEvents()
