@@ -24,6 +24,11 @@ class PhotoService {
      */
     protected $em;
 
+    /**
+     * @var Translator
+     */
+    protected $translator;
+    
     protected $usersService;
 
     protected $utileService;
@@ -80,12 +85,13 @@ class PhotoService {
 
     const MIN_LENGTH_FILE = 8;
 
-    public function __construct(Registry $doctrine, UsersService $usersService, CacheService $cacheService, UtileService $utileService, $size_limit_photo, $upload_directory,
+    public function __construct(Registry $doctrine, Translator $translator, UsersService $usersService, CacheService $cacheService, UtileService $utileService, $size_limit_photo, $upload_directory,
                                 $profile_photo_directory, $user_photo_directory, $post_photo_directory, $original_directory, $medium_directory, 
                                 $small_directory, $medium_photo_max_width, $small_photo_max_width, $icon_photo_max_width, $photo_default_mime_type,
                                 $photo_default_type)
     {
         $this->doctrine = $doctrine;
+        $this->translator = $translator;
         $this->em = $this->doctrine->getManager();
         $this->usersService = $usersService;
         $this->utileService = $utileService;
@@ -111,7 +117,7 @@ class PhotoService {
         if(!$this->user){
             $this->utileService->setResponseMessage('user.token.wrong');
             $this->utileService->setResponseState(false);
-            return $this->utileService->response;
+            return $this->utileService->getResponse();
         }
         return $this->uploadFile($request, $is_local);
     }
@@ -142,7 +148,7 @@ class PhotoService {
                 if(array_key_exists('error',$result_upload)) {
                     $this->utileService->setResponseMessage($result_upload['error']);
                 }
-                return $this->utileService->response;
+                return $this->utileService->getResponse();
             }
 
 
@@ -210,7 +216,7 @@ class PhotoService {
         } catch(\Exception $err) {
             $this->utileService->setResponseState(false);
             $this->utileService->setResponseMessage($err->getMessage());
-            return $this->utileService->response;
+            return $this->utileService->getResponse();
         }
         
         try{
@@ -221,7 +227,7 @@ class PhotoService {
                 if(!$request->get('post_id')){
                     $this->utileService->setResponseMessage('post.id.invalid');
                     $this->utileService->setResponseState(false);
-                    return $this->utileService->response;
+                    return $this->utileService->getResponse();
                 }
                 $this->mPhoto->setPostId($request->get('post_id'));
             }
@@ -252,11 +258,11 @@ class PhotoService {
                     )
             );
             $this->utileService->setResponseState(true);
-            return $this->utileService->response;
+            return $this->utileService->getResponse();
         } catch(\Exception $err) {
             $this->utileService->setResponseState(false);
             $this->utileService->setResponseMessage($err->getMessage());
-            return $this->utileService->response;
+            return $this->utileService->getResponse();
         }
     }
 
@@ -265,7 +271,7 @@ class PhotoService {
        if(!file_exists($photo_path)){
            $this->utileService->setResponseMessage('photo.original.not_exist');
            $this->utileService->setResponseState(false);
-           return $this->utileService->response;
+           return $this->utileService->getResponse();
        }
 
         try {
@@ -290,7 +296,7 @@ class PhotoService {
             // Handle errors
             $this->utileService->setResponseState(false);
             $this->utileService->setResponseMessage($err->getMessage());
-            return $this->utileService->response;
+            return $this->utileService->getResponse();
         }
     }
 
@@ -314,7 +320,7 @@ class PhotoService {
             default:
                 $this->utileService->setResponseMessage('upload.directory.type.invalid');
                 $this->utileService->setResponseState(false);
-                return $this->utileService->response;
+                return $this->utileService->getResponse();
         }
 
         switch ($level){
@@ -333,7 +339,7 @@ class PhotoService {
             default:
                 $this->utileService->setResponseMessage('upload.directory.level.invalid');
                 $this->utileService->setResponseState(false);
-                return $this->utileService->response;
+                return $this->utileService->getResponse();
         }
 
         if($user_id){
@@ -360,6 +366,11 @@ class PhotoService {
     public function findProfilePhotosByUserId($user_id)
     {
         return $this->em->getRepository('ApiBundle:Mphoto')->loadProfilePhotosByUserId($user_id);
+    }     
+    
+    public function findPhotoByInternalId($internal_id)
+    {
+        return $this->em->getRepository('ApiBundle:Mphoto')->loadPhotoByInternalId($internal_id);
     }        
 
     public function findUserPhotosByUserIdCache($user_id)
@@ -402,8 +413,52 @@ class PhotoService {
         return $this->utileService->getResponse();
     } 
     
-    public function deletePhoto($internal_id, $internal_token)
+    public function deletePhoto($internal_id_photo, $internal_id, $internal_token)
     {
-        
+        try{
+            $user = $this->usersService->findUserByInternalId($internal_id);
+            if(!$user){
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage($this->translator->trans('user.internal_id.not.exist'));
+                return $this->utileService->getResponse();
+            }
+
+            if($user->getInternalToken() !== $internal_token){
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage($this->translator->trans('user.internal_token.wrong'));
+                return $this->utileService->getResponse();
+            }
+            
+            $photo = $this->findPhotoByInternalId($internal_id_photo);
+            if(!$photo){
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage($this->translator->trans('user.photo.not.exist'));
+                return $this->utileService->getResponse();
+            }
+            
+            if($photo->getUser()->getId() !== $user->getId()){
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage($this->translator->trans('user.photo.not.yours'));
+                return $this->utileService->getResponse();
+            }
+            
+            $photo->setIsDeleted(true);
+            $this->em->persist($photo);
+            
+            // update cache and search
+            $user->setUpdated($user->getUpdated()->format('Y-m-d H:i:s'));
+            $this->em->persist($user);
+            
+            $this->em->flush();
+            
+            $this->utileService->setResponseState(true);
+            $this->utileService->setResponseMessage($this->translator->trans('user.photo.deleted'));
+            return $this->utileService->getResponse();
+            
+        } catch (\Exception $e) {
+            $this->utileService->setResponseState(false);
+            $this->utileService->setResponseMessage($e->getMessage());
+            return $this->utileService->getResponse();
+        }
     }        
 }

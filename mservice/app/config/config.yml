@@ -13,7 +13,9 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    api_version : 0
     locale: zh
+    min_top_time: 1800
     service_mail: service@xxx.com
     cc_mail: cc@xxx.com
     upload_directory: "uploads/"

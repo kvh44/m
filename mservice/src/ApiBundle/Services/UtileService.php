@@ -16,11 +16,17 @@ class UtileService {
      */
     protected $translator;
     
-    public function __construct(Translator $translator)
+    protected $api_version;
+
+
+    public function __construct(Translator $translator, $api_version)
     {
         $this->translator = $translator;
-    }  
-     
+        $this->api_version = $api_version;
+    }
+    
+    const API_VERSION = 0.1;
+    
     const FROM_SQL = 'sql';
     const FROM_CACHE = 'cache';
     const FROM_SEARCH = 'search';
@@ -37,10 +43,11 @@ class UtileService {
     const LANG_FR = 'fr';
     const LANG_EN = 'en';
     
+    const DATA_STRUCTURE_USER = 'user';
     const DATA_STRUCTURE_PROFILE_PHOTO = 'profile_photo';
     const DATA_STRUCTURE_USER_PHOTOS = 'user_photos';
     
-    public $response= array('data' => array(), 'state' => true, 'message' => null, 'path' => null, 'from' => null,'code' => 0);
+    public $response= array('data' => array(), 'state' => true, 'message' => null, 'path' => null, 'from' => null,'code' => 0, 'version' => self::API_VERSION);
     
     public $errors = array();
     

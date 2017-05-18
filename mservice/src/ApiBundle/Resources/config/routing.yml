@@ -90,4 +90,14 @@ public_api_profile_photo:
 public_api_user_search:
     path: /public/user/search
     defaults: { _controller: ApiBundle:PublicUser:searchUser, _format:json}
-    methods:  [POST]     
+    methods:  [POST] 
+    
+private_api_topuser:
+    path: /private/user/top
+    defaults: { _controller: ApiBundle:PrivateUser:topUser, _format:json}
+    methods:  [POST]    
+    
+private_api_photo_delete:
+    path: /private/photo/delete
+    defaults: { _controller: ApiBundle:PrivateUser:deletePhoto, _format:json}
+    methods:  [POST]        

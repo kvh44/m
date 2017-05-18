@@ -69,6 +69,21 @@ class PrivateUserController extends FOSRestController
     {
         $is_local = $request->get('is_local') ;
         return $this->container->get('api_massage.PhotoService')->uploadEntry($request, $is_local);
+    } 
+    
+    public function topUserAction(Request $request)
+    {
+        $internal_id = $request->headers->get('internal_id');
+        $internal_token = $request->headers->get('internal_token');
+        return $this->container->get('api_massage.UsersService')->topUser($internal_id, $internal_token);
+    }
+    
+    public function deletePhotoAction(Request $request)
+    {
+        $internal_id_photo = $request->headers->get('internal_id_photo');
+        $internal_id = $request->headers->get('internal_id');
+        $internal_token = $request->headers->get('internal_token');
+        return $this->container->get('api_massage.PhotoService')->deletePhoto($internal_id_photo, $internal_id, $internal_token);
     }        
 
 }
