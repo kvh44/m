@@ -81,6 +81,12 @@ class CacheService
     public function removeSingleUserByUsernameCache($username)
     {
         try{
+            $user = $this->getSingleUserByUsernameCache($username);
+            if($user){
+                $user = unserialize($user);
+                $this->removeSingleUserPhotosByUserIdCache($user->getId());
+                $this->removeProfilePhotoByUserIdCache($user->getId());
+            }
             return $this->redisUser->hDel($this->userWithUsername,$username);
         } catch(\Exception $e) {
             return false;
