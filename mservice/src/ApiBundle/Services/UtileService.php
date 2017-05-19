@@ -46,6 +46,11 @@ class UtileService {
     const DATA_STRUCTURE_USER = 'user';
     const DATA_STRUCTURE_PROFILE_PHOTO = 'profile_photo';
     const DATA_STRUCTURE_USER_PHOTOS = 'user_photos';
+	
+	const DATA_STRUCTURE_POST = 'post';
+    const DATA_STRUCTURE_POST_PHOTOS = 'post_photos';
+	
+	const MIN_LENGTH_TOKEN = 32;
     
     public $response= array('data' => array(), 'state' => true, 'message' => null, 'path' => null, 'from' => null,'code' => 0, 'version' => self::API_VERSION);
     

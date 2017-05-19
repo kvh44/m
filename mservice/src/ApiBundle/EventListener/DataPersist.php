@@ -31,6 +31,7 @@ class DataPersist
 
         if($entity instanceof Mpost){
             $this->persistDate($entity);
+			$this->updatePostCache($entity);
         }
 
         if($entity instanceof Mphoto){
@@ -50,6 +51,7 @@ class DataPersist
         if($entity instanceof Mphoto){
             $this->updateUserPhotosCache($entity);
             $this->updateProfilePhotoCache($entity);
+			$this->updatePostPhotosCache($entity);
         }
     }        
 
@@ -68,6 +70,7 @@ class DataPersist
 
         if($entity instanceof Mpost){
             $this->updateDate($entity);
+			$this->updatePostCache($entity);
         }
 
         if($entity instanceof Mphoto){
@@ -87,6 +90,7 @@ class DataPersist
         if($entity instanceof Mphoto){
             $this->updateUserPhotosCache($entity);
             $this->updateProfilePhotoCache($entity);
+			$this->updatePostPhotosCache($entity);
         }
     } 
     
@@ -127,6 +131,25 @@ class DataPersist
         $profile_photo = $this->cacheService->container->get('doctrine')->getManager()->getRepository('ApiBundle:Mphoto')->loadProfilePhotosByUserId($entity->getUser()->getId());
         $this->cacheService->setProfilePhotoByUserIdCache($entity->getUser()->getId(), serialize($profile_photo));
     }        
+	
+    public function updatePostCache($entity)
+    {
+        $result = $this->cacheService->setSinglePostCache($entity->getId(), serialize($entity));
+        if($result !== false){
+            $entity->setIsSynchronizedByCache(1);
+        } else {
+            $entity->setIsSynchronizedByCache(0);
+        }
+    }
+	
+	public function updatePostPhotosCache($entity)
+    {
+        if($entity->getPhotoType() != PhotoService::POST_PHOTO_TYPE){
+            return;
+        }
+        $post_photos = $this->cacheService->container->get('doctrine')->getManager()->getRepository('ApiBundle:Mphoto')->loadPhotosByPostId($entity->getPostId());
+        $this->cacheService->setSinglePostPhotosByPostIdCache($entity->getPostId(), serialize($post_photos));
+    }  
 
     
     public function persistDate($entity)

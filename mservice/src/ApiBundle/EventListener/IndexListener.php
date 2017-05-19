@@ -38,7 +38,7 @@ class IndexListener extends Listener implements EventSubscriber
     {
         $entity = $eventArgs->getObject();
 
-        if ($entity instanceof Muser) {
+        if ($entity instanceof Muser || $entity instanceof Mpost) {
             if ($this->objectPersister->handlesObject($entity)) {
                 if ($this->isObjectIndexable($entity)) {
                     $this->scheduledForInsertion[] = $entity;
@@ -51,7 +51,7 @@ class IndexListener extends Listener implements EventSubscriber
     {
         $entity = $args->getObject();
 
-        if ($entity instanceof Muser) {
+        if ($entity instanceof Muser || $entity instanceof Mpost) {
             if ($this->objectPersister->handlesObject($entity)) {
                 if ($this->isObjectIndexable($entity)) {
                     $this->scheduledForUpdate[] = $entity;
@@ -64,7 +64,7 @@ class IndexListener extends Listener implements EventSubscriber
     {
         $entity = $args->getObject();
 
-        if ($entity instanceof Muser) {
+        if ($entity instanceof Muser || $entity instanceof Mpost) {
             if ($this->objectPersister->handlesObject($entity)) {
                 if ($identifierValue = $this->propertyAccessor->getValue($entity, $this->config['identifier'])) {
                     $this->scheduledForDeletion[] = $identifierValue;

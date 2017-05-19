@@ -40,6 +40,8 @@ parameters:
     cache.userWithUsername: "userWithUsername"
     cache.userPhotos: "userPhotos"
     cache.profilePhotos: "profilePhotos"
+    cache.post: "post"
+    cache.postPhotos: "postPhotos"
     search.host: "localhost"
     search.port: 9200
     search.user.numberResults: 15
@@ -161,7 +163,69 @@ fos_elastica:
             use_alias: true
             index_name: app_massage_%kernel.environment%
             types:
-                user:
+                post:
+                    mappings:
+                                id:
+                                    type: keyword
+                                    index: not_analyzed
+                                userId: 
+                                    type: keyword
+                                    index: not_analyzed
+                                internalId:
+                                    type: keyword
+                                    index: not_analyzed
+                                title: 
+                                    type: keyword
+                                    boost: 10
+                                description:  
+                                    type: keyword
+                                    boost: 10
+                                displayedHome:
+                                    type: keyword
+                                    index: not_analyzed
+                                viewNumber:
+                                    type: keyword
+                                    index: not_analyzed
+                                isFromOtherWeb:
+                                    type: keyword
+                                    index: not_analyzed
+                                otherWeb:
+                                    type: keyword
+                                    index: not_analyzed
+                                isDeleted:                                    
+                                    type: keyword
+                                    index: not_analyzed
+                                deletedByUserId:
+                                    type: keyword
+                                    index: not_analyzed
+                                slug:                                    
+                                    type: keyword
+                                    index: not_analyzed
+                                topTime:
+                                    type: date
+                                    index: not_analyzed 
+                                created:
+                                    type: date
+                                    index: not_analyzed
+                                updated:
+                                    type: date
+                                    index: not_analyzed    
+                    persistence:
+                                #identifier: internalId
+                                driver: orm
+                                model: ApiBundle\Entity\Mpost
+                                provider: 
+                                    debug_logging: false
+                                finder: ~   
+                                listener: 
+                                    insert: false
+                                    update: false
+                                    delete: false
+                                    logger: false
+                                elastica_to_model_transformer:
+                                    ignore_missing: true                
+                                                                                                            
+                user:               
                     properties:
                                 birthday:
                                     type: date

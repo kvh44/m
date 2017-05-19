@@ -154,17 +154,17 @@ class UsersService
                 $this->mUser->setInternalToken($this->prepareInternalToken());
                 $this->mUser->setExternalToken($this->prepareExternalToken());
                 $this->mUser->setInternalId($this->prepareInternalId());
-                if ($request->get('is_shop') === 1) {
+                if ($request->get('is_shop') == 1) {
                     $this->mUser->setIsShop(1);
                     $this->mUser->setIsSingle(0);
                 }
-                if ($request->get('is_zh')) {
+                if ($request->get('is_zh') == 1) {
                     $this->mUser->setIsZh(1);
                 }
-                if ($request->get('is_fr')) {
+                if ($request->get('is_fr') == 1) {
                     $this->mUser->setIsFr(1);
                 }
-                if ($request->get('is_en')) {
+                if ($request->get('is_en') == 1) {
                     $this->mUser->setIsEn(1);
                 }
                 if ($request->get('country_id')) {

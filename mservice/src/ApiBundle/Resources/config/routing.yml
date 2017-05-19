@@ -92,6 +92,11 @@ public_api_user_search:
     defaults: { _controller: ApiBundle:PublicUser:searchUser, _format:json}
     methods:  [POST] 
     
+public_api_post_search:
+    path: /public/post/search
+    defaults: { _controller: ApiBundle:PublicPost:searchPost, _format:json}
+    methods:  [POST]     
+    
 private_api_topuser:
     path: /private/user/top
     defaults: { _controller: ApiBundle:PrivateUser:topUser, _format:json}
@@ -101,3 +106,24 @@ private_api_photo_delete:
     path: /private/photo/delete
     defaults: { _controller: ApiBundle:PrivateUser:deletePhoto, _format:json}
     methods:  [POST]        
+    
+public_api_post_page:
+    path: /public/post/single/page
+    defaults: { _controller: ApiBundle:PublicPost:getSinglePostPage, _format:json}
+    methods:  [POST]    
+    
+public_api_create_post:
+    path: /private/post/create
+    defaults: { _controller: ApiBundle:PrivatePost:createPost, _format:json}
+    methods:  [POST]      
+    
+private_api_post_delete:
+    path: /private/post/delete
+    defaults: { _controller: ApiBundle:PrivatePost:deletePost, _format:json}
+    methods:  [POST]   
+
+private_api_post_update:
+    path: /private/post/update
+    defaults: { _controller: ApiBundle:PrivatePost:updatePost, _format:json}
+    methods:  [POST]     
+    

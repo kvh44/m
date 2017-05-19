@@ -26,6 +26,12 @@ class CacheService
     
     
     protected $redisProfilePhoto;
+	
+	
+	protected $redisPost;
+	
+	
+	protected $redisPostPhotos;
 
 
     protected $userWithUsername;
@@ -35,18 +41,28 @@ class CacheService
     
     
     protected $profilePhotos;
+	
+	
+	protected $post;
+	
+	
+	protected $postPhotos;
 
     
-    public function __construct(Container $container, UtileService $utileService, $userWithUsername, $userPhotos, $profilePhotos)
+    public function __construct(Container $container, UtileService $utileService, $userWithUsername, $userPhotos, $profilePhotos, $post, $postPhotos)
     {
         $this->container = $container;
         $this->utileService = $utileService;
         $this->redisUser = $this->container->get('snc_redis.user');
         $this->redisUserPhotos = $this->container->get('snc_redis.userPhotos');
         $this->redisProfilePhoto = $this->container->get('snc_redis.profilePhotos');
+		$this->redisPost = $this->container->get('snc_redis.post');
+		$this->redisPostPhotos = $this->container->get('snc_redis.postPhotos');
         $this->userWithUsername = $userWithUsername;
         $this->userPhotos = $userPhotos;
         $this->profilePhotos = $profilePhotos;
+		$this->post = $post;
+		$this->postPhotos = $postPhotos;
     }
     
     public function checkRedisRunning($redis)
@@ -92,12 +108,7 @@ class CacheService
             return false;
         }
     } 
-    /*
-    public function refreshSingleUserByIdentifierCache($identifier)
-    {
 
-    }
-    */
     public function getProfilePhotoByUserIdCache($user_id)
     {
         try{
@@ -124,12 +135,7 @@ class CacheService
             return false;
         }
     }
-    /*
-    public function refreshProfilePhotoByUserIdCache($user_id)
-    {
 
-    }
-    */
     public function getSingleUserPhotosByUserIdCache($user_id)
     {
         try{
@@ -156,10 +162,64 @@ class CacheService
             return false;
         }
     }
-    /*
-    public function refreshSingleUserPhotosByUserIdCache($user_id)
+	
+	public function getSinglePostCache($id)
     {
-
+        try{
+            return $this->redisPost->hGet($this->post,$id);
+        } catch(\Exception $e) {
+            return false;
+        }
+    }  
+    
+    public function setSinglePostCache($id, $post)
+    {
+        try{
+            return $this->redisPost->hSet($this->post, $id, $post);
+        } catch(\Exception $e) {
+            return false;
+        }
+    }  
+    
+    public function removeSinglePostCache($id)
+    {
+        try{
+            $post = $this->getSinglePostCache($id);
+            if($post){
+                $post = unserialize($post);
+                $this->removeSinglePostPhotosByPostIdCache($id);
+            }
+            return $this->redisPost->hDel($this->post,$id);
+        } catch(\Exception $e) {
+            return false;
+        }
+    } 
+	
+	public function getSinglePostPhotosByPostIdCache($post_id)
+    {
+        try{
+            return $this->redisPostPhotos->hGet($this->postPhotos,$post_id);
+        } catch(\Exception $e) {
+            return false;
+        }
     }
-    */
+    
+    public function setSinglePostPhotosByPostIdCache($post_id, $photos)
+    {
+        try{
+            return $this->redisPostPhotos->hSet($this->postPhotos, $post_id, $photos);
+        } catch(\Exception $e) {
+            return false;
+        }
+    }
+    
+    public function removeSinglePostPhotosByPostIdCache($post_id)
+    {
+        try{
+            return $this->redisPostPhotos->hDel($this->postPhotos,$post_id);
+        } catch(\Exception $e) {
+            return false;
+        }
+    }
+	
 }

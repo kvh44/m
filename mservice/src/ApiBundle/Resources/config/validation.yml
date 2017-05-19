@@ -39,3 +39,18 @@ ApiBundle\Entity\Muser:
                 pattern: '/^[0-9]{8,20}$/'
                 match:   true
                 message: user.telephone.format.invalid       
+
+ApiBundle\Entity\Mpost:
+    properties:
+        title:
+            - NotBlank:  
+                message: 'post.title.not_blank' 
+            - Length:
+                min: 3
+                minMessage: 'post.title.too_short' 
+        description:
+            - NotBlank:  
+                message: 'post.description.not_blank'   
+            - Length:
+                min: 10
+                minMessage: 'post.description.too_short'                   

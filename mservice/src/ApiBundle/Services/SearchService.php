@@ -31,8 +31,23 @@ class SearchService {
         $this->indexManager = $indexManager;
         //$this->transformer = $transformer;
     }
+	
+	public function searchPostManager($only_total, $offset, $limit, $country_id, $location_id, $word)
+    {
+        try{
+            $searchResult = $this->searchPostByIndex($only_total, $offset, $limit, $country_id, $location_id, $word);
+            $this->utileService->setResponseFrom(UtileService::FROM_SEARCH);
+            $this->utileService->setResponseData($searchResult);
+            $this->utileService->setResponseState(true);
+            return $this->utileService->getResponse();
+        } catch(\Exception $e) {
+            $this->utileService->setResponseState(false);
+            $this->utileService->setResponseMessage($e->getMessage());
+            return $this->utileService->getResponse();
+        }
+    }        
     
-    public function searchManager($only_total, $offset, $limit, $country_id, $location_id, $color,
+    public function searchUserManager($only_total, $offset, $limit, $country_id, $location_id, $color,
                 $lang, $is_single, $age_period, $word)
     {
         try{
@@ -48,6 +63,29 @@ class SearchService {
             return $this->utileService->getResponse();
         }
     }        
+	
+	public function searchPostByIndex($only_total = false, $offset = 0, $limit = 15, $country_id = null, $location_id = null, $word = null)
+	{
+		$search = $this->container->get($this->indexManager)->getIndex('app')->createSearch();
+        $search->addType('post');
+		
+		$boolQuery = new \Elastica\Query\BoolQuery();
+        $activeQuery = new \Elastica\Query\Terms();
+        $activeQuery->setTerms('isDeleted', array((UtileService::BOOL_FALSE, UtileService::TINY_INT_FALSE, UtileService::TINY_INT_FALSE_STRING));
+        $boolQuery->addMust($activeQuery);
+		
+		if(strlen($word) > 0){
+            $wordQuery = new \Elastica\Query\QueryString();
+            $wordQuery->setQuery($word); 
+            $boolQuery->addShould($wordQuery);
+        }
+		
+		if($only_total){
+            return $search->search($boolQuery)->getTotalHits(); 
+        }
+        $this->resultSet = $search->search($boolQuery)->getResults($offset, $limit);
+        return $this->getSourceArray();
+	}
 
     public function searchUserByIndex($only_total = false, $offset = 0, $limit = 15, $country_id = null, $location_id = null, 
             $color = null, $lang = null, $is_single = null, $age_period = array(), $word = null)
@@ -132,7 +170,7 @@ class SearchService {
             }
         }
 
-        if(strlen($word)){
+        if(strlen($word) > 0){
             $wordQuery = new \Elastica\Query\QueryString();
             $wordQuery->setQuery($word); 
             $boolQuery->addShould($wordQuery);

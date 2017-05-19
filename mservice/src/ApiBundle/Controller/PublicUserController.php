@@ -77,9 +77,8 @@ class PublicUserController extends FOSRestController
         $age_period = $request->get('age_period');
         $word = $request->get('word');
         $only_total = $request->get('only_total');
-        return $this->container->get('api_massage.SearchService')->searchManager(
+        return $this->container->get('api_massage.SearchService')->searchUserManager(
                 $only_total, $offset, $limit, $country_id, $location_id, $color,
                 $lang, $is_single, $age_period, $word);
-    }        
-            
+    }               
 }

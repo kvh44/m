@@ -15,6 +15,10 @@ services:
             class: ApiBundle\Services\UsersService
             arguments: ["@doctrine","@session","@translator.default","@validator", "@service_container","@api_massage.UtileService", "@api_massage.mailer", "@api_massage.CacheService", "%min_top_time%"]
 #  "@service_container"
+    
+    api_massage.PostsService:
+            class: ApiBundle\Services\PostsService
+            arguments: ["@doctrine","@session","@translator.default","@validator", "@service_container","@api_massage.UtileService", "@api_massage.mailer", "@api_massage.CacheService", "%min_top_time%"]
 
     api_massage.PhotoService:
             class: ApiBundle\Services\PhotoService
@@ -22,7 +26,7 @@ services:
 
     api_massage.CacheService:
             class: ApiBundle\Services\CacheService
-            arguments: ["@service_container", "@api_massage.UtileService", "%cache.userWithUsername%", "%cache.userPhotos%", "%cache.profilePhotos%"]
+            arguments: ["@service_container", "@api_massage.UtileService", "%cache.userWithUsername%", "%cache.userPhotos%", "%cache.profilePhotos%", "%cache.post%", "%cache.postPhotos%"]
     
     api_massage.SearchService:
             class: ApiBundle\Services\SearchService
