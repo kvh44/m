@@ -11,7 +11,7 @@ use FOS\RestBundle\View\View;
 
 class PublicPostController extends FOSRestController
 {
-	public function searchPostAction(Request $request)
+    public function searchPostAction(Request $request)
     {
         $offset = $request->get('offset');
         $limit = $request->get('limit');
@@ -23,7 +23,7 @@ class PublicPostController extends FOSRestController
                 $only_total, $offset, $limit, $country_id, $location_id, $word);
     }   
 	
-	public function getSinglePostPageAction(Request $request)
+    public function getSinglePostPageAction(Request $request)
     {
         return $this->container->get('api_massage.PostsService')->getSinglePostPageById($request->get('id'));
     }

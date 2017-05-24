@@ -28,10 +28,10 @@ class CacheService
     protected $redisProfilePhoto;
 	
 	
-	protected $redisPost;
-	
-	
-	protected $redisPostPhotos;
+    protected $redisPost;
+
+
+    protected $redisPostPhotos;
 
 
     protected $userWithUsername;

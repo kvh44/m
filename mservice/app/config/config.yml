@@ -164,6 +164,7 @@ fos_elastica:
             index_name: app_massage_%kernel.environment%
             types:
                 post:
+                    properties:
                     mappings:
                                 id:
                                     type: keyword
@@ -175,11 +176,11 @@ fos_elastica:
                                     type: keyword
                                     index: not_analyzed
                                 title: 
-                                    type: keyword
+                                    type: text
                                     boost: 10
                                 description:  
-                                    type: keyword
-                                    boost: 10
+                                    type: text
+                                    boost: 5
                                 displayedHome:
                                     type: keyword
                                     index: not_analyzed

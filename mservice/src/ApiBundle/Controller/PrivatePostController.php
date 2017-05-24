@@ -15,20 +15,17 @@ class PrivatePostController extends FOSRestController
     {
         return $this->container->get('api_massage.PostsService')->createPost($request);
     }
+    
+    public function updatePostAction(Request $request)
+    {
+        return $this->container->get('api_massage.PostsService')->updatePost($request);
+    } 
 	
-	public function deletePostAction(Request $request)
+    public function deletePostAction(Request $request)
     {
         $internal_id_post = $request->headers->get('internal_id_post');
         $internal_id = $request->headers->get('internal_id');
         $internal_token = $request->headers->get('internal_token');
         return $this->container->get('api_massage.PostsService')->deletePost($internal_id_post, $internal_id, $internal_token);
-    } 
-	
-	public function updatePostAction(Request $request)
-    {
-        $internal_id_post = $request->headers->get('internal_id_post');
-        $internal_id = $request->headers->get('internal_id');
-        $internal_token = $request->headers->get('internal_token');
-        return $this->container->get('api_massage.PostsService')->updatePost($internal_id_post, $internal_id, $internal_token);
     } 
 }

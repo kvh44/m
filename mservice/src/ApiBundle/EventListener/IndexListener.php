@@ -2,6 +2,7 @@
 namespace ApiBundle\EventListener;
 
 use ApiBundle\Entity\Muser;
+use ApiBundle\Entity\Mpost;
 
 use Doctrine\Common\EventSubscriber;
 use FOS\ElasticaBundle\Doctrine\Listener;
@@ -37,8 +38,12 @@ class IndexListener extends Listener implements EventSubscriber
     public function postPersist(LifecycleEventArgs $eventArgs)
     {
         $entity = $eventArgs->getObject();
-
+        
         if ($entity instanceof Muser || $entity instanceof Mpost) {
+            if($entity->getIsdeleted()){
+                $this->preRemove($eventArgs);
+            }
+            
             if ($this->objectPersister->handlesObject($entity)) {
                 if ($this->isObjectIndexable($entity)) {
                     $this->scheduledForInsertion[] = $entity;
@@ -52,6 +57,10 @@ class IndexListener extends Listener implements EventSubscriber
         $entity = $args->getObject();
 
         if ($entity instanceof Muser || $entity instanceof Mpost) {
+            if($entity->getIsdeleted()){
+                $this->preRemove($args);
+            }
+        
             if ($this->objectPersister->handlesObject($entity)) {
                 if ($this->isObjectIndexable($entity)) {
                     $this->scheduledForUpdate[] = $entity;

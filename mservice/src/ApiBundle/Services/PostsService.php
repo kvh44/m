@@ -53,13 +53,13 @@ class PostsService
 
     protected $cacheService;
 	
-	protected $mPost;
+    protected $mPost;
+
+    protected $user;
 	
-	protected $user;
 	
 	
-	
-	public function __construct(Registry $doctrine, Session $session, Translator $translator, RecursiveValidator $validator, Container $container,UtileService $utileService, MailerService $mailer, CacheService $cacheService, $min_top_time)
+    public function __construct(Registry $doctrine, Session $session, Translator $translator, RecursiveValidator $validator, Container $container,UtileService $utileService, MailerService $mailer, CacheService $cacheService, $min_top_time)
     {
         $this->doctrine = $doctrine;
         $this->em = $this->doctrine->getManager();
@@ -73,37 +73,37 @@ class PostsService
         $this->minTopTime = $min_top_time;
     }
 	
-	public function findPostById($id)
+    public function findPostById($id)
     {
         return $this->em->getRepository('ApiBundle:Mpost')->loadPostById($id);
     }
 	
-	public function findPostPhotosByPostId($post_id)
-	{
-		return $this->em->getRepository('ApiBundle:Mphoto')->loadPhotosByPostId($post_id);
-	}
+    public function findPostPhotosByPostId($post_id)
+    {
+        return $this->em->getRepository('ApiBundle:Mphoto')->loadPhotosByPostId($post_id);
+    }
 	
-	public function findUserByInternalToken($internal_token)
+    public function findUserByInternalToken($internal_token)
     {
         return $this->em->getRepository('ApiBundle:Muser')->loadUserByInternalToken($internal_token);
     }
 	
-	public function findPostByInternalId($internal_id)
-	{
-		return $this->em->getRepository('ApiBundle:Mpost')->loadPostByInternalId($internal_id);
-	}
+    public function findPostByInternalId($internal_id)
+    {
+            return $this->em->getRepository('ApiBundle:Mpost')->loadPostByInternalId($internal_id);
+    }
 	
-	public function prepareInternalId($internalId = '')
+    public function prepareInternalId($internalId = '')
     {
         return $internalId . UtileService::RandomString(UtileService::MIN_LENGTH_TOKEN) . UtileService::getDateTimeMicroseconds();
     }
 	
-	public function prepareSlug($slug)
+    public function prepareSlug($slug)
     {
         return $slug . '-' . UtileService::getDateTimeMicroseconds();
     }
 	
-	public function getSinglePostPageById($id)
+    public function getSinglePostPageById($id)
     {
         try{
             $this->utileService->setResponseFrom(UtileService::FROM_CACHE);
@@ -151,145 +151,144 @@ class PostsService
             $this->utileService->setResponseMessage($e->getMessage());
             return $this->utileService->getResponse();
         }
-	}
+    }
 		
-	public function createPost($request)
-	{
-		$this->user = $this->findUserByInternalToken($request->headers->get('internal_token'));
-		if(!$this->user){
-			$this->utileService->setResponseMessage($this->translator->trans('user.token.wrong'));
-			$this->utileService->setResponseState(false);
-			return $this->utileService->getResponse();
-		}
-		
-		if($this->user->getInternalId() !== $request->headers->get('internal_id')) {
-			$this->utileService->setResponseMessage($this->translator->trans('user.internal_id.not.exist'));
-			$this->utileService->setResponseState(false);
-			return $this->utileService->getResponse();
-		}
-			
-				
-		
-		$this->mPost = new Mpost();
-		
-		$this->mPost->setUser($this->user);
-		$this->mPost->setTitle($request->get('title'));
-		$this->mPost->setDescription($request->get('description'));
-		$this->mPost->setDisplayedHome(UtileService::TINY_INT_TRUE);
-		$this->mPost->setIsFromOtherWeb($request->get('is_from_other_web'));
-		$this->mPost->setOtherWeb($request->get('other_web'));
-		$this->mPost->setDisplayedHome(UtileService::TINY_INT_TRUE);
-		$this->mPost->setInternalId($this->prepareInternalId());
-		$this->mPost->setSlug($this->prepareSlug($this->mPost->getTitle()));
-		
-		$errorsPost = $this->validator->validate($this->mPost);
-		if (count($errorsPost) > 0) {
-			$message = $this->translator->trans(
-				$errorsPost[0]->getMessage()
-			);
-			$this->utileService->setResponsePath(array('field' => $errorsPost[0]->getPropertyPath()));
-			$this->utileService->setResponseMessage($message);
-			$this->utileService->setResponseState(false);
-			return $this->utileService->getResponse();
-		}
-		
-		$this->em->persist($this->mPost);
-		$this->em->flush();
-		$this->utileService->setResponseData($this->mPost);
-		$this->utileService->setResponseFrom(UtileService::FROM_SQL);
-		return $this->utileService->getResponse();
-	}
-	
-	public function updatePost($request)
-	{
-		$user = $this->findUserByInternalToken($request->headers->get('internal_token'));
-		if(!$user){
-			$this->utileService->setResponseMessage($this->translator->trans('user.token.wrong'));
-			$this->utileService->setResponseState(false);
-			return $this->utileService->getResponse();
-		}
-		
-		if($user->getInternalId() !== $request->headers->get('internal_id')) {
-			$this->utileService->setResponseMessage($this->translator->trans('user.internal_id.not.exist'));
-			$this->utileService->setResponseState(false);
-			return $this->utileService->getResponse();
-		}
-			
-		$this->mPost = $this->findPostByInternalId($request->headers->get('internal_id_post'));
-		if(!$this->mPost){
-			$this->utileService->setResponseState(false);
-			$this->utileService->setResponseMessage($this->translator->trans('post.not.exist'));
-			return $this->utileService->getResponse();
-		}
-		
-		if($this->mPost->getUser()->getId() !== $user->getId()){
-			$this->utileService->setResponseState(false);
-			$this->utileService->setResponseMessage($this->translator->trans('post.not.yours'));
-			return $this->utileService->getResponse();
-		}
-		$this->mPost->setTitle($request->get('title'));
-		$this->mPost->setDescription($request->get('description'));
-		$this->mPost->setDisplayedHome(UtileService::TINY_INT_TRUE);
-		$this->mPost->setIsFromOtherWeb($request->get('is_from_other_web'));
-		$this->mPost->setOtherWeb($request->get('other_web'));
-		$this->mPost->setDisplayedHome(UtileService::TINY_INT_TRUE);
-		$this->mPost->setInternalId($this->prepareInternalId());
-		$this->mPost->setSlug($this->prepareSlug($this->mPost->getTitle()));
-		
-		$errorsPost = $this->validator->validate($this->mPost);
-		if (count($errorsPost) > 0) {
-			$message = $this->translator->trans(
-				$errorsPost[0]->getMessage()
-			);
-			$this->utileService->setResponsePath(array('field' => $errorsPost[0]->getPropertyPath()));
-			$this->utileService->setResponseMessage($message);
-			$this->utileService->setResponseState(false);
-			return $this->utileService->getResponse();
-		}
-		
-		$this->em->persist($this->mPost);
-		$this->em->flush();
-		$this->utileService->setResponseData($this->mPost);
-		$this->utileService->setResponseFrom(UtileService::FROM_SQL);
-		return $this->utileService->getResponse();
-	}
-	
-	public function deletePost($internal_id_post, $internal_id, $internal_token)
+    public function createPost($request)
     {
-        try{
-            $user = $this->usersService->findUserByInternalId($internal_id);
-            if(!$user){
+            $this->user = $this->findUserByInternalToken($request->headers->get('internal_token'));
+            if(!$this->user){
+                $this->utileService->setResponseMessage($this->translator->trans('user.token.wrong'));
                 $this->utileService->setResponseState(false);
-                $this->utileService->setResponseMessage($this->translator->trans('user.internal_id.not.exist'));
                 return $this->utileService->getResponse();
             }
 
-            if($user->getInternalToken() !== $internal_token){
+            if($this->user->getInternalId() !== $request->headers->get('internal_id')) {
+                $this->utileService->setResponseMessage($this->translator->trans('user.internal_id.not.exist'));
+                $this->utileService->setResponseState(false);
+                return $this->utileService->getResponse();
+            }
+
+
+
+            $this->mPost = new Mpost();
+
+            $this->mPost->setUser($this->user);
+            $this->mPost->setTitle($request->get('title'));
+            $this->mPost->setDescription($request->get('description'));
+            $this->mPost->setDisplayedHome(UtileService::TINY_INT_TRUE);
+            $this->mPost->setIsFromOtherWeb($request->get('is_from_other_web'));
+            $this->mPost->setOtherWeb($request->get('other_web'));
+            $this->mPost->setDisplayedHome(UtileService::TINY_INT_TRUE);
+            $this->mPost->setInternalId($this->prepareInternalId());
+            $this->mPost->setSlug($this->prepareSlug($this->mPost->getTitle()));
+
+            $errorsPost = $this->validator->validate($this->mPost);
+            if (count($errorsPost) > 0) {
+                $message = $this->translator->trans(
+                        $errorsPost[0]->getMessage()
+                );
+                $this->utileService->setResponsePath(array('field' => $errorsPost[0]->getPropertyPath()));
+                $this->utileService->setResponseMessage($message);
+                $this->utileService->setResponseState(false);
+                return $this->utileService->getResponse();
+            }
+
+            $this->em->persist($this->mPost);
+            $this->em->flush();
+            $this->utileService->setResponseData($this->mPost);
+            $this->utileService->setResponseFrom(UtileService::FROM_SQL);
+            return $this->utileService->getResponse();
+    }
+	
+    public function updatePost($request)
+    {
+            $user = $this->findUserByInternalToken($request->headers->get('internal_token'));
+            if(!$user){
+                    $this->utileService->setResponseMessage($this->translator->trans('user.token.wrong'));
+                    $this->utileService->setResponseState(false);
+                    return $this->utileService->getResponse();
+            }
+
+            if($user->getInternalId() !== $request->headers->get('internal_id')) {
+                    $this->utileService->setResponseMessage($this->translator->trans('user.internal_id.not.exist'));
+                    $this->utileService->setResponseState(false);
+                    return $this->utileService->getResponse();
+            }
+
+            $this->mPost = $this->findPostByInternalId($request->headers->get('internal_id_post'));
+            if(!$this->mPost){
+                    $this->utileService->setResponseState(false);
+                    $this->utileService->setResponseMessage($this->translator->trans('post.not.exist'));
+                    return $this->utileService->getResponse();
+            }
+
+            if($this->mPost->getUser()->getId() !== $user->getId()){
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage($this->translator->trans('post.not.yours'));
+                return $this->utileService->getResponse();
+            }
+            $this->mPost->setTitle($request->get('title'));
+            $this->mPost->setDescription($request->get('description'));
+            $this->mPost->setDisplayedHome(UtileService::TINY_INT_TRUE);
+            $this->mPost->setIsFromOtherWeb($request->get('is_from_other_web'));
+            $this->mPost->setOtherWeb($request->get('other_web'));
+            $this->mPost->setDisplayedHome(UtileService::TINY_INT_TRUE);
+            $this->mPost->setSlug($this->prepareSlug($this->mPost->getTitle()));
+
+            $errorsPost = $this->validator->validate($this->mPost);
+            if (count($errorsPost) > 0) {
+                $message = $this->translator->trans(
+                        $errorsPost[0]->getMessage()
+                );
+                $this->utileService->setResponsePath(array('field' => $errorsPost[0]->getPropertyPath()));
+                $this->utileService->setResponseMessage($message);
+                $this->utileService->setResponseState(false);
+                return $this->utileService->getResponse();
+            }
+
+            $this->em->persist($this->mPost);
+            $this->em->flush();
+            $this->utileService->setResponseData($this->mPost);
+            $this->utileService->setResponseFrom(UtileService::FROM_SQL);
+            return $this->utileService->getResponse();
+    }
+	
+    public function deletePost($internal_id_post, $internal_id, $internal_token)
+    {
+        try{
+            $user = $this->findUserByInternalToken($internal_token);
+            if(!$user){
                 $this->utileService->setResponseState(false);
                 $this->utileService->setResponseMessage($this->translator->trans('user.internal_token.wrong'));
                 return $this->utileService->getResponse();
             }
+
+            if($user->getInternalId() !== $internal_id){
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage($this->translator->trans('user.internal_id.not.exist'));
+                return $this->utileService->getResponse();
+            }
             
-            $post = $this->findPostByInternalId($internal_id_post);
-            if(!$post){
+            $this->mPost = $this->findPostByInternalId($internal_id_post);
+            if(!$this->mPost){
                 $this->utileService->setResponseState(false);
                 $this->utileService->setResponseMessage($this->translator->trans('post.not.exist'));
                 return $this->utileService->getResponse();
             }
             
-            if($post->getUser()->getId() !== $user->getId()){
+            if($this->mPost->getUser()->getId() !== $user->getId()){
                 $this->utileService->setResponseState(false);
                 $this->utileService->setResponseMessage($this->translator->trans('post.not.yours'));
                 return $this->utileService->getResponse();
             }
             
-            $post->setIsDeleted(true);
-            $this->em->persist($post);
-            
+            $this->mPost->setIsDeleted(UtileService::TINY_INT_TRUE);
+            $this->em->persist($this->mPost);
             $this->em->flush();
             
             $this->utileService->setResponseState(true);
             $this->utileService->setResponseMessage($this->translator->trans('post.deleted'));
+            $this->utileService->setResponseFrom(UtileService::FROM_SQL);
             return $this->utileService->getResponse();
             
         } catch (\Exception $e) {

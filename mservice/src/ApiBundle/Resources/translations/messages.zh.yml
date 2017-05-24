@@ -40,4 +40,9 @@ user:
         not:
             exist: 此照片不存在
             yours: 此照片不属于你
-            deleted: 此照片已被删除
+        deleted: 此照片已被成功删除
+post:
+    not:
+        exist: 次贴已经不存在
+        yours: 此贴不属于你
+    deleted: 此贴已被成功删除

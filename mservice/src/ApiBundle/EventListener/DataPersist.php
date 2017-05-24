@@ -30,8 +30,11 @@ class DataPersist
         }
 
         if($entity instanceof Mpost){
+            if($entity->getIsDeleted()){
+                $this->cacheService->removeSinglePostCache($entity->getId());
+            }
             $this->persistDate($entity);
-			$this->updatePostCache($entity);
+	    $this->updatePostCache($entity);
         }
 
         if($entity instanceof Mphoto){
@@ -51,7 +54,7 @@ class DataPersist
         if($entity instanceof Mphoto){
             $this->updateUserPhotosCache($entity);
             $this->updateProfilePhotoCache($entity);
-			$this->updatePostPhotosCache($entity);
+	    $this->updatePostPhotosCache($entity);
         }
     }        
 
@@ -69,8 +72,11 @@ class DataPersist
         }
 
         if($entity instanceof Mpost){
+            if($entity->getIsDeleted()){
+                $this->cacheService->removeSinglePostCache($entity->getId());
+            }
             $this->updateDate($entity);
-			$this->updatePostCache($entity);
+	    $this->updatePostCache($entity);
         }
 
         if($entity instanceof Mphoto){
@@ -90,7 +96,7 @@ class DataPersist
         if($entity instanceof Mphoto){
             $this->updateUserPhotosCache($entity);
             $this->updateProfilePhotoCache($entity);
-			$this->updatePostPhotosCache($entity);
+	    $this->updatePostPhotosCache($entity);
         }
     } 
     
@@ -142,7 +148,7 @@ class DataPersist
         }
     }
 	
-	public function updatePostPhotosCache($entity)
+    public function updatePostPhotosCache($entity)
     {
         if($entity->getPhotoType() != PhotoService::POST_PHOTO_TYPE){
             return;

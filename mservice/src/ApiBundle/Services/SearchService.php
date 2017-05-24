@@ -32,7 +32,7 @@ class SearchService {
         //$this->transformer = $transformer;
     }
 	
-	public function searchPostManager($only_total, $offset, $limit, $country_id, $location_id, $word)
+    public function searchPostManager($only_total, $offset, $limit, $country_id, $location_id, $word)
     {
         try{
             $searchResult = $this->searchPostByIndex($only_total, $offset, $limit, $country_id, $location_id, $word);
@@ -64,28 +64,29 @@ class SearchService {
         }
     }        
 	
-	public function searchPostByIndex($only_total = false, $offset = 0, $limit = 15, $country_id = null, $location_id = null, $word = null)
-	{
-		$search = $this->container->get($this->indexManager)->getIndex('app')->createSearch();
+    public function searchPostByIndex($only_total = false, $offset = 0, $limit = 15, $country_id = null, $location_id = null, $word = null)
+    {
+        $search = $this->container->get($this->indexManager)->getIndex('app')->createSearch();
         $search->addType('post');
-		
-		$boolQuery = new \Elastica\Query\BoolQuery();
+
+        $boolQuery = new \Elastica\Query\BoolQuery();
+        
         $activeQuery = new \Elastica\Query\Terms();
-        $activeQuery->setTerms('isDeleted', array((UtileService::BOOL_FALSE, UtileService::TINY_INT_FALSE, UtileService::TINY_INT_FALSE_STRING));
-        $boolQuery->addMust($activeQuery);
-		
-		if(strlen($word) > 0){
+        $activeQuery->setTerms('isDeleted', array(UtileService::BOOL_TRUE, UtileService::TINY_INT_TRUE, UtileService::TINY_INT_TRUE_STRING));
+        $boolQuery->addMustNot($activeQuery);
+        
+        if(strlen($word) > 0){
             $wordQuery = new \Elastica\Query\QueryString();
             $wordQuery->setQuery($word); 
             $boolQuery->addShould($wordQuery);
         }
-		
-		if($only_total){
+
+        if($only_total){
             return $search->search($boolQuery)->getTotalHits(); 
         }
         $this->resultSet = $search->search($boolQuery)->getResults($offset, $limit);
         return $this->getSourceArray();
-	}
+    }
 
     public function searchUserByIndex($only_total = false, $offset = 0, $limit = 15, $country_id = null, $location_id = null, 
             $color = null, $lang = null, $is_single = null, $age_period = array(), $word = null)
