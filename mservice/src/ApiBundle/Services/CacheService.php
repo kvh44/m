@@ -43,10 +43,10 @@ class CacheService
     protected $profilePhotos;
 	
 	
-	protected $post;
+    protected $post;
 	
 	
-	protected $postPhotos;
+    protected $postPhotos;
 
     
     public function __construct(Container $container, UtileService $utileService, $userWithUsername, $userPhotos, $profilePhotos, $post, $postPhotos)
@@ -56,13 +56,13 @@ class CacheService
         $this->redisUser = $this->container->get('snc_redis.user');
         $this->redisUserPhotos = $this->container->get('snc_redis.userPhotos');
         $this->redisProfilePhoto = $this->container->get('snc_redis.profilePhotos');
-		$this->redisPost = $this->container->get('snc_redis.post');
-		$this->redisPostPhotos = $this->container->get('snc_redis.postPhotos');
+        $this->redisPost = $this->container->get('snc_redis.post');
+        $this->redisPostPhotos = $this->container->get('snc_redis.postPhotos');
         $this->userWithUsername = $userWithUsername;
         $this->userPhotos = $userPhotos;
         $this->profilePhotos = $profilePhotos;
-		$this->post = $post;
-		$this->postPhotos = $postPhotos;
+        $this->post = $post;
+        $this->postPhotos = $postPhotos;
     }
     
     public function checkRedisRunning($redis)

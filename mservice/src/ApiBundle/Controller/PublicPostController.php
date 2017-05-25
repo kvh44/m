@@ -13,8 +13,8 @@ class PublicPostController extends FOSRestController
 {
     public function searchPostAction(Request $request)
     {
-        $offset = $request->get('offset');
-        $limit = $request->get('limit');
+        $offset = $request->get('offset')?$request->get('offset'):0;
+        $limit = $request->get('limit')?$request->get('limit'):$this->getParameter('search.post.numberResults');
         $country_id = $request->get('country_id');
         $location_id = $request->get('location_id');
         $word = $request->get('word');

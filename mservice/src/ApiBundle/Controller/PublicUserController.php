@@ -63,12 +63,8 @@ class PublicUserController extends FOSRestController
     
     public function searchUserAction(Request $request)
     {
-        /*
-        $finder = $this->container->get('fos_elastica.finder.app.user');
-        $results = $finder->find('anya17');
-        */
-        $offset = $request->get('offset');
-        $limit = $request->get('limit');
+        $offset = $request->get('offset')?$request->get('offset'):0;
+        $limit = $request->get('limit')?$request->get('limit'):$this->getParameter('search.user.numberResults');
         $country_id = $request->get('country_id');
         $location_id = $request->get('location_id');
         $color = $request->get('color');

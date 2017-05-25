@@ -155,6 +155,7 @@ class PostsService
 		
     public function createPost($request)
     {
+        try{
             $this->user = $this->findUserByInternalToken($request->headers->get('internal_token'));
             if(!$this->user){
                 $this->utileService->setResponseMessage($this->translator->trans('user.token.wrong'));
@@ -198,10 +199,17 @@ class PostsService
             $this->utileService->setResponseData($this->mPost);
             $this->utileService->setResponseFrom(UtileService::FROM_SQL);
             return $this->utileService->getResponse();
+            
+            } catch (\Exception $e) {
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage($e->getMessage());
+                return $this->utileService->getResponse();
+            }
     }
 	
     public function updatePost($request)
     {
+        try{
             $user = $this->findUserByInternalToken($request->headers->get('internal_token'));
             if(!$user){
                     $this->utileService->setResponseMessage($this->translator->trans('user.token.wrong'));
@@ -251,6 +259,12 @@ class PostsService
             $this->utileService->setResponseData($this->mPost);
             $this->utileService->setResponseFrom(UtileService::FROM_SQL);
             return $this->utileService->getResponse();
+            
+            } catch (\Exception $e) {
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage($e->getMessage());
+                return $this->utileService->getResponse();
+            }
     }
 	
     public function deletePost($internal_id_post, $internal_id, $internal_token)

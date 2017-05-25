@@ -10,6 +10,7 @@ use FOS\ElasticaBundle\Persister\ObjectPersisterInterface;
 use FOS\ElasticaBundle\Provider\IndexableInterface;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use FOS\ElasticaBundle\Elastica\Client;
 
 
 class IndexListener extends Listener implements EventSubscriber
@@ -28,18 +29,28 @@ class IndexListener extends Listener implements EventSubscriber
         $this->indexable = $indexable;
         $this->config = $config;
         $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
+        $this->client = new Client();
     }
 
     public function getSubscribedEvents()
     {
         return ['postPersist', 'postUpdate', 'preRemove', 'preFlush', 'postFlush'];
     }
+    
+    public function prePersist(LifecycleEventArgs $eventArgs)
+    {
+        $entity = $eventArgs->getObject();
+        if ($entity instanceof Muser || $entity instanceof Mpost) {
+            $entity = $this->testAliasesInfo($entity);
+        }
+    }        
 
     public function postPersist(LifecycleEventArgs $eventArgs)
     {
         $entity = $eventArgs->getObject();
-        
+
         if ($entity instanceof Muser || $entity instanceof Mpost) {
+            
             if($entity->getIsdeleted()){
                 $this->preRemove($eventArgs);
             }
@@ -57,6 +68,7 @@ class IndexListener extends Listener implements EventSubscriber
         $entity = $args->getObject();
 
         if ($entity instanceof Muser || $entity instanceof Mpost) {
+
             if($entity->getIsdeleted()){
                 $this->preRemove($args);
             }
@@ -80,6 +92,15 @@ class IndexListener extends Listener implements EventSubscriber
                 }
             }
         }
+    }
+    
+    public function testAliasesInfo($entity)
+    {
+        $aliasesInfo = $this->client->request('_aliases', 'GET')->getData();
+        if(is_array($aliasesInfo)){
+            $entity->setIsSynchronizedBySearch(1);
+        }
+        return $entity;
     }
 
     private function isObjectIndexable($object)

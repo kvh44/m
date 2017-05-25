@@ -41,6 +41,8 @@ user:
             exist: 此照片不存在
             yours: 此照片不属于你
         deleted: 此照片已被成功删除
+    information:
+        updated: 用户信息更改成功
 post:
     not:
         exist: 次贴已经不存在

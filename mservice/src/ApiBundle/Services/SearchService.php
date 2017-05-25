@@ -3,8 +3,9 @@ namespace ApiBundle\Services;
 
 use ApiBundle\Services\UtileService;
 use Symfony\Component\DependencyInjection\Container;
-use FOS\ElasticaBundle\Transformer\ElasticaToModelTransformerInterface;
+//use FOS\ElasticaBundle\Transformer\ElasticaToModelTransformerInterface;
 use Elastica\Result;
+use Elastica\Query;
 
 class SearchService {
     /**
@@ -80,11 +81,14 @@ class SearchService {
             $wordQuery->setQuery($word); 
             $boolQuery->addShould($wordQuery);
         }
-
+                
         if($only_total){
             return $search->search($boolQuery)->getTotalHits(); 
         }
-        $this->resultSet = $search->search($boolQuery)->getResults($offset, $limit);
+        $queryObject = Query::create($boolQuery);
+        $queryObject->setSize($limit);
+        $queryObject->setFrom($offset);        
+        $this->resultSet = $search->search($queryObject)->getResults();
         return $this->getSourceArray();
     }
 
@@ -180,8 +184,12 @@ class SearchService {
         if($only_total){
             return $search->search($boolQuery)->getTotalHits(); 
         }
-        $this->resultSet = $search->search($boolQuery)->getResults($offset, $limit);
+        $queryObject = Query::create($boolQuery);
+        $queryObject->setSize($limit);
+        $queryObject->setFrom($offset);        
+        $this->resultSet = $search->search($queryObject)->getResults();
         return $this->getSourceArray();
+        //return $search->search($queryObject)->getSuggests();
         //return $this->transformer->hybridTransform($results);
     }
     

@@ -11,7 +11,6 @@ use ApiBundle\Services\CacheService;
 use ApiBundle\Services\PhotoService;
 
 
-
 class DataPersist
 {
     protected $cacheService;
@@ -75,6 +74,7 @@ class DataPersist
             if($entity->getIsDeleted()){
                 $this->cacheService->removeSinglePostCache($entity->getId());
             }
+            
             $this->updateDate($entity);
 	    $this->updatePostCache($entity);
         }
@@ -104,12 +104,7 @@ class DataPersist
     {
         $this->cacheService = $cacheService;
     }
-    /*
-    public function setCacheService(CacheService $cacheService)
-    {
-        $this->cacheService = $cacheService;
-    }        
-    */
+    
     public function updateUserCache($entity)
     {
         $result = $this->cacheService->setSingleUserByUsernameCache($entity->getUsername(), serialize($entity));

@@ -773,8 +773,9 @@ class UsersService
             $this->utileService->setResponseMessage($e->getMessage());
             return $this->utileService->getResponse();
         }
+        $this->utileService->setResponseData(array());
         $this->utileService->setResponseState(true);
-        $this->utileService->setResponseMessage('user.information.updated');
+        $this->utileService->setResponseMessage($this->translator->trans('user.information.updated'));
         return $this->utileService->getResponse();
     }        
     
