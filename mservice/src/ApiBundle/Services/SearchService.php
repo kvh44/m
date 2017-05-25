@@ -6,6 +6,7 @@ use Symfony\Component\DependencyInjection\Container;
 //use FOS\ElasticaBundle\Transformer\ElasticaToModelTransformerInterface;
 use Elastica\Result;
 use Elastica\Query;
+use FOS\ElasticaBundle\Elastica\Client;
 
 class SearchService {
     /**
@@ -30,6 +31,7 @@ class SearchService {
         $this->container = $container;
         $this->utileService = $utileService;
         $this->indexManager = $indexManager;
+        $this->client = new Client();
         //$this->transformer = $transformer;
     }
 	
@@ -198,6 +200,19 @@ class SearchService {
         return array_map(function (Result $result) {
             return $result->getSource();
         }, $this->resultSet);
+    }        
+    
+    public function getSearchEngineAliases()
+    {
+        try{
+            $info = $this->client->request('_aliases', 'GET')->getData();
+            if(is_array($info)){
+                return true;
+            } 
+            return false;
+        } catch(\Exception $e) {
+            return false;
+        }
     }        
 }
 

@@ -2,6 +2,14 @@ api_homepage:
     path:     /
     defaults: { _controller: ApiBundle:Default:index }
     
+public_api_client_ip:
+    path:     /public/client/ip
+    defaults: { _controller: ApiBundle:Default:clientIp }    
+  
+public_api_searchengine_state:
+    path:     /public/searchengine/state
+    defaults: { _controller: ApiBundle:Default:searchEngineState }      
+    
 public_api_login:
     path: /public/user/login
     defaults: { _controller: ApiBundle:PublicUser:login, _format:json}
