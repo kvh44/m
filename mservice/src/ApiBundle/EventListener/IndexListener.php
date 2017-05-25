@@ -11,6 +11,7 @@ use FOS\ElasticaBundle\Provider\IndexableInterface;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use FOS\ElasticaBundle\Elastica\Client;
+use ApiBundle\Services\UtileService;
 
 
 class IndexListener extends Listener implements EventSubscriber
@@ -34,25 +35,29 @@ class IndexListener extends Listener implements EventSubscriber
 
     public function getSubscribedEvents()
     {
-        return ['postPersist', 'postUpdate', 'preRemove', 'preFlush', 'postFlush'];
+        return ['prePersist', 'postPersist', 'preUpdate', 'postUpdate', 'preRemove', 'preFlush', 'postFlush'];
     }
     
-    public function prePersist(LifecycleEventArgs $eventArgs)
+    public function prePersist(LifecycleEventArgs $args)
     {
-        $entity = $eventArgs->getObject();
-        if ($entity instanceof Muser || $entity instanceof Mpost) {
-            $entity = $this->testAliasesInfo($entity);
+        try{
+            $entity = $args->getObject();
+            if ($entity instanceof Muser || $entity instanceof Mpost) {
+                $entity = $this->testSearchEngineAliasesInfo($entity);
+            }
+        } catch (\Exception $e) {
+            
         }
     }        
 
-    public function postPersist(LifecycleEventArgs $eventArgs)
+    public function postPersist(LifecycleEventArgs $args)
     {
-        $entity = $eventArgs->getObject();
+        $entity = $args->getObject();
 
         if ($entity instanceof Muser || $entity instanceof Mpost) {
             
             if($entity->getIsdeleted()){
-                $this->preRemove($eventArgs);
+                $this->preRemove($args);
             }
             
             if ($this->objectPersister->handlesObject($entity)) {
@@ -60,6 +65,18 @@ class IndexListener extends Listener implements EventSubscriber
                     $this->scheduledForInsertion[] = $entity;
                 }
             }
+        }
+    }
+    
+    public function preUpdate(LifecycleEventArgs $args)
+    {
+        try{
+            $entity = $args->getObject();
+            if ($entity instanceof Muser || $entity instanceof Mpost) {
+                $entity = $this->testSearchEngineAliasesInfo($entity);
+            }
+        } catch (\Exception $e) {
+            
         }
     }
 
@@ -94,12 +111,13 @@ class IndexListener extends Listener implements EventSubscriber
         }
     }
     
-    public function testAliasesInfo($entity)
+    public function testSearchEngineAliasesInfo($entity)
     {
+        $entity->setIsSynchronizedBySearch(UtileService::TINY_INT_FALSE);
         $aliasesInfo = $this->client->request('_aliases', 'GET')->getData();
         if(is_array($aliasesInfo)){
-            $entity->setIsSynchronizedBySearch(1);
-        }
+            $entity->setIsSynchronizedBySearch(UtileService::TINY_INT_TRUE);
+        } 
         return $entity;
     }
 
