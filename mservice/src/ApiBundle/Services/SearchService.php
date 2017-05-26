@@ -2,7 +2,10 @@
 namespace ApiBundle\Services;
 
 use ApiBundle\Services\UtileService;
+use ApiBundle\Services\CacheService;
+
 use Symfony\Component\DependencyInjection\Container;
+use Doctrine\Bundle\DoctrineBundle\Registry;
 //use FOS\ElasticaBundle\Transformer\ElasticaToModelTransformerInterface;
 use Elastica\Result;
 use Elastica\Query;
@@ -13,11 +16,24 @@ class SearchService {
      * @var Container
      */
     public $container;
+    
+     /**
+     * @var Registry
+     */
+    protected $doctrine;
+
+    /*
+     * @var em
+     */
+    protected $em;
+    
     /**
      *
      * @var UtileService
      */
     protected $utileService;
+    
+    protected $cacheService;
     
     protected $indexManager;
 
@@ -26,10 +42,13 @@ class SearchService {
     protected $resultSet;
 
 
-    public function __construct(Container $container, UtileService $utileService, $indexManager) //, ElasticaToModelTransformerInterface $transformer)
+    public function __construct(Container $container, Registry $doctrine, UtileService $utileService, CacheService $cacheService, $indexManager) //, ElasticaToModelTransformerInterface $transformer)
     {
         $this->container = $container;
+        $this->doctrine = $doctrine;
+        $this->em = $this->doctrine->getManager();
         $this->utileService = $utileService;
+        $this->cacheService = $cacheService;
         $this->indexManager = $indexManager;
         $this->client = new Client();
         //$this->transformer = $transformer;
@@ -61,9 +80,28 @@ class SearchService {
             $this->utileService->setResponseState(true);
             return $this->utileService->getResponse();
         } catch(\Exception $e) {
-            $this->utileService->setResponseState(false);
-            $this->utileService->setResponseMessage($e->getMessage());
-            return $this->utileService->getResponse();
+            try{
+                $key = $this->getSearchUserKey($only_total, $offset, $limit, $country_id, $location_id, $color,
+                    $lang, $is_single, $age_period);
+                $searchUsersByKeyCache = $this->cacheService->getSearchUsersByKeyCache($key);
+                if(!$searchUsersByKeyCache){
+                    $results = $this->searchUserBySql($only_total, $offset, $limit, $country_id, $location_id, $color,
+                        $lang, $is_single, $age_period);
+                    $this->cacheService->setSearchUsersByKeyCache($key, serialize($results));
+                    $this->utileService->setResponseFrom(UtileService::FROM_SQL);
+                } else {
+                    $results = unserialize($searchUsersByKeyCache);
+                    $this->utileService->setResponseFrom(UtileService::FROM_CACHE);
+                }
+                $this->utileService->setResponseState(true);
+                $this->utileService->setResponseMessage($e->getMessage());
+                $this->utileService->setResponseData($results);
+                return $this->utileService->getResponse();
+            } catch(\Exception $e) {
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage($e->getMessage());
+                return $this->utileService->getResponse();
+            }
         }
     }        
 	
@@ -213,6 +251,59 @@ class SearchService {
         } catch(\Exception $e) {
             return false;
         }
+    }        
+    
+    public function searchUserBySql($only_total = false, $offset = 0, $limit = 15, $country_id = null, $location_id = null, 
+            $color = null, $lang = null, $is_single = null, $age_period = array())
+    {
+        return $this->em->getRepository('ApiBundle:Muser')->searchUserBySql($only_total, $offset, $limit, $country_id, $location_id, $color,
+                $lang, $is_single, $age_period, $this->em);
+    }     
+    
+    public function searchUserByCache($only_total = false, $offset = 0, $limit = 15, $country_id = null, $location_id = null, 
+            $color = null, $lang = null, $is_single = null, $age_period = array())
+    {
+        $key = $this->getSearchUserKey($only_total, $offset, $limit, $country_id, $location_id, $color,
+                    $lang, $is_single, $age_period);
+        
+        
+    }
+    
+    public function getSearchUserKey($only_total = false, $offset = 0, $limit = 15, $country_id = null, $location_id = null, 
+            $color = null, $lang = null, $is_single = null, $age_period = array())
+    {
+        $key = 'users';
+        if(strlen($offset) > 0){
+            $key .= 'offset'.$offset;
+        }
+        if(strlen($limit) > 0){
+            $key .= 'limit'.$limit;
+        }
+        if(strlen($country_id) > 0){
+            $key .= 'country'.$country_id;
+        }
+        if(strlen($location_id) > 0){
+            $key .= 'location'.$location_id;
+        }
+        if(strlen($color) > 0){
+            $key .= 'color'.$color;
+        }
+        if(strlen($lang) > 0){
+            $key .= 'lang'.$lang;
+        }
+        if(strlen($is_single) > 0){
+            $key .= 'single'.$is_single;
+        }
+        if(count($age_period) > 0){
+            if(array_key_exists('min', $age_period)){
+                $key .= 'min'.$age_period['min'];
+            }
+            if(array_key_exists('max', $age_period)){
+                $key .= 'max'.$age_period['max'];
+            }
+        }
+        
+        return $key;
     }        
 }
 

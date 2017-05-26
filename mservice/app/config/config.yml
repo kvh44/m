@@ -37,11 +37,13 @@ parameters:
     cache.dsn.userPhotos: "redis://localhost/3"
     cache.dsn.postPhotos: "redis://localhost/4"
     cache.dsn.profilePhotos: "redis://localhost/5"
+    cache.dsn.searchUsers: "redis://localhost/6"
     cache.userWithUsername: "userWithUsername"
     cache.userPhotos: "userPhotos"
     cache.profilePhotos: "profilePhotos"
     cache.post: "post"
     cache.postPhotos: "postPhotos"
+    cache.searchUsers: "searchUsers"
     search.host: "localhost"
     search.port: 9200
     search.user.numberResults: 15
@@ -147,7 +149,12 @@ snc_redis:
             type: predis
             alias: profilePhotos
             dsn: %cache.dsn.profilePhotos%
-            logging: true     
+            logging: true    
+        searchUsers:
+            type: predis
+            alias: searchUsers
+            dsn: %cache.dsn.searchUsers%
+            logging: true        
     session:
             client: default
             prefix: session

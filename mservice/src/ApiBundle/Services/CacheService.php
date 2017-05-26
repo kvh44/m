@@ -32,6 +32,9 @@ class CacheService
 
 
     protected $redisPostPhotos;
+    
+    
+    protected $redisSearchUsers;
 
 
     protected $userWithUsername;
@@ -47,9 +50,13 @@ class CacheService
 	
 	
     protected $postPhotos;
-
     
-    public function __construct(Container $container, UtileService $utileService, $userWithUsername, $userPhotos, $profilePhotos, $post, $postPhotos)
+    
+    protected $searchUsers;
+
+
+
+    public function __construct(Container $container, UtileService $utileService, $userWithUsername, $userPhotos, $profilePhotos, $post, $postPhotos, $searchUsers)
     {
         $this->container = $container;
         $this->utileService = $utileService;
@@ -58,11 +65,13 @@ class CacheService
         $this->redisProfilePhoto = $this->container->get('snc_redis.profilePhotos');
         $this->redisPost = $this->container->get('snc_redis.post');
         $this->redisPostPhotos = $this->container->get('snc_redis.postPhotos');
+        $this->redisSearchUsers = $this->container->get('snc_redis.searchUsers');
         $this->userWithUsername = $userWithUsername;
         $this->userPhotos = $userPhotos;
         $this->profilePhotos = $profilePhotos;
         $this->post = $post;
         $this->postPhotos = $postPhotos;
+        $this->searchUsers = $searchUsers;
     }
     
     public function checkRedisRunning($redis)
@@ -195,7 +204,7 @@ class CacheService
         }
     } 
 	
-	public function getSinglePostPhotosByPostIdCache($post_id)
+    public function getSinglePostPhotosByPostIdCache($post_id)
     {
         try{
             return $this->redisPostPhotos->hGet($this->postPhotos,$post_id);
@@ -217,6 +226,33 @@ class CacheService
     {
         try{
             return $this->redisPostPhotos->hDel($this->postPhotos,$post_id);
+        } catch(\Exception $e) {
+            return false;
+        }
+    }
+    
+    public function getSearchUsersByKeyCache($key)
+    {
+        try{
+            return $this->redisSearchUsers->hGet($this->searchUsers,$key);
+        } catch(\Exception $e) {
+            return false;
+        }
+    }
+    
+    public function setSearchUsersByKeyCache($key, $users)
+    {
+        try{
+            return $this->redisSearchUsers->hSet($this->searchUsers, $key, $users);
+        } catch(\Exception $e) {
+            return false;
+        }
+    }
+    
+    public function removeSearchUsersByKeyCache($key)
+    {
+        try{
+            return $this->redisSearchUsers->hDel($this->searchUsers,$key);
         } catch(\Exception $e) {
             return false;
         }

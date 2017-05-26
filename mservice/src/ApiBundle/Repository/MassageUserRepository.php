@@ -4,6 +4,7 @@ namespace ApiBundle\Repository;
 
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Doctrine\ORM\EntityRepository;
+use ApiBundle\Services\UtileService;
 
 class MassageUserRepository extends EntityRepository implements UserLoaderInterface {
 
@@ -101,5 +102,100 @@ class MassageUserRepository extends EntityRepository implements UserLoaderInterf
             ->getQuery()
             ->getOneOrNullResult();
     }
+    
+    public function searchUserBySql($only_total = false, $offset = 0, $limit = 15, $country_id = null, $location_id = null, 
+            $color = null, $lang = null, $is_single = null, $age_period = array(), $em)
+    {   
+        $q = $this->createQueryBuilder('u');
+        $q->select('u.id, u.username, u.email, u.telephone, u.nickname, u.nickname, u.wechat, u.facebook,
+        u.instagram, u.website, u.timezone, u.country, u.city, u.postNumber, u.countryId, u.locationId,
+        u.skinColor, u.birthday, u.shopAddress, u.description, u.translatedDescription, u.isActive, u.isDeleted,
+        u.isPremium, u.isSingle, u.isShop, u.isZh, u.isEn, u.isFr, u.isTest, u.isFromOtherWeb, u.otherWeb,
+        u.slug, u.internalId, u.topTime, u.lastSynchronizedFromOtherWebTime, u.paymentExpiredTime, u.created,
+        u.updated');
+        
+        $q->where('u.isDeleted <> :is_deleted');
+        $parameters = array(':is_deleted' => UtileService::TINY_INT_TRUE);
+        
+        if(strlen($country_id)){
+            $q->andWhere('u.countryId = :country_id');
+            $parameters[':country_id'] = $country_id;
+        }
+        
+        if(strlen($location_id)){
+            $q->andWhere('u.locationId = :location_id');
+            $parameters[':location_id'] = $location_id;
+        }
+        
+        if(strlen($color)){
+            $q->andWhere('u.skinColor = :skin_color');
+            $parameters[':skin_color'] = $color;
+        }
+        
+        if(strlen($lang)){
+            switch ($lang){
+                case UtileService::LANG_ZH : 
+                    $q->andWhere('u.isZh = :is_zh');
+                    $parameters[':is_zh'] = UtileService::TINY_INT_TRUE;
+                   break; 
+               case UtileService::LANG_FR : 
+                   $q->andWhere('u.isFr = :is_fr');
+                   $parameters[':is_fr'] = UtileService::TINY_INT_TRUE;
+                   break; 
+               case UtileService::LANG_EN : 
+                   $q->andWhere('u.isEn = :is_en');
+                   $parameters[':is_en'] = UtileService::TINY_INT_TRUE;
+                   break; 
+               default :
+                   break;
+            }
+        }
+        
+        if(strlen($is_single) > 0) {
+            if($is_single == 1){
+                $q->andWhere('u.isSingle = :is_single');
+                $parameters[':is_single'] = UtileService::TINY_INT_TRUE;
+            } else {
+                $q->andWhere('u.isSingle = :is_single');
+                $parameters[':is_single'] = UtileService::TINY_INT_FALSE;
+            }
+        }
+        
+        if(count($age_period) > 0){
+            $thisYear = date('Y');
+            
+            if(array_key_exists('min', $age_period)){
+                $maxBirthYear = (int)$thisYear - (int)$age_period['min'];
+                $minTime = strtotime($maxBirthYear);
+                $minTime = date('Y-m-d',$minTime);
+                $q->andWhere('u.birthday < :min');
+                $parameters[':min'] = $minTime;
+            }
+            if(array_key_exists('max', $age_period)){
+                $minBirthYear = (int)$thisYear - (int)$age_period['max'];
+                $maxTime = strtotime($minBirthYear);
+                $maxTime = date('Y-m-d',$maxTime);
+                $q->andWhere('u.birthday > :max');
+                $parameters[':max'] = $maxTime;
+            }
 
+        }
+        
+        $q->setParameters($parameters);
+        $q->distinct();
+        //var_dump($q->getQuery()->getSQL());
+        //die;
+        if($only_total){
+            return count($q->getQuery()->getScalarResult());
+        }
+        $q->setMaxResults($limit);
+        $q->setFirstResult($offset);
+        $users = $q->getQuery()->getScalarResult();
+        
+        foreach ($users as $key => $user) {
+            $profile_photo = $em->getRepository('ApiBundle:Mphoto')->loadProfilePhotosByUserId($user['id']);
+            $users[$key][UtileService::DATA_STRUCTURE_PROFILE_PHOTO] = $profile_photo;
+        }
+        return $users;
+    }
 }
