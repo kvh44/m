@@ -273,6 +273,11 @@ class SearchService {
             $color = null, $lang = null, $is_single = null, $age_period = array())
     {
         $key = 'users';
+        
+        if(strlen($only_total) > 0){
+            $key .= 'total'.$only_total;
+        }
+        
         if(strlen($offset) > 0){
             $key .= 'offset'.$offset;
         }

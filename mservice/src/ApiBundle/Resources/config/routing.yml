@@ -100,6 +100,11 @@ public_api_user_search:
     defaults: { _controller: ApiBundle:PublicUser:searchUser, _format:json}
     methods:  [POST] 
     
+public_api_remove_user_search_cache:
+    path: /public/user/search/remove/cache
+    defaults: { _controller: ApiBundle:PublicUser:removeSearchUserCache, _format:json}
+    methods:  [POST]     
+    
 public_api_post_search:
     path: /public/post/search
     defaults: { _controller: ApiBundle:PublicPost:searchPost, _format:json}

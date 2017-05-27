@@ -76,5 +76,23 @@ class PublicUserController extends FOSRestController
         return $this->container->get('api_massage.SearchService')->searchUserManager(
                 $only_total, $offset, $limit, $country_id, $location_id, $color,
                 $lang, $is_single, $age_period, $word);
-    }               
+    }           
+
+    public function removeSearchUserCacheAction(Request $request)
+    {
+        $offset = $request->get('offset')?$request->get('offset'):0;
+        $limit = $request->get('limit')?$request->get('limit'):$this->getParameter('search.user.numberResults');
+        $country_id = $request->get('country_id');
+        $location_id = $request->get('location_id');
+        $color = $request->get('color');
+        $lang = $request->get('lang');
+        $is_single = $request->get('is_single');
+        $age_period = $request->get('age_period');
+        $word = $request->get('word');
+        $only_total = $request->get('only_total');
+        $key = $this->container->get('api_massage.SearchService')->getSearchUserKey(
+                $only_total, $offset, $limit, $country_id, $location_id, $color,
+                $lang, $is_single, $age_period, $word);
+        return $this->container->get('api_massage.CacheService')->removeSearchUsersByKeyCache($key);
+    }        
 }
