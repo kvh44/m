@@ -2,6 +2,14 @@ api_homepage:
     path:     /
     defaults: { _controller: ApiBundle:Default:index }
     
+public_api_client_ip:
+    path:     /public/client/ip
+    defaults: { _controller: ApiBundle:Default:clientIp }    
+  
+public_api_searchengine_state:
+    path:     /public/searchengine/state
+    defaults: { _controller: ApiBundle:Default:searchEngineState }      
+    
 public_api_login:
     path: /public/user/login
     defaults: { _controller: ApiBundle:PublicUser:login, _format:json}
@@ -37,6 +45,11 @@ private_api_user_update_info:
     defaults: { _controller: ApiBundle:PrivateUser:updateUserInfo, _format:json}
     methods:  [POST]  
     
+private_api_shop_update_info:
+    path: /private/shop/update/info
+    defaults: { _controller: ApiBundle:PrivateUser:updateShopInfo, _format:json}
+    methods:  [POST]      
+    
 private_api_new_user_send_mail:
     path: /private/user/new/send/mail
     defaults: { _controller: ApiBundle:PrivateUser:sendNewUserMail, _format:json}
@@ -55,4 +68,75 @@ public_api_password_forget_send_mail:
 private_api_uploader:
     path: /private/user/upload/photo
     defaults: { _controller: ApiBundle:PrivateUser:upload, _format:json}
-    methods:  [POST]  
+    methods:  [POST]
+
+public_api_user_page:
+    path: /public/user/single/page
+    defaults: { _controller: ApiBundle:PublicUser:getSingleUserPage, _format:json}
+    methods:  [POST]
+    
+public_api_shop_page:
+    path: /public/shop/single/page
+    defaults: { _controller: ApiBundle:PublicUser:getSingleShopPage, _format:json}
+    methods:  [POST]    
+
+public_api__remove_user_page_cache:
+    path: /public/user/single/page/remove/cache
+    defaults: { _controller: ApiBundle:PublicUser:removeSingleUserPageCache, _format:json}
+    methods:  [POST]
+    
+public_api_user_photos:
+    path: /public/user/photos
+    defaults: { _controller: ApiBundle:PublicUser:getSingleUserPhotos, _format:json}
+    methods:  [POST] 
+    
+public_api_profile_photo:
+    path: /public/profile/photo
+    defaults: { _controller: ApiBundle:PublicUser:getProfilePhoto, _format:json}
+    methods:  [POST]     
+    
+public_api_user_search:
+    path: /public/user/search
+    defaults: { _controller: ApiBundle:PublicUser:searchUser, _format:json}
+    methods:  [POST] 
+    
+public_api_remove_user_search_cache:
+    path: /public/user/search/remove/cache
+    defaults: { _controller: ApiBundle:PublicUser:removeSearchUserCache, _format:json}
+    methods:  [POST]     
+    
+public_api_post_search:
+    path: /public/post/search
+    defaults: { _controller: ApiBundle:PublicPost:searchPost, _format:json}
+    methods:  [POST]     
+    
+private_api_topuser:
+    path: /private/user/top
+    defaults: { _controller: ApiBundle:PrivateUser:topUser, _format:json}
+    methods:  [POST]    
+    
+private_api_photo_delete:
+    path: /private/photo/delete
+    defaults: { _controller: ApiBundle:PrivateUser:deletePhoto, _format:json}
+    methods:  [POST]        
+    
+public_api_post_page:
+    path: /public/post/single/page
+    defaults: { _controller: ApiBundle:PublicPost:getSinglePostPage, _format:json}
+    methods:  [POST]    
+    
+public_api_create_post:
+    path: /private/post/create
+    defaults: { _controller: ApiBundle:PrivatePost:createPost, _format:json}
+    methods:  [POST]      
+    
+private_api_post_delete:
+    path: /private/post/delete
+    defaults: { _controller: ApiBundle:PrivatePost:deletePost, _format:json}
+    methods:  [POST]   
+
+private_api_post_update:
+    path: /private/post/update
+    defaults: { _controller: ApiBundle:PrivatePost:updatePost, _format:json}
+    methods:  [POST]     
+    

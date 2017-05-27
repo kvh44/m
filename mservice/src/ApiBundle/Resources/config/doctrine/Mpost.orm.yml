@@ -1,6 +1,7 @@
 ApiBundle\Entity\Mpost:
     type: entity
     table: mpost
+    repositoryClass: ApiBundle\Repository\MassagePostRepository
     indexes:
         user_id:
             columns:

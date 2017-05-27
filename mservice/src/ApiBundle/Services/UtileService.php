@@ -16,16 +16,43 @@ class UtileService {
      */
     protected $translator;
     
-    public function __construct(Translator $translator)
+    protected $api_version;
+
+
+    public function __construct(Translator $translator, $api_version)
     {
         $this->translator = $translator;
-    }  
-     
+        $this->api_version = $api_version;
+    }
+    
+    const API_VERSION = 0.1;
+    
     const FROM_SQL = 'sql';
     const FROM_CACHE = 'cache';
     const FROM_SEARCH = 'search';
-
-    public $response= array('data' => array(), 'state' => true, 'message' => null, 'path' => null, 'from' => null,'code' => 0);
+    
+    const CONST_NULL = NULL;
+    const BOOL_TRUE = true;
+    const TINY_INT_TRUE = 1;
+    const TINY_INT_TRUE_STRING = '1';
+    const BOOL_FALSE = false;
+    const TINY_INT_FALSE = 0;
+    const TINY_INT_FALSE_STRING = '0';
+    
+    const LANG_ZH = 'zh';
+    const LANG_FR = 'fr';
+    const LANG_EN = 'en';
+    
+    const DATA_STRUCTURE_USER = 'user';
+    const DATA_STRUCTURE_PROFILE_PHOTO = 'profile_photo';
+    const DATA_STRUCTURE_USER_PHOTOS = 'user_photos';
+	
+    const DATA_STRUCTURE_POST = 'post';
+    const DATA_STRUCTURE_POST_PHOTOS = 'post_photos';
+	
+    const MIN_LENGTH_TOKEN = 32;
+    
+    public $response= array('data' => array(), 'state' => true, 'message' => null, 'path' => null, 'from' => null,'code' => 0, 'version' => self::API_VERSION);
     
     public $errors = array();
     
@@ -100,5 +127,16 @@ class UtileService {
              $star .= $mask;
          }
          return $first .$star. $last;
-     }
+    }
+    
+    public static function getClientIp(){
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else {
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+        return $ip;
+    }
 }

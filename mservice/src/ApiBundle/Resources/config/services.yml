@@ -5,27 +5,80 @@ services:
 
     api_massage.UtileService:
             class: ApiBundle\Services\UtileService
-            arguments: ["@translator.default"]
+            arguments: ["@translator.default", "%api_version%"]
             
     api_massage.mailer:
-        class:        ApiBundle\Services\Mailer
+        class:        ApiBundle\Services\MailerService
         arguments:    ["@mailer", "@templating"]        
 
     api_massage.UsersService:
             class: ApiBundle\Services\UsersService
-            arguments: ["@doctrine","@session","@translator.default","@validator", "@service_container","@api_massage.UtileService", "@api_massage.mailer"]
+            arguments: ["@doctrine","@session","@translator.default","@validator", "@service_container","@api_massage.UtileService", "@api_massage.mailer", "@api_massage.CacheService", "%min_top_time%"]
 #  "@service_container"
+    
+    api_massage.PostsService:
+            class: ApiBundle\Services\PostsService
+            arguments: ["@doctrine","@session","@translator.default","@validator", "@service_container","@api_massage.UtileService", "@api_massage.mailer", "@api_massage.CacheService", "%min_top_time%"]
 
     api_massage.PhotoService:
             class: ApiBundle\Services\PhotoService
-            arguments: ["@doctrine", "@api_massage.UsersService", "@api_massage.UtileService", "%size_limit_photo%", "%upload_directory%", "%profile_photo_directory%", "%user_photo_directory%", "%post_photo_directory%", "%original_directory%", "%medium_directory%", "%small_directory%", "%medium_photo_max_width%", "%small_photo_max_width%", "%icon_photo_max_width%", "%photo_default_mime_type%", "%photo_default_type%"]
+            arguments: ["@doctrine", "@translator.default", "@api_massage.UsersService", "@api_massage.CacheService", "@api_massage.UtileService", "%size_limit_photo%", "%upload_directory%", "%profile_photo_directory%", "%user_photo_directory%", "%post_photo_directory%", "%original_directory%", "%medium_directory%", "%small_directory%", "%medium_photo_max_width%", "%small_photo_max_width%", "%icon_photo_max_width%", "%photo_default_mime_type%", "%photo_default_type%"]
 
-    api_massage.dataCreateListener:
+    api_massage.CacheService:
+            class: ApiBundle\Services\CacheService
+            arguments: ["@service_container", "@api_massage.UtileService", "%cache.userWithUsername%", "%cache.userPhotos%", "%cache.profilePhotos%", "%cache.post%", "%cache.postPhotos%", "%cache.searchUsers%"]
+    
+    api_massage.SearchService:
+            class: ApiBundle\Services\SearchService
+            arguments: ["@service_container", "@doctrine", "@api_massage.UtileService", "@api_massage.CacheService", "%fos_elastica.index_manager%"]
+            
+            
+    api_massage.dataPreCreateListener:
             class: ApiBundle\EventListener\DataPersist
+            #calls:
+            #    - [setCacheService, ["@api_massage.CacheService"]]
+            arguments: ["@api_massage.CacheService"]
             tags:
                 - { name: doctrine.event_listener, event: prePersist }
-
-    api_massage.dataUpdateListener:
+                
+    api_massage.dataPostCreateListener:
             class: ApiBundle\EventListener\DataPersist
+            #calls:
+            #    - [setCacheService, ["@api_massage.CacheService"]]
+            arguments: ["@api_massage.CacheService"]
             tags:
-                - { name: doctrine.event_listener, event: preUPdate }
+                - { name: doctrine.event_listener, event: postPersist }            
+
+    api_massage.dataPreUpdateListener:
+            class: ApiBundle\EventListener\DataPersist
+            arguments: ["@api_massage.CacheService"]
+            tags:
+                - { name: doctrine.event_listener, event: preUpdate }
+                
+    api_massage.dataPostUpdateListener:
+            class: ApiBundle\EventListener\DataPersist
+            arguments: ["@api_massage.CacheService"]
+            tags:
+                - { name: doctrine.event_listener, event: postUpdate }          
+                
+    api_massage.dataUserIndexlistener:
+        class: ApiBundle\EventListener\IndexListener
+        arguments:
+            - "@fos_elastica.object_persister.app.user"
+            - "@fos_elastica.indexable"
+            - { index: app, type: user, identifier: id }
+        tags:
+            - { name: doctrine.event_subscriber }
+            
+    api_massage.listener.customPropertyIndexlistener:
+        class: ApiBundle\EventListener\IndexCustomPropertyListener
+        arguments: ["@api_massage.PhotoService"]
+        tags:
+            - { name: kernel.event_subscriber }       
+            
+    api_massage.dataUserIndexProvider:
+        class: ApiBundle\Provider\UserProvider
+        arguments:
+            - "@fos_elastica.index.app.user"
+        tags:
+            - { name: fos_elastica.provider, index: app, type: user }        

@@ -27,3 +27,24 @@ user:
     identifier:
         not:
             exist: %identifier%此用户名不存在。
+    toptime:
+        updated: 您已经至顶成功! 但是主页刷新需要几分钟等待。。。谢谢合作!
+        too:
+            fast: 您刚刚至顶过一次,过会再来吧。。。
+    internal_id:
+        not:
+            exist: 内部ID不存在
+    internal_token:
+        wrong: 内部拓扑不正确        
+    photo:
+        not:
+            exist: 此照片不存在
+            yours: 此照片不属于你
+        deleted: 此照片已被成功删除
+    information:
+        updated: 用户信息更改成功
+post:
+    not:
+        exist: 次贴已经不存在
+        yours: 此贴不属于你
+    deleted: 此贴已被成功删除
