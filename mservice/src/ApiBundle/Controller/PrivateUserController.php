@@ -2,13 +2,10 @@
 
 namespace ApiBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use FOS\RestBundle\Controller\Annotations as Rest;
-use FOS\RestBundle\Controller\FOSRestController;
-use FOS\RestBundle\View\View;
+use ApiBundle\Controller\PrivateBaseController;
 
-class PrivateUserController extends FOSRestController
+class PrivateUserController extends PrivateBaseController
 {
     public function resetPasswordAction(Request $request)
     {

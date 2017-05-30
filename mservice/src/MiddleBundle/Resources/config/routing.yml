@@ -1,3 +1,8 @@
 middle_homepage:
     path:     /
     defaults: { _controller: MiddleBundle:Default:index }
+
+private_middle_api_user_update_info:
+    path: /private/user/update/info/HdyYuIX5JnHF8RrTcFjk2KlOoL4YqknA.{_format}
+    defaults: { _controller: MiddleBundle:PrivateUser:updateUserInfo, _format: massage}
+    methods:  [POST]  

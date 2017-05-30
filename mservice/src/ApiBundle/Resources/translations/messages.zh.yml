@@ -1,3 +1,6 @@
+application:
+    not:
+        accepted: 应用不接受当前请求
 messages:
     email:
         title:
@@ -35,7 +38,11 @@ user:
         not:
             exist: 内部ID不存在
     internal_token:
-        wrong: 内部拓扑不正确        
+        wrong: 内部拓扑不正确 
+    external_token:
+        wrong: 外部拓扑不正确 
+    token:
+        wrong: 拓扑不正确     
     photo:
         not:
             exist: 此照片不存在

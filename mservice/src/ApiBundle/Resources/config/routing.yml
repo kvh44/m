@@ -2,6 +2,10 @@ api_homepage:
     path:     /
     defaults: { _controller: ApiBundle:Default:index }
     
+public_api_generate_random_string:
+    path:     /public/random/string
+    defaults: { _controller: ApiBundle:Default:generateRandomString } 
+    
 public_api_client_ip:
     path:     /public/client/ip
     defaults: { _controller: ApiBundle:Default:clientIp }    

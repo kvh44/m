@@ -342,9 +342,19 @@ class UsersService
         return $this->em->getRepository('ApiBundle:Muser')->loadPasswordByUserInternalId($internal_id);
     }
 
+    public function findInternalTokenByExternalToken($internal_id, $external_token)
+    {
+        return $this->em->getRepository('ApiBundle:Muser')->loadInternalTokenByExternalToken($internal_id, $external_token);
+    }
+    
     public function findUserByInternalToken($internal_token)
     {
         return $this->em->getRepository('ApiBundle:Muser')->loadUserByInternalToken($internal_token);
+    }
+    
+    public function findUserByToken($token)
+    {
+        return $this->em->getRepository('ApiBundle:Muser')->loadUserByToken($token);
     }
     
     public function findUserPhotosByUserId($user_id)
@@ -769,6 +779,7 @@ class UsersService
             $this->em->flush();
             
         } catch (\Exception $e) {
+            $this->utileService->setResponseData(array());
             $this->utileService->setResponseState(false);
             $this->utileService->setResponseMessage($e->getMessage());
             return $this->utileService->getResponse();
