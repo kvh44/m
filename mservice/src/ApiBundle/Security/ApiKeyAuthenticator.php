@@ -21,9 +21,13 @@ class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface, Authentica
      */
     protected $container;
     
+    //protected $utileService;
+
     public function __construct(Container $container)
     {
         $this->container = $container;
+        //$this->utileService = $this->container->get('api_massage.UtileService');
+        
     }      
     
     public function createToken(Request $request, $providerKey)
@@ -71,9 +75,13 @@ class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface, Authentica
             // CAUTION: this message will be returned to the client
             // (so don't put any un-trusted messages / error strings here)
             
+            die($this->container->get('translator')->trans('user.token.wrong'));
+            /*
             throw new CustomUserMessageAuthenticationException(
                 sprintf('API Key "%s" does not exist.', $apiKey)
             );
+             * 
+             */
         }
 
         $user = $userProvider->loadUserByUsername($username);
