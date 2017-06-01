@@ -45,27 +45,27 @@ private_api_user_reset_telephone:
     methods:  [POST]    
     
 private_api_user_update_info:
-    path: /private/user/update/info
+    path: /private/uui/RUWj1jizt0WjvMJUqFJwks5cGjuc7MEY.{_format}
     defaults: { _controller: ApiBundle:PrivateUser:updateUserInfo, _format:json}
     methods:  [POST]  
     
 private_api_shop_update_info:
-    path: /private/shop/update/info
+    path: /private/sui/teI0mLYe4xvpZqxLPYTjxKHhBLHS4abc.{_format}
     defaults: { _controller: ApiBundle:PrivateUser:updateShopInfo, _format:json}
     methods:  [POST]      
     
 private_api_new_user_send_mail:
-    path: /private/user/new/send/mail
+    path: /private/unsm/sendjdkdshedjcksjdjejdjqiehdusjzs.{_format}
     defaults: { _controller: ApiBundle:PrivateUser:sendNewUserMail, _format:json}
     methods:  [POST]   
     
 private_api_password_changed_send_mail:
-    path: /private/user/password/changed/send/mail
+    path: /private/upcsm/teI0mLYe4xvpZqxLPYTjxKHhdghjnbcz.{_format}
     defaults: { _controller: ApiBundle:PrivateUser:sendPasswordChangedMail, _format:json}
     methods:  [POST]   
     
 public_api_password_forget_send_mail:
-    path: /private/user/password/forget/send/mail
+    path: /private/upfsm/nuyOR8Ps3xT4oWggrzDk4KzrO2Ydc5LD.{_format}
     defaults: { _controller: ApiBundle:PrivateUser:sendPasswordForgetMail, _format:json}
     methods:  [POST]     
     
@@ -115,12 +115,12 @@ public_api_post_search:
     methods:  [POST]     
     
 private_api_topuser:
-    path: /private/user/top
+    path: /private/ut/kGn1KnNEVQGCPdbYrT2lzOFlNWhpdaTN.{_format}
     defaults: { _controller: ApiBundle:PrivateUser:topUser, _format:json}
     methods:  [POST]    
     
 private_api_photo_delete:
-    path: /private/photo/delete
+    path: /private/phd/hxJ182uoG9etkVyp8O3Rapo018oZKD2p.{_format}
     defaults: { _controller: ApiBundle:PrivateUser:deletePhoto, _format:json}
     methods:  [POST]        
     
@@ -130,17 +130,17 @@ public_api_post_page:
     methods:  [POST]    
     
 public_api_create_post:
-    path: /private/post/create
+    path: /private/pc/vivUeFaGjacPOnE8WMQcOWSm0vhg142P.{_format}
     defaults: { _controller: ApiBundle:PrivatePost:createPost, _format:json}
     methods:  [POST]      
     
 private_api_post_delete:
-    path: /private/post/delete
+    path: /private/pd/JIM2Nr2gRo4XYHfAxFTykdtwvqbEihIz.{_format}
     defaults: { _controller: ApiBundle:PrivatePost:deletePost, _format:json}
     methods:  [POST]   
 
 private_api_post_update:
-    path: /private/post/update
+    path: /private/pu/blSqcFfCDXr198oX2FPrKgqJfuWCUt32.{_format}
     defaults: { _controller: ApiBundle:PrivatePost:updatePost, _format:json}
     methods:  [POST]     
     

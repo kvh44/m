@@ -16,6 +16,11 @@ class ControllerListener
             if (isset($_controller[0])) 
             {
                 $controller = $_controller[0];
+                // On vérifie que le controller implémente la méthode preExecuteMiddle
+                if(method_exists($controller,'preExecuteMiddle'))
+                {
+                    $controller->preExecuteMiddle();
+                }
                 // On vérifie que le controller implémente la méthode preExecute
                 if(method_exists($controller,'preExecute'))
                 {

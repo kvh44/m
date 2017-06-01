@@ -83,7 +83,7 @@ services:
         tags:
             - { name: fos_elastica.provider, index: app, type: user }        
             
-    api_massage.controller.pre_execute_listener:
+    api_massage.controller.preExecuteListener:
         class: ApiBundle\EventListener\ControllerListener
         tags:
           -  { name: kernel.event_listener, event: kernel.controller, method: onCoreController }        

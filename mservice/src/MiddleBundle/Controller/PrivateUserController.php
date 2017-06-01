@@ -9,7 +9,31 @@ class PrivateUserController extends ApiPrivateUserController
 {
     public function updateUserInfoAction(Request $request)
     {
-        //$request->headers->set('api_application_key' , $this->container->getParameter('api_application_key'));
         return parent::updateUserInfoAction($request);
     }  
+    
+    public function updateShopInfoAction(Request $request)
+    {
+        return parent::updateShopInfoAction($request);
+    } 
+    
+    public function deletePhotoAction(Request $request)
+    {
+        return parent::deletePhotoAction($request);
+    }
+    
+    public function sendPasswordForgetMailAction(Request $request)
+    {
+        return parent::sendPasswordForgetMailAction($request);
+    }
+    
+    public function sendPasswordChangedMailAction(Request $request)
+    {
+        return parent::sendPasswordChangedMailAction($request);
+    }  
+    
+    public function sendNewUserMailAction(Request $request)
+    {
+        return parent::sendNewUserMailAction($request);
+    }   
 }

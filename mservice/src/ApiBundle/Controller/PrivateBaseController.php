@@ -6,6 +6,11 @@ use ApiBundle\Controller\PublicBaseController;
 
 class PrivateBaseController extends PublicBaseController
 {
+    public function preExecuteMiddle()
+    {
+        $this->get('request_stack')->getCurrentRequest()->headers->set('api_application_key' , $this->container->getParameter('api_application_key'));
+    }        
+
     public function preExecute()
     {
         // application key

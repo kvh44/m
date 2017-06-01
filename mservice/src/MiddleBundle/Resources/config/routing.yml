@@ -2,7 +2,53 @@ middle_homepage:
     path:     /
     defaults: { _controller: MiddleBundle:Default:index }
 
-private_middle_api_user_update_info:
-    path: /private/user/update/info/HdyYuIX5JnHF8RrTcFjk2KlOoL4YqknA.{_format}
-    defaults: { _controller: MiddleBundle:PrivateUser:updateUserInfo, _format: massage}
+private_middle_user_update_info:
+    path: /private/uui/HdyYuIX5JnHF8RrTcFjk2KlOoL4YqknA.{_format}
+    defaults: { _controller: MiddleBundle:PrivateUser:updateUserInfo, _format: json}
     methods:  [POST]  
+
+
+private_middle_post_update:
+    path: /private/pu/YT2vdOl9S5XphMmaeuFSi9Wa9VYIOlBA.{_format}
+    defaults: { _controller: MiddleBundle:PrivatePost:updatePost, _format:json}
+    methods:  [POST]     
+    
+private_middle_post_delete:
+    path: /private/pd/qhcXxeaqod3or84PdvJjD5Ue5XOX1Shw.{_format}
+    defaults: { _controller: MiddleBundle:PrivatePost:deletePost, _format:json}
+    methods:  [POST]     
+    
+public_middle_create_post:
+    path: /private/pc/7mi0LqVnE58G21Pbe7tJdLFf5JFSHehe.{_format}
+    defaults: { _controller: MiddleBundle:PrivatePost:createPost, _format:json}
+    methods:  [POST]        
+    
+private_middle_photo_delete:
+    path: /private/phd/NOTY7Hs6WEbbCZQEWQCD9LZs7yBTI1ty.{_format}
+    defaults: { _controller: MiddleBundle:PrivateUser:deletePhoto, _format:json}
+    methods:  [POST]         
+    
+private_middle_topuser:
+    path: /private/ut/rxn1cezQxBXqeellWEvM83qa2hX4eFfZ.{_format}
+    defaults: { _controller: MiddleBundle:PrivateUser:topUser, _format:json}
+    methods:  [POST]      
+    
+private_middle_shop_update_info:
+    path: /private/sui/xkiMTn1Nv4SOWs9IKdxMngsmM178fJu6.{_format}
+    defaults: { _controller: MiddleBundle:PrivateUser:updateShopInfo, _format:json}
+    methods:  [POST]       
+    
+public_middle_password_forget_send_mail:
+    path: /private/upfsm/IewYKZ7Q0CsXoLz5MjG2eEoQ2moGlmvp.{_format}
+    defaults: { _controller: MiddleBundle:PrivateUser:sendPasswordForgetMail, _format:json}
+    methods:  [POST]      
+    
+private_middle_password_changed_send_mail:
+    path: /private/upcsm/1mWviPZ9n3B7iIMfe1WIIhy8bRgjhUJq.{_format}
+    defaults: { _controller: MiddleBundle:PrivateUser:sendPasswordChangedMail, _format:json}
+    methods:  [POST]       
+    
+private_middle_new_user_send_mail:
+    path: /private/unsm/C21Qb01Hph2dIHAdtYFIKWKaSmIkUz8v.{_format}
+    defaults: { _controller: MiddleBundle:PrivateUser:sendNewUserMail, _format:json}
+    methods:  [POST]      
