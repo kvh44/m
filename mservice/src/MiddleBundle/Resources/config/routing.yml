@@ -52,3 +52,18 @@ private_middle_new_user_send_mail:
     path: /private/unsm/C21Qb01Hph2dIHAdtYFIKWKaSmIkUz8v.{_format}
     defaults: { _controller: MiddleBundle:PrivateUser:sendNewUserMail, _format:json}
     methods:  [POST]      
+    
+private_middle_user_reset_telephone:
+    path: /private/urt/i9jy2Yidqek7otloAHSXRKkBSJzjZqDj.{_format}
+    defaults: { _controller: MiddleBundle:PrivateUser:resetTelephone, _format:json}
+    methods:  [POST]      
+    
+private_middle_user_reset_email:
+    path: /private/ure/Teb5nnFy7e2j8Rx21tZcK0uLB7YsWwhc.{_format}
+    defaults: { _controller: MiddleBundle:PrivateUser:resetEmail, _format:json}
+    methods:  [POST]    
+    
+private_middle_user_reset_password:
+    path: /private/urp/4INi1unJKyELDdllSyLPb4e3P8mv3Tvb.{_format}
+    defaults: { _controller: MiddleBundle:PrivateUser:resetPassword, _format:json}
+    methods:  [POST]    

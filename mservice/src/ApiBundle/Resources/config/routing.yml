@@ -30,17 +30,17 @@ public_api_user_forget_password:
     methods:  [POST]  
     
 private_api_user_reset_password:
-    path: /private/user/reset/password
+    path: /private/urp/ixBuSee1zKP8B2zjarerV0CBHT9nfPZs.{_format}
     defaults: { _controller: ApiBundle:PrivateUser:resetPassword, _format:json}
     methods:  [POST]
 
 private_api_user_reset_email:
-    path: /private/user/reset/email
+    path: /private/ure/qQrSbOckK85PNxdVr5r5J74QcL6WXYso.{_format}
     defaults: { _controller: ApiBundle:PrivateUser:resetEmail, _format:json}
     methods:  [POST]
     
 private_api_user_reset_telephone:
-    path: /private/user/reset/telephone
+    path: /private/urt/94Qc2PStROlisSdlOnWJBRKEcJ0DiqPf.{_format}
     defaults: { _controller: ApiBundle:PrivateUser:resetTelephone, _format:json}
     methods:  [POST]    
     

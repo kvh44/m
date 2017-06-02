@@ -36,4 +36,19 @@ class PrivateUserController extends ApiPrivateUserController
     {
         return parent::sendNewUserMailAction($request);
     }   
+    
+    public function resetTelephoneAction(Request $request)
+    {
+        return parent::resetTelephoneAction($request);
+    }
+    
+    public function resetEmailAction(Request $request)
+    {
+        return parent::resetEmailAction($request);
+    }
+    
+    public function resetPasswordAction(Request $request)
+    {
+        return parent::resetPasswordAction($request);
+    }
 }
