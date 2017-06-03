@@ -29,6 +29,12 @@ class PublicUserController extends FOSRestController
     {
         return $this->container->get('api_massage.UsersService')->forgetPassword($request);
     }    
+    
+    public function sendPasswordForgetMailAction(Request $request)
+    {
+        $identifier = $request->get('identifier');
+        return $this->container->get('api_massage.UsersService')->sendPasswordForgetMail($identifier);
+    } 
 
     public function resetPasswordAction(Request $request)
     {

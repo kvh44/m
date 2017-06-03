@@ -3,24 +3,24 @@ api_homepage:
     defaults: { _controller: ApiBundle:Default:index }
     
 public_api_generate_random_string:
-    path:     /public/random/string
-    defaults: { _controller: ApiBundle:Default:generateRandomString } 
+    path:     /public/rs/s4IPvSlIpZaAzZjk32zgguXsmBxTsGWL
+    defaults: { _controller: ApiBundle:Default:generateRandomString , _format:json} 
     
 public_api_client_ip:
-    path:     /public/client/ip
-    defaults: { _controller: ApiBundle:Default:clientIp }    
+    path:     /public/ci/mJemHziBpaw8GllwVIk98U96urNapR2Z.{_format}
+    defaults: { _controller: ApiBundle:Default:clientIp , _format:json}    
   
 public_api_searchengine_state:
-    path:     /public/searchengine/state
-    defaults: { _controller: ApiBundle:Default:searchEngineState }      
+    path:     /public/ss/IoUHL2m6wNCc8N9sIyams5iYTuTKItqd.{_format}
+    defaults: { _controller: ApiBundle:Default:searchEngineState , _format:json}         
     
 public_api_login:
-    path: /public/user/login
+    path: /public/ul/QZgETAYn3Kw7SkOAHHhEOf1YsjDiawDA.{_format}
     defaults: { _controller: ApiBundle:PublicUser:login, _format:json}
     methods:  [POST]
     
 public_api_create_user:
-    path: /public/user/create
+    path: /public/uc/uXQ3PdRDIpwbTECgg4Ae9AxCaFIViqL1.{_format}
     defaults: { _controller: ApiBundle:PublicUser:createUser, _format:json}
     methods:  [POST]    
     
@@ -65,8 +65,8 @@ private_api_password_changed_send_mail:
     methods:  [POST]   
     
 public_api_password_forget_send_mail:
-    path: /private/upfsm/nuyOR8Ps3xT4oWggrzDk4KzrO2Ydc5LD.{_format}
-    defaults: { _controller: ApiBundle:PrivateUser:sendPasswordForgetMail, _format:json}
+    path: /public/upfsm/nuyOR8Ps3xT4oWggrzDk4KzrO2Ydc5LD.{_format}
+    defaults: { _controller: ApiBundle:PublicUser:sendPasswordForgetMail, _format:json}
     methods:  [POST]     
     
 private_api_uploader:
@@ -75,42 +75,42 @@ private_api_uploader:
     methods:  [POST]
 
 public_api_user_page:
-    path: /public/user/single/page
+    path: /public/usp/FQy21dV1zx0wpGgSzMf5nHHIbnXIcX4o.{_format}
     defaults: { _controller: ApiBundle:PublicUser:getSingleUserPage, _format:json}
     methods:  [POST]
     
 public_api_shop_page:
-    path: /public/shop/single/page
+    path: /public/ssp/gOzX8eZ54yZEbOCz3Zevjrq47XUrb7b3.{_format}
     defaults: { _controller: ApiBundle:PublicUser:getSingleShopPage, _format:json}
     methods:  [POST]    
 
 public_api__remove_user_page_cache:
-    path: /public/user/single/page/remove/cache
+    path: /public/usprc/QcUrTSqRbB9kx0iQX2149IIAFbHmdgr1.{_format}
     defaults: { _controller: ApiBundle:PublicUser:removeSingleUserPageCache, _format:json}
     methods:  [POST]
     
 public_api_user_photos:
-    path: /public/user/photos
+    path: /public/up/Db2FUBxAmlMeSR257ySQTw77kiyRWCdZ.{_format}
     defaults: { _controller: ApiBundle:PublicUser:getSingleUserPhotos, _format:json}
     methods:  [POST] 
     
 public_api_profile_photo:
-    path: /public/profile/photo
+    path: /public/pp/hgeusPjrI9H6AS3m4knn4m4fpjsCJ8yz.{_format}
     defaults: { _controller: ApiBundle:PublicUser:getProfilePhoto, _format:json}
     methods:  [POST]     
     
 public_api_user_search:
-    path: /public/user/search
+    path: /public/us/CkHbQ50W23tTSwK9YiYU7yyJiSFa7uXq.{_format}
     defaults: { _controller: ApiBundle:PublicUser:searchUser, _format:json}
     methods:  [POST] 
     
 public_api_remove_user_search_cache:
-    path: /public/user/search/remove/cache
+    path: /public/usrc/hm7RuoNdy67z479uMrpF80xxJluf5HUX.{_format}
     defaults: { _controller: ApiBundle:PublicUser:removeSearchUserCache, _format:json}
     methods:  [POST]     
     
 public_api_post_search:
-    path: /public/post/search
+    path: /public/ps/peVVra1KVSbTNeZwid4UyT22gSApB8VM.{_format}
     defaults: { _controller: ApiBundle:PublicPost:searchPost, _format:json}
     methods:  [POST]     
     
@@ -125,7 +125,7 @@ private_api_photo_delete:
     methods:  [POST]        
     
 public_api_post_page:
-    path: /public/post/single/page
+    path: /public/psp/ApbSnnOoXxrvI8MiHYeOlK9aaG5LkaMV.{_format}
     defaults: { _controller: ApiBundle:PublicPost:getSinglePostPage, _format:json}
     methods:  [POST]    
     

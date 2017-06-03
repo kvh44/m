@@ -56,12 +56,6 @@ class PrivateUserController extends PrivateBaseController
         return $this->container->get('api_massage.UsersService')->sendPasswordChangedMail($internal_id, $internal_token);
     }  
     
-    public function sendPasswordForgetMailAction(Request $request)
-    {
-        $identifier = $request->get('identifier');
-        return $this->container->get('api_massage.UsersService')->sendPasswordForgetMail($identifier);
-    } 
-    
     public function uploadAction(Request $request)
     {
         $is_local = $request->get('is_local') ;

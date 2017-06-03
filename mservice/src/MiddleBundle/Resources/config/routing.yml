@@ -18,7 +18,7 @@ private_middle_post_delete:
     defaults: { _controller: MiddleBundle:PrivatePost:deletePost, _format:json}
     methods:  [POST]     
     
-public_middle_create_post:
+private_middle_create_post:
     path: /private/pc/7mi0LqVnE58G21Pbe7tJdLFf5JFSHehe.{_format}
     defaults: { _controller: MiddleBundle:PrivatePost:createPost, _format:json}
     methods:  [POST]        
@@ -37,11 +37,6 @@ private_middle_shop_update_info:
     path: /private/sui/xkiMTn1Nv4SOWs9IKdxMngsmM178fJu6.{_format}
     defaults: { _controller: MiddleBundle:PrivateUser:updateShopInfo, _format:json}
     methods:  [POST]       
-    
-public_middle_password_forget_send_mail:
-    path: /private/upfsm/IewYKZ7Q0CsXoLz5MjG2eEoQ2moGlmvp.{_format}
-    defaults: { _controller: MiddleBundle:PrivateUser:sendPasswordForgetMail, _format:json}
-    methods:  [POST]      
     
 private_middle_password_changed_send_mail:
     path: /private/upcsm/1mWviPZ9n3B7iIMfe1WIIhy8bRgjhUJq.{_format}
@@ -67,3 +62,75 @@ private_middle_user_reset_password:
     path: /private/urp/4INi1unJKyELDdllSyLPb4e3P8mv3Tvb.{_format}
     defaults: { _controller: MiddleBundle:PrivateUser:resetPassword, _format:json}
     methods:  [POST]    
+     
+public_middle_password_forget_send_mail:
+    path: /public/upfsm/IewYKZ7Q0CsXoLz5MjG2eEoQ2moGlmvp.{_format}
+    defaults: { _controller: MiddleBundle:PublicUser:sendPasswordForgetMail, _format:json}
+    methods:  [POST]   
+    
+public_middle_login:
+    path: /public/ul/XsxXW9PC73rKxKHP7pvOODsqfqciBRq0.{_format}
+    defaults: { _controller: MiddleBundle:PublicUser:login, _format:json}
+    methods:  [POST]    
+    
+public_middle_create_user:
+    path: /public/uc/ejBC0Zjkp5klXmr3TkychrcZQHnpxUNb.{_format}
+    defaults: { _controller: MiddleBundle:PublicUser:createUser, _format:json}
+    methods:  [POST]      
+    
+public_middle_user_page:
+    path: /public/usp/aSrtmyxCiPYyGLNelN1m4BJ4GE6U1qFx.{_format}
+    defaults: { _controller: MiddleBundle:PublicUser:getSingleUserPage, _format:json}
+    methods:  [POST]    
+    
+public_middle_shop_page:
+    path: /public/ssp/hUfg7ftG8wB6aMl4mVxMb5Z0cgaUhDUD.{_format}
+    defaults: { _controller: MiddleBundle:PublicUser:getSingleShopPage, _format:json}
+    methods:  [POST]  
+    
+public_middle_remove_user_page_cache:
+    path: /public/usprc/fnvjxFE8DX35YqVelYeEPnBxPgpG4cAa.{_format}
+    defaults: { _controller: MiddleBundle:PublicUser:removeSingleUserPageCache, _format:json}
+    methods:  [POST]    
+    
+public_middle_user_photos:
+    path: /public/up/GfjXLg8wGErhT5AJ46XwvEiZZOt8Chh9.{_format}
+    defaults: { _controller: MiddleBundle:PublicUser:getSingleUserPhotos, _format:json}
+    methods:  [POST] 
+    
+public_middle_profile_photo:
+    path: /public/pp/HMOclo6M6oexMfaPedqSzCP4xEfOjyo4.{_format}
+    defaults: { _controller: MiddleBundle:PublicUser:getProfilePhoto, _format:json}
+    methods:  [POST]      
+    
+public_middle_user_search:
+    path: /public/us/SvRTpOcubv7fkFUAhc8EaCAQ2V86NMde.{_format}
+    defaults: { _controller: MiddleBundle:PublicUser:searchUser, _format:json}
+    methods:  [POST]    
+    
+public_middle_remove_user_search_cache:
+    path: /public/usrc/wjbnmgYz8nEshg3uyyO8TJPw1BRURkOj.{_format}
+    defaults: { _controller: MiddleBundle:PublicUser:removeSearchUserCache, _format:json}
+    methods:  [POST]      
+    
+public_middle_post_page:
+    path: /public/psp/tIq1giUSIDJhvIhu5mbaeVKRoBqYRhCm.{_format}
+    defaults: { _controller: MiddleBundle:PublicPost:getSinglePostPage, _format:json}
+    methods:  [POST]     
+    
+public_middle_post_search:
+    path: /public/ps/PDHB8pX05Nnt6ANWB6Cx4vnwD9e09Ut0.{_format}
+    defaults: { _controller: MiddleBundle:PublicPost:searchPost, _format:json}
+    methods:  [POST]   
+    
+public_middle_client_ip:
+    path:     /public/ci/2NFLVWIocpxapc9YUdAZqFlPcLpxHmFm.{_format}
+    defaults: { _controller: MiddleBundle:Default:clientIp , _format:json}  
+    
+public_middle_searchengine_state:
+    path:     /public/ss/pNxqnEOH3IgRIPrlTUTUkG18faFQ8KDX.{_format}
+    defaults: { _controller: MiddleBundle:Default:searchEngineState , _format:json}     
+    
+public_middle_generate_random_string:
+    path:     /public/rs/lwpiKnYlLmIZpGJQmU62yehVPPIQwmoH.{_format}
+    defaults: { _controller: MiddleBundle:Default:generateRandomString , _format:json}     
