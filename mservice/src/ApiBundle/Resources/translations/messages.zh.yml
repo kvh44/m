@@ -42,7 +42,7 @@ user:
     telephone:
         changed: 电话号码被成功更改
         old_telephone:
-        same: 新旧电话号码一样,请输入一个不一样的新电话号码
+            same: 新旧电话号码一样,请输入一个不一样的新电话号码
     toptime:
         updated: 您已经至顶成功! 但是主页刷新需要几分钟等待。。。谢谢合作!
         too:
