@@ -115,7 +115,12 @@ class PhotoService {
     {
         $this->user = $this->findUserByInternalToken($request->get('internal_token'));
         if(!$this->user){
-            $this->utileService->setResponseMessage('user.token.wrong');
+            $this->utileService->setResponseMessage($this->translator->trans('user.internal_token.wrong'));
+            $this->utileService->setResponseState(false);
+            return $this->utileService->getResponse();
+        }
+        if ($this->user->getInternalId() !== $request->get('internal_id')) {
+            $this->utileService->setResponseMessage($this->translator->trans('user.internal_id.not.exist'));
             $this->utileService->setResponseState(false);
             return $this->utileService->getResponse();
         }
@@ -225,7 +230,7 @@ class PhotoService {
             $this->mPhoto->setPhotoType($request->get('type'));
             if($request->get('type') === self::POST_PHOTO_TYPE){
                 if(!$request->get('post_id')){
-                    $this->utileService->setResponseMessage('post.id.invalid');
+                    $this->utileService->setResponseMessage($this->translator->trans('post.id.invalid'));
                     $this->utileService->setResponseState(false);
                     return $this->utileService->getResponse();
                 }
@@ -269,7 +274,7 @@ class PhotoService {
     protected function generateSmallPhoto($photo_path, $directory, $new_name, $mime_type = 'image/png', $width = 100, $height = 100)
     {
        if(!file_exists($photo_path)){
-           $this->utileService->setResponseMessage('photo.original.not_exist');
+           $this->utileService->setResponseMessage($this->translator->trans('photo.original.not.exist'));
            $this->utileService->setResponseState(false);
            return $this->utileService->getResponse();
        }
@@ -280,9 +285,9 @@ class PhotoService {
 
             $image
                 ->fromFile($photo_path)                     // load image.jpg
-                ->autoOrient()                              // adjust orientation based on exif data
+                //->autoOrient()                              // adjust orientation based on exif data
                 ->resize($width, $height)                          // resize to 320x200 pixels
-                ->flip('x')                                 // flip horizontally
+                //->flip('x')                                 // flip horizontally
                 //->colorize('DarkBlue')                      // tint dark blue
                 //->border('black', 10)                       // add a 10 pixel black border
                 //->overlay('watermark.png', 'bottom right')  // add a watermark image
@@ -318,7 +323,7 @@ class PhotoService {
                 $return = $this->uploadDirectory . $this->postPhotoDirectory;
                 break;
             default:
-                $this->utileService->setResponseMessage('upload.directory.type.invalid');
+                $this->utileService->setResponseMessage($this->translator->trans('photo.upload.directory.type.invalid'));
                 $this->utileService->setResponseState(false);
                 return $this->utileService->getResponse();
         }
@@ -337,7 +342,7 @@ class PhotoService {
                 $return .= $this->iconDirectory;
                 break;
             default:
-                $this->utileService->setResponseMessage('upload.directory.level.invalid');
+                $this->utileService->setResponseMessage('photo.upload.directory.level.invalid');
                 $this->utileService->setResponseState(false);
                 return $this->utileService->getResponse();
         }

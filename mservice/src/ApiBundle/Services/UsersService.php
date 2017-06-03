@@ -374,7 +374,7 @@ class UsersService
             if (!$user) {
                 $this->utileService->setResponseState(false);
                 $this->utileService->setResponseData(array());
-                $this->utileService->setResponseMessage('user.internal_token.wrong');
+                $this->utileService->setResponseMessage($this->translator->trans('user.internal_token.wrong'));
             }
 
             if ($user->getInternalId() === $internalId) {
@@ -386,11 +386,11 @@ class UsersService
 
                 $this->utileService->setResponseState(true);
                 $this->utileService->setResponseData(array());
-                $this->utileService->setResponseMessage('user.token.changed');
+                $this->utileService->setResponseMessage($this->translator->trans('user.token.changed'));
             } else {
                 $this->utileService->setResponseState(false);
                 $this->utileService->setResponseData(array());
-                $this->utileService->setResponseMessage('user.internal_token.wrong');
+                $this->utileService->setResponseMessage($this->translator->trans('user.internal_token.wrong'));
             }
         } catch (\Exception $e) {
             $this->utileService->setResponseState(false);
@@ -413,7 +413,7 @@ class UsersService
             $user = $this->findUserByIdentifier($request->get('identifier'));
             if(!$user){
                 $this->utileService->setResponseState(false);
-                $this->utileService->setResponseMessage('user.username.incorrect');
+                $this->utileService->setResponseMessage($this->translator->trans('user.username.incorrect'));
                 $this->utileService->setResponseFrom(UtileService::FROM_SQL);
                 return $this->utileService->getResponse();
             }
@@ -424,7 +424,7 @@ class UsersService
                 $this->utileService->setResponseData($user);
             } else {
                 $this->utileService->setResponseState(false);
-                $this->utileService->setResponseMessage('user.password.incorrect');
+                $this->utileService->setResponseMessage($this->translator->trans('user.password.incorrect'));
             }
 
             return $this->utileService->getResponse();
@@ -444,7 +444,7 @@ class UsersService
                 if (count($user->getEmail()) > 0) {
                     $this->utileService->setResponseState(true);
                     $this->utileService->setResponseData(array());
-                    $this->utileService->setResponseMessage('user.email.indication_change_password.will_be_sent');
+                    $this->utileService->setResponseMessage($this->translator->trans('user.email.forget.sent'));
                 } else {
                     $indication = $this->findPasswordIndicationByIdentifier($request->get('identifier'));
                     $this->utileService->setResponseData($indication);
@@ -453,7 +453,7 @@ class UsersService
             } else {
                 $this->utileService->setResponseState(false);
                 $this->utileService->setResponseData(array());
-                $this->utileService->setResponseMessage('user.identifier.not.exist');
+                $this->utileService->setResponseMessage($this->translator->trans('user.identifier.not.exist'));
             }
             return $this->utileService->getResponse();
         } catch (\Exception $e) {
@@ -468,30 +468,28 @@ class UsersService
         try {
             $user = $this->findUserByInternalToken($internal_token);
             if (!$user) {
-                $this->utileService->setResponseData(array());
                 $this->utileService->setResponseState(false);
-                $this->utileService->setResponseMessage('user.internal_token.wrong');
+                $this->utileService->setResponseMessage($this->translator->trans('user.internal_token.wrong'));
                 return $this->utileService->getResponse();
             }
 
             $Mpassword = $this->findPasswordByUserInternalId($user->getInternalId());
             if (!password_verify($password, $Mpassword['password'])) {
-                $this->utileService->setResponseData(array());
                 $this->utileService->setResponseState(false);
-                $this->utileService->setResponseMessage('user.password.old_password.wrong');
+                $this->utileService->setResponseMessage($this->translator->trans('user.password.old_password.wrong'));
                 return $this->utileService->getResponse();
             }
 
             if ($password1 === $password) {
                 $this->utileService->setResponsePath(array('field' => array('password1', 'password')));
-                $this->utileService->setResponseMessage('user.password.old_password.same');
+                $this->utileService->setResponseMessage($this->translator->trans('user.password.old_password.same'));
                 $this->utileService->setResponseState(false);
                 return $this->utileService->getResponse();
             }
 
             if ($password1 !== $password2) {
                 $this->utileService->setResponsePath(array('field' => array('password1', 'password2')));
-                $this->utileService->setResponseMessage('user.password.differ');
+                $this->utileService->setResponseMessage($this->translator->trans('user.password.differ'));
                 $this->utileService->setResponseState(false);
                 return $this->utileService->getResponse();
             }
@@ -534,7 +532,7 @@ class UsersService
 
         $this->utileService->setResponseData(array());
         $this->utileService->setResponseState(true);
-        $this->utileService->setResponseMessage('user.password.changed');
+        $this->utileService->setResponseMessage($this->translator->trans('user.password.changed'));
         return $this->utileService->getResponse();
     }
 
@@ -546,7 +544,7 @@ class UsersService
             if (!$user) {
                 $this->utileService->setResponseData(array());
                 $this->utileService->setResponseState(false);
-                $this->utileService->setResponseMessage('user.internal_token.wrong');
+                $this->utileService->setResponseMessage($this->translator->trans('user.internal_token.wrong'));
                 return $this->utileService->getResponse();
             }
 
@@ -554,27 +552,27 @@ class UsersService
             if (!password_verify($password, $Mpassword['password'])) {
                 $this->utileService->setResponseData(array());
                 $this->utileService->setResponseState(false);
-                $this->utileService->setResponseMessage('user.password.wrong');
+                $this->utileService->setResponseMessage($this->translator->trans('user.password.wrong'));
                 return $this->utileService->getResponse();
             }
 
             if (!$this->validateEmailFormat($email)) {
                 $this->utileService->setResponsePath(array('field' => 'email'));
-                $this->utileService->setResponseMessage('user.email.format.invalid');
+                $this->utileService->setResponseMessage($this->translator->trans('user.email.format.invalid'));
                 $this->utileService->setResponseState(false);
                 return $this->utileService->getResponse();
             }
 
             if ($user->getEmail() === $email) {
                 $this->utileService->setResponsePath(array('field' => array('email')));
-                $this->utileService->setResponseMessage('user.email.old_email.same');
+                $this->utileService->setResponseMessage($this->translator->trans('user.email.old_email.same'));
                 $this->utileService->setResponseState(false);
                 return $this->utileService->getResponse();
             }
 
             if ($this->findUserByEmail($email)) {
                 $this->utileService->setResponsePath(array('field' => 'email'));
-                $this->utileService->setResponseMessage('user.email.exist');
+                $this->utileService->setResponseMessage($this->translator->trans('user.email.exist'));
                 $this->utileService->setResponseState(false);
                 return $this->utileService->getResponse();
             }
@@ -592,7 +590,7 @@ class UsersService
         }
         $this->utileService->setResponseData(array());
         $this->utileService->setResponseState(true);
-        $this->utileService->setResponseMessage('user.email.changed');
+        $this->utileService->setResponseMessage($this->translator->trans('user.email.changed'));
         return $this->utileService->getResponse();
     }
 
@@ -603,7 +601,7 @@ class UsersService
             if (!$user) {
                 $this->utileService->setResponseData(array());
                 $this->utileService->setResponseState(false);
-                $this->utileService->setResponseMessage('user.internal_token.wrong');
+                $this->utileService->setResponseMessage($this->translator->trans('user.internal_token.wrong'));
                 return $this->utileService->getResponse();
             }
 
@@ -617,7 +615,7 @@ class UsersService
 
             if ($user->getTelephone() === $telephone) {
                 $this->utileService->setResponsePath(array('field' => array('telephone')));
-                $this->utileService->setResponseMessage('user.telephone.old_telephone.same');
+                $this->utileService->setResponseMessage($this->translator->trans('user.telephone.old_telephone.same'));
                 $this->utileService->setResponseState(false);
                 return $this->utileService->getResponse();
             }
@@ -649,7 +647,7 @@ class UsersService
         }
         $this->utileService->setResponseData(array());
         $this->utileService->setResponseState(true);
-        $this->utileService->setResponseMessage('user.telephone.changed');
+        $this->utileService->setResponseMessage($this->translator->trans('user.telephone.changed'));
         return $this->utileService->getResponse();
     }
     
@@ -662,7 +660,7 @@ class UsersService
             $user = $this->findUserByInternalToken($request->headers->get('internal_token'));
             if(!$user){
                 $this->utileService->setResponseState(false);
-                $this->utileService->setResponseMessage('user.internal_token.wrong');
+                $this->utileService->setResponseMessage($this->translator->trans('user.internal_token.wrong'));
                 return $this->utileService->getResponse();
             }
 
@@ -797,21 +795,21 @@ class UsersService
             if(!$user){
                 $this->utileService->setResponseData(array());
                 $this->utileService->setResponseState(false);
-                $this->utileService->setResponseMessage('user.internal_id.not_exist');
+                $this->utileService->setResponseMessage($this->translator->trans('user.internal_id.not.exist'));
                 return $this->utileService->getResponse();
             }
 
             if($user->getInternalToken() !== $internal_token){
                 $this->utileService->setResponseData(array());
                 $this->utileService->setResponseState(false);
-                $this->utileService->setResponseMessage('user.internal_token.wrong');
+                $this->utileService->setResponseMessage($this->translator->trans('user.internal_token.wrong'));
                 return $this->utileService->getResponse();
             }
 
             if(count($user->getEmail()) === 0){
                 $this->utileService->setResponseData(array());
                 $this->utileService->setResponseState(false);
-                $this->utileService->setResponseMessage('user.email.empty');
+                $this->utileService->setResponseMessage($this->translator->trans('user.email.empty'));
                 return $this->utileService->getResponse();
             }
 
@@ -824,7 +822,7 @@ class UsersService
             $this->mailer->sendNewUserMail($user->getEmail(), $this->container->getParameter('service_mail'), $this->container->getParameter('cc_mail'), $this->translator->trans('messages.email.title.newUser'), $data);
 
             $this->utileService->setResponseState(true);
-            $this->utileService->setResponseMessage('user.email.sent');
+            $this->utileService->setResponseMessage($this->translator->trans('user.email.sent'));
             return $this->utileService->getResponse();
         } catch (\Exception $e) {
             $this->utileService->setResponseState(false);
@@ -840,21 +838,21 @@ class UsersService
             if(!$user){
                 $this->utileService->setResponseData(array());
                 $this->utileService->setResponseState(false);
-                $this->utileService->setResponseMessage('user.internal_id.not_exist');
+                $this->utileService->setResponseMessage($this->translator->trans('user.internal_id.not.exist'));
                 return $this->utileService->getResponse();
             }
 
             if($user->getInternalToken() !== $internal_token){
                 $this->utileService->setResponseData(array());
                 $this->utileService->setResponseState(false);
-                $this->utileService->setResponseMessage('user.internal_token.wrong');
+                $this->utileService->setResponseMessage($this->translator->trans('user.internal_token.wrong'));
                 return $this->utileService->getResponse();
             }
 
             if(count($user->getEmail()) === 0){
                 $this->utileService->setResponseData(array());
                 $this->utileService->setResponseState(false);
-                $this->utileService->setResponseMessage('user.email.empty');
+                $this->utileService->setResponseMessage($this->translator->trans('user.email.empty'));
                 return $this->utileService->getResponse();
             }
 
@@ -867,7 +865,7 @@ class UsersService
             $this->mailer->sendPasswordChangedMail($user->getEmail(), $this->container->getParameter('service_mail'), $this->container->getParameter('cc_mail'), $this->translator->trans('messages.email.title.passwordChanged'), $data);
 
             $this->utileService->setResponseState(true);
-            $this->utileService->setResponseMessage('user.email.sent');
+            $this->utileService->setResponseMessage($this->translator->trans('user.email.sent'));
             return $this->utileService->getResponse();
         } catch (\Exception $e) {
             $this->utileService->setResponseState(false);
@@ -927,7 +925,7 @@ class UsersService
 
                 if(!$user){
                     $this->utileService->setResponseState(false);
-                    $this->utileService->setResponseMessage('user.username.wrong');
+                    $this->utileService->setResponseMessage($this->translator->trans('user.username.incorrect'));
                     return $this->utileService->getResponse();
                 }
 

@@ -24,12 +24,25 @@ messages:
         passwordForgetWords: 您忘记密码了?您的密码提示为%password%,如果还没有想起来,请点击下面的链接进行修改。
 user:
     email:
+        sent:您即将会收到一封电子邮件
+        changed: 邮箱已被成功更改
+        exist: 此电子邮箱已存在
+        format:
+            invalid: 电子邮箱格式不对
         forget:
             sent: 您的密码提示将在5分钟以内被发送到您的邮箱%email%,快去看看吧。
-        empty: 用户电子邮箱为空        
+        empty: 用户电子邮箱为空   
+        old_email:
+            same: 新旧邮箱一样,请输入一个不同的新邮箱
     identifier:
         not:
             exist: %identifier%此用户名不存在。
+    username:
+        incorrect: 用户名不正确     
+    telephone:
+        changed: 电话号码被成功更改
+        old_telephone:
+        same: 新旧电话号码一样,请输入一个不一样的新电话号码
     toptime:
         updated: 您已经至顶成功! 但是主页刷新需要几分钟等待。。。谢谢合作!
         too:
@@ -42,7 +55,8 @@ user:
     external_token:
         wrong: 外部拓扑不正确 
     token:
-        wrong: 拓扑不正确     
+        wrong: 拓扑不正确  
+        changed: 用户拓扑已经成功更改
     photo:
         not:
             exist: 此照片不存在
@@ -50,8 +64,29 @@ user:
         deleted: 此照片已被成功删除
     information:
         updated: 用户信息更改成功
+    password:
+        worng: 密码不对
+        changed: 密码已被成功更改
+        differ: 两次密码不一致
+        incorrect: 密码错误
+        old_password:
+            same: 新旧密码一样,请换一个不一样的新密码
+            wrong: 密码不对
+photo:
+    original:
+        not:
+            exist: 您上传的照片不存在   
+    upload:
+        directory:
+            type:
+                invalid: 上传文件夹类别出错
+            level:
+                invalid: 上传文件夹大小出错    
 post:
+    id:
+        invalid: 此帖ID不存在
     not:
         exist: 次贴已经不存在
         yours: 此贴不属于你
     deleted: 此贴已被成功删除
+    

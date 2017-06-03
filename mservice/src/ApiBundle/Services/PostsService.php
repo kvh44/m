@@ -118,7 +118,7 @@ class PostsService
 
                 if(!$post){
                     $this->utileService->setResponseState(false);
-                    $this->utileService->setResponseMessage('post.id.wrong');
+                    $this->utileService->setResponseMessage($this->translator->trans('post.id.invalid'));
                     return $this->utileService->getResponse();
                 }
 
