@@ -24,9 +24,9 @@ messages:
         passwordForgetWords: 您忘记密码了?您的密码提示为%password%,如果还没有想起来,请点击下面的链接进行修改。
 user:
     email:
-        sent:您即将会收到一封电子邮件
+        sent: 您即将会收到一封电子邮件
         changed: 邮箱已被成功更改
-        exist: 此电子邮箱已存在
+        exist: 此电子邮箱已被占用
         format:
             invalid: 电子邮箱格式不对
         forget:
@@ -39,10 +39,23 @@ user:
             exist: %identifier%此用户名不存在。
     username:
         incorrect: 用户名不正确     
+        exist: 此用户名已被占用
+        not:
+            blank: 用户名不能为空
+        too:
+            short: 用户名太短了
     telephone:
+        exist: 此电话号码已被占用
         changed: 电话号码被成功更改
-        old_telephone:
+        old:
             same: 新旧电话号码一样,请输入一个不一样的新电话号码
+        not:
+            blank: 电话号码不能为空,否则客户怎么找到您呢?
+        too:
+            short: 电话号码至少8位   
+            long: 电话号码太长了 
+        format:
+            invalid: 电话号码只能包含数字    
     toptime:
         updated: 您已经至顶成功! 但是主页刷新需要几分钟等待。。。谢谢合作!
         too:
@@ -65,7 +78,13 @@ user:
     information:
         updated: 用户信息更改成功
     password:
-        worng: 密码不对
+        not:
+            blank: 密码不能为空
+        too:
+            short: 密码至少8位,必须包含数字(0-9)和字母(a-z)  
+        complex:
+            invalid: 密码至少8位,必须包含数字(0-9)和字母(a-z)
+        wrong: 密码不对
         changed: 密码已被成功更改
         differ: 两次密码不一致
         incorrect: 密码错误
@@ -89,4 +108,14 @@ post:
         exist: 次贴已经不存在
         yours: 此贴不属于你
     deleted: 此贴已被成功删除
+    title:
+        not:
+            blank: 帖子标题不能为空
+        too:
+            short: 帖子标题太短
+    description:
+        not:
+            blank: 帖子内容不能为空
+        too:
+            short: 帖子内容太短
     

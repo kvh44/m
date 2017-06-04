@@ -106,13 +106,13 @@ class UsersService
             if (strlen($request->get('email')) > 0) {
                 if (!$this->validateEmailFormat($request->get('email'))) {
                     $this->utileService->setResponsePath(array('field' => 'email'));
-                    $this->utileService->setResponseMessage('user.email.format.invalid');
+                    $this->utileService->setResponseMessage($this->translator->trans('user.email.format.invalid'));
                     $this->utileService->setResponseState(false);
                     return $this->utileService->getResponse();
                 }
                 if ($this->findUserByEmail($request->get('email'))) {
                     $this->utileService->setResponsePath(array('field' => 'email'));
-                    $this->utileService->setResponseMessage('user.email.exist');
+                    $this->utileService->setResponseMessage($this->translator->trans('user.email.exist'));
                     $this->utileService->setResponseState(false);
                     return $this->utileService->getResponse();
                 }
@@ -120,7 +120,7 @@ class UsersService
 
             if ($user = $this->findUserByTelephone($request->get('telephone'))) {
                 $this->utileService->setResponseData($user);
-                $this->utileService->setResponseMessage('user.telephone.exist');
+                $this->utileService->setResponseMessage($this->translator->trans('user.telephone.exist'));
                 $this->utileService->setResponseState(false);
                 return $this->utileService->getResponse();
             }
@@ -128,14 +128,14 @@ class UsersService
 
             if ($user = $this->findUserByUsername($request->get('username'))) {
                 $this->utileService->setResponseData($user);
-                $this->utileService->setResponseMessage('user.username.exist');
+                $this->utileService->setResponseMessage($this->translator->trans('user.username.exist'));
                 $this->utileService->setResponseState(false);
                 return $this->utileService->getResponse();
             }
 
             if ($request->get('password1') !== $request->get('password2')) {
                 $this->utileService->setResponsePath(array('field' => array('password1', 'password2')));
-                $this->utileService->setResponseMessage('user.password.differ');
+                $this->utileService->setResponseMessage($this->translator->trans('user.password.differ'));
                 $this->utileService->setResponseState(false);
                 return $this->utileService->getResponse();
             }
@@ -188,9 +188,7 @@ class UsersService
                 $errorsPassword = $this->validator->validate($this->mPassword);
                 if (count($errorsPassword) > 0) {
                     $message = $this->translator->trans(
-                        $errorsPassword[0]->getMessage(),
-                        array(),
-                        'validators'
+                        $errorsPassword[0]->getMessage()
                     );
                     $this->utileService->setResponsePath(array('field' => $errorsPassword[0]->getPropertyPath()));
                     $this->utileService->setResponseMessage($message);
@@ -201,9 +199,7 @@ class UsersService
                 $errorsUser = $this->validator->validate($this->mUser);
                 if (count($errorsUser) > 0) {
                     $message = $this->translator->trans(
-                        $errorsUser[0]->getMessage(),
-                        array(),
-                        'validators'
+                        $errorsUser[0]->getMessage()
                     );
                     $this->utileService->setResponsePath(array('field' => $errorsUser[0]->getPropertyPath()));
                     $this->utileService->setResponseMessage($message);
@@ -609,13 +605,13 @@ class UsersService
             if (!password_verify($password, $Mpassword['password'])) {
                 $this->utileService->setResponseData(array());
                 $this->utileService->setResponseState(false);
-                $this->utileService->setResponseMessage('user.password.wrong');
+                $this->utileService->setResponseMessage($this->translator->trans('user.password.wrong'));
                 return $this->utileService->getResponse();
             }
 
             if ($user->getTelephone() === $telephone) {
                 $this->utileService->setResponsePath(array('field' => array('telephone')));
-                $this->utileService->setResponseMessage($this->translator->trans('user.telephone.old_telephone.same'));
+                $this->utileService->setResponseMessage($this->translator->trans('user.telephone.old.same'));
                 $this->utileService->setResponseState(false);
                 return $this->utileService->getResponse();
             }

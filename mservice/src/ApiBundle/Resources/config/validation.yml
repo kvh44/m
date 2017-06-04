@@ -3,10 +3,10 @@ ApiBundle\Entity\Mpassword:
     properties:
         password:
             - NotBlank:  
-                message: 'user.password.not_blank' 
+                message: 'user.password.not.blank' 
             - Length:
                 min: 8
-                minMessage: 'user.password.too_short'
+                minMessage: 'user.password.too.short'
             - Regex:
                 pattern: '/^(?=.*[a-zA-Z])(?=.*[0-9]).+$/'
                 match:   true
@@ -23,18 +23,18 @@ ApiBundle\Entity\Muser:
     properties:
         username:
             - NotBlank:  
-                message: 'user.username.not_blank' 
+                message: 'user.username.not.blank' 
             - Length:
                 min: 3
-                minMessage: 'user.username.too_short' 
+                minMessage: 'user.username.too.short' 
         telephone:
             - NotBlank:  
-                message: 'user.telephone.not_blank' 
+                message: 'user.telephone.not.blank' 
             - Length:
                 min: 8
-                minMessage: 'user.telephone.too_short'     
+                minMessage: 'user.telephone.too.short'     
                 max: 20
-                maxMessage: 'user.telephone.too_long' 
+                maxMessage: 'user.telephone.too.long' 
             - Regex:
                 pattern: '/^[0-9]{8,20}$/'
                 match:   true
@@ -44,13 +44,13 @@ ApiBundle\Entity\Mpost:
     properties:
         title:
             - NotBlank:  
-                message: 'post.title.not_blank' 
+                message: 'post.title.not.blank' 
             - Length:
                 min: 3
-                minMessage: 'post.title.too_short' 
+                minMessage: 'post.title.too.short' 
         description:
             - NotBlank:  
-                message: 'post.description.not_blank'   
+                message: 'post.description.not.blank'   
             - Length:
                 min: 10
-                minMessage: 'post.description.too_short'                   
+                minMessage: 'post.description.too.short'                   
