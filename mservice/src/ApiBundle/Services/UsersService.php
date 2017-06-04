@@ -386,7 +386,7 @@ class UsersService
             } else {
                 $this->utileService->setResponseState(false);
                 $this->utileService->setResponseData(array());
-                $this->utileService->setResponseMessage($this->translator->trans('user.internal_token.wrong'));
+                $this->utileService->setResponseMessage($this->translator->trans('user.internal_id.wrong'));
             }
         } catch (\Exception $e) {
             $this->utileService->setResponseState(false);
@@ -459,13 +459,19 @@ class UsersService
         }
     }
 
-    public function resetPassword($password, $password1, $password2, $internal_token)
+    public function resetPassword($password, $password1, $password2, $internal_token, $internal_id)
     {
         try {
             $user = $this->findUserByInternalToken($internal_token);
             if (!$user) {
                 $this->utileService->setResponseState(false);
                 $this->utileService->setResponseMessage($this->translator->trans('user.internal_token.wrong'));
+                return $this->utileService->getResponse();
+            }
+            
+            if($user->getInternalId() !== $internal_id){
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage($this->translator->trans('user.internal_id.wrong'));
                 return $this->utileService->getResponse();
             }
 
@@ -533,14 +539,19 @@ class UsersService
     }
 
 
-    public function resetEmail($email, $password, $internal_token)
+    public function resetEmail($email, $password, $internal_token, $internal_id)
     {
         try {
             $user = $this->findUserByInternalToken($internal_token);
             if (!$user) {
-                $this->utileService->setResponseData(array());
                 $this->utileService->setResponseState(false);
                 $this->utileService->setResponseMessage($this->translator->trans('user.internal_token.wrong'));
+                return $this->utileService->getResponse();
+            }
+            
+            if ($user->getInternalId() !== $internal_id) {
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage($this->translator->trans('user.internal_id.wrong'));
                 return $this->utileService->getResponse();
             }
 
@@ -590,7 +601,7 @@ class UsersService
         return $this->utileService->getResponse();
     }
 
-    public function resetTelephone($telephone, $password, $internal_token)
+    public function resetTelephone($telephone, $password, $internal_token, $internal_id)
     {
         try{
             $user = $this->findUserByInternalToken($internal_token);
@@ -598,6 +609,12 @@ class UsersService
                 $this->utileService->setResponseData(array());
                 $this->utileService->setResponseState(false);
                 $this->utileService->setResponseMessage($this->translator->trans('user.internal_token.wrong'));
+                return $this->utileService->getResponse();
+            }
+            
+            if ($user->getInternalId() !== $internal_id) {
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage($this->translator->trans('user.internal_id.wrong'));
                 return $this->utileService->getResponse();
             }
 
@@ -657,6 +674,12 @@ class UsersService
             if(!$user){
                 $this->utileService->setResponseState(false);
                 $this->utileService->setResponseMessage($this->translator->trans('user.internal_token.wrong'));
+                return $this->utileService->getResponse();
+            }
+            
+            if ($user->getInternalId() !== $internal_id) {
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage($this->translator->trans('user.internal_id.wrong'));
                 return $this->utileService->getResponse();
             }
 
@@ -789,21 +812,18 @@ class UsersService
         try{
             $user = $this->findUserByInternalId($internal_id);
             if(!$user){
-                $this->utileService->setResponseData(array());
                 $this->utileService->setResponseState(false);
                 $this->utileService->setResponseMessage($this->translator->trans('user.internal_id.not.exist'));
                 return $this->utileService->getResponse();
             }
 
             if($user->getInternalToken() !== $internal_token){
-                $this->utileService->setResponseData(array());
                 $this->utileService->setResponseState(false);
                 $this->utileService->setResponseMessage($this->translator->trans('user.internal_token.wrong'));
                 return $this->utileService->getResponse();
             }
 
             if(count($user->getEmail()) === 0){
-                $this->utileService->setResponseData(array());
                 $this->utileService->setResponseState(false);
                 $this->utileService->setResponseMessage($this->translator->trans('user.email.empty'));
                 return $this->utileService->getResponse();
@@ -832,14 +852,12 @@ class UsersService
         try{
             $user = $this->findUserByInternalId($internal_id);
             if(!$user){
-                $this->utileService->setResponseData(array());
                 $this->utileService->setResponseState(false);
                 $this->utileService->setResponseMessage($this->translator->trans('user.internal_id.not.exist'));
                 return $this->utileService->getResponse();
             }
 
             if($user->getInternalToken() !== $internal_token){
-                $this->utileService->setResponseData(array());
                 $this->utileService->setResponseState(false);
                 $this->utileService->setResponseMessage($this->translator->trans('user.internal_token.wrong'));
                 return $this->utileService->getResponse();

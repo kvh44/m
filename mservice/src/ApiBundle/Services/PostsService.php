@@ -212,7 +212,7 @@ class PostsService
         try{
             $user = $this->findUserByInternalToken($request->headers->get('internal_token'));
             if(!$user){
-                    $this->utileService->setResponseMessage($this->translator->trans('user.token.wrong'));
+                    $this->utileService->setResponseMessage($this->translator->trans('user.internal_token.wrong'));
                     $this->utileService->setResponseState(false);
                     return $this->utileService->getResponse();
             }

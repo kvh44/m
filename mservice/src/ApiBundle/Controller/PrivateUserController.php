@@ -10,10 +10,11 @@ class PrivateUserController extends PrivateBaseController
     public function resetPasswordAction(Request $request)
     {
         $internal_token = $request->headers->get('internal_token');
+        $internal_id = $request->headers->get('internal_id');
         $password = $request->headers->get('password');
         $password1 = $request->headers->get('password1');
         $password2 = $request->headers->get('password2');
-        return $this->container->get('api_massage.UsersService')->resetPassword($password, $password1, $password2, $internal_token);
+        return $this->container->get('api_massage.UsersService')->resetPassword($password, $password1, $password2, $internal_token, $internal_id);
     }
 
     public function resetEmailAction(Request $request)
@@ -21,7 +22,8 @@ class PrivateUserController extends PrivateBaseController
         $email = $request->get('email');
         $password = $request->headers->get('password');
         $internal_token = $request->headers->get('internal_token');
-        return $this->container->get('api_massage.UsersService')->resetEmail($email, $password, $internal_token);
+        $internal_id = $request->headers->get('internal_id');
+        return $this->container->get('api_massage.UsersService')->resetEmail($email, $password, $internal_token, $internal_id);
     }
     
     public function resetTelephoneAction(Request $request)
@@ -29,7 +31,8 @@ class PrivateUserController extends PrivateBaseController
         $telephone = $request->get('telephone');
         $password = $request->headers->get('password');
         $internal_token = $request->headers->get('internal_token');
-        return $this->container->get('api_massage.UsersService')->resetTelephone($telephone, $password, $internal_token);
+        $internal_id = $request->headers->get('internal_id');
+        return $this->container->get('api_massage.UsersService')->resetTelephone($telephone, $password, $internal_token, $internal_id);
     }
     
     public function updateUserInfoAction(Request $request)

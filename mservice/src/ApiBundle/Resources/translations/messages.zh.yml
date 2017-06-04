@@ -62,7 +62,8 @@ user:
             fast: 您刚刚至顶过一次,过会再来吧。。。
     internal_id:
         not:
-            exist: 内部ID不存在
+            exist: 内部ID不正确
+        wrong: 内部ID不正确     
     internal_token:
         wrong: 内部拓扑不正确 
     external_token:
