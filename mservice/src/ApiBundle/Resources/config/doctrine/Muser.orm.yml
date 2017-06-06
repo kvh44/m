@@ -14,7 +14,13 @@ ApiBundle\Entity\Muser:
                 - email
         nickname:
             columns:
-                - nickname        
+                - nickname  
+        country_id:
+            columns:
+                - country_id
+        location_id:
+            columns:
+                - location_id
     uniqueConstraints:
         username:
             columns:
@@ -37,6 +43,9 @@ ApiBundle\Entity\Muser:
         telephone_2:
             columns:
                 - telephone
+        draft_id:
+            columns:
+                - draft_id
     id:
         id:
             type: integer
@@ -184,6 +193,13 @@ ApiBundle\Entity\Muser:
             options:
                 fixed: false
             column: shop_address
+        shopName:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+            column: shop_name    
         description:
             type: blob
             nullable: true
@@ -270,6 +286,20 @@ ApiBundle\Entity\Muser:
             options:
                 fixed: false
             column: other_web
+        otherWebReference:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+            column: other_web_reference    
+        draftId:
+            type: integer
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+            column: draft_id       
         viewNumber:
             type: integer
             nullable: true
@@ -334,4 +364,25 @@ ApiBundle\Entity\Muser:
         updated:
             type: datetime
             nullable: false
-    lifecycleCallbacks: {  }
+    manyToOne:
+        mcountry:
+            targetEntity: Mcountry
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                country_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        mlocation:
+            targetEntity: Mlocation
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                location_id:
+                    referencedColumnName: id
+            orphanRemoval: false    
+    lifecycleCallbacks: {  }        

@@ -6,9 +6,21 @@ security:
             algorithm: bcrypt
 
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    
+    firewalls:
+        secured_area:
+            pattern: ^/middle/private
+            stateless: false
+            simple_preauth:
+                authenticator: apikey_authenticator
+            provider: api_key_user_provider
+            
     providers:
-        in_memory:
-            memory: ~
+        api_key_user_provider:
+            id: api_key_user_provider
+
+        #in_memory:
+            #memory: ~
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -25,3 +37,8 @@ security:
 
             # form_login: ~
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+
+
+
+    access_control:
+        - { path: ^/middle/private, roles: ROLE_API }

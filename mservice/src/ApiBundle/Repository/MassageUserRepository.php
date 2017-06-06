@@ -103,6 +103,17 @@ class MassageUserRepository extends EntityRepository implements UserLoaderInterf
             ->getOneOrNullResult();
     }
     
+    public function loadInternalTokenByExternalToken($internal_id, $external_token) {
+        return $this->createQueryBuilder('u') 
+            ->select('u.internalToken')    
+            ->where('u.externalToken = :external_token')
+            ->andWhere('u.internalId = :internal_id')
+            ->setParameters(array('internal_id' => $internal_id,'external_token' => $external_token))
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+    
     public function searchUserBySql($only_total = false, $offset = 0, $limit = 15, $country_id = null, $location_id = null, 
             $color = null, $lang = null, $is_single = null, $age_period = array(), $em)
     {   

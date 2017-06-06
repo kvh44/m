@@ -2,21 +2,19 @@
 
 namespace ApiBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use FOS\RestBundle\Controller\Annotations as Rest;
-use FOS\RestBundle\Controller\FOSRestController;
-use FOS\RestBundle\View\View;
+use ApiBundle\Controller\PrivateBaseController;
 
-class PrivateUserController extends FOSRestController
+class PrivateUserController extends PrivateBaseController
 {
     public function resetPasswordAction(Request $request)
     {
         $internal_token = $request->headers->get('internal_token');
+        $internal_id = $request->headers->get('internal_id');
         $password = $request->headers->get('password');
         $password1 = $request->headers->get('password1');
         $password2 = $request->headers->get('password2');
-        return $this->container->get('api_massage.UsersService')->resetPassword($password, $password1, $password2, $internal_token);
+        return $this->container->get('api_massage.UsersService')->resetPassword($password, $password1, $password2, $internal_token, $internal_id);
     }
 
     public function resetEmailAction(Request $request)
@@ -24,7 +22,8 @@ class PrivateUserController extends FOSRestController
         $email = $request->get('email');
         $password = $request->headers->get('password');
         $internal_token = $request->headers->get('internal_token');
-        return $this->container->get('api_massage.UsersService')->resetEmail($email, $password, $internal_token);
+        $internal_id = $request->headers->get('internal_id');
+        return $this->container->get('api_massage.UsersService')->resetEmail($email, $password, $internal_token, $internal_id);
     }
     
     public function resetTelephoneAction(Request $request)
@@ -32,7 +31,8 @@ class PrivateUserController extends FOSRestController
         $telephone = $request->get('telephone');
         $password = $request->headers->get('password');
         $internal_token = $request->headers->get('internal_token');
-        return $this->container->get('api_massage.UsersService')->resetTelephone($telephone, $password, $internal_token);
+        $internal_id = $request->headers->get('internal_id');
+        return $this->container->get('api_massage.UsersService')->resetTelephone($telephone, $password, $internal_token, $internal_id);
     }
     
     public function updateUserInfoAction(Request $request)
@@ -58,12 +58,6 @@ class PrivateUserController extends FOSRestController
         $internal_token = $request->headers->get('internal_token');
         return $this->container->get('api_massage.UsersService')->sendPasswordChangedMail($internal_id, $internal_token);
     }  
-    
-    public function sendPasswordForgetMailAction(Request $request)
-    {
-        $identifier = $request->get('identifier');
-        return $this->container->get('api_massage.UsersService')->sendPasswordForgetMail($identifier);
-    } 
     
     public function uploadAction(Request $request)
     {

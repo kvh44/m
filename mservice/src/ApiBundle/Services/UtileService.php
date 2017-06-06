@@ -14,9 +14,9 @@ class UtileService {
     /**
      * @var Translator
      */
-    protected $translator;
+    public $translator;
     
-    protected $api_version;
+    public $api_version;
 
 
     public function __construct(Translator $translator, $api_version)
@@ -99,6 +99,10 @@ class UtileService {
         return $this->errors;
     }
     
+    public function getTranslator(){
+        return $this->translator;
+    }
+
     public static function RandomString($length = 32) {
         $keys = array_merge(range(0,9), range('a', 'z'), range('A', 'Z'));
 

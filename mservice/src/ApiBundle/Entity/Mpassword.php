@@ -269,4 +269,18 @@ class Mpassword
     {
         return $this->user;
     }
+
+    /**
+     * Set userId
+     *
+     * @param string $userId
+     *
+     * @return Mpassword
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+
+        return $this;
+    }
 }

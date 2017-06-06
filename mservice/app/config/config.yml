@@ -13,6 +13,7 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    api_application_key: ibJg1A6N8yOIVK158aFYHksSTaW0WCPHHn1rNbP38hYza6T9xSjv6eCDT570R6gslFP02P5E0uPmVd0fmp3Ksp5wisUUU9dztngtqBBcivuvOHa7qyvXrzdcuxWHxCLl
     api_version : 0
     locale: zh
     min_top_time: 1800
@@ -118,6 +119,17 @@ swiftmailer:
     #spool:     { type: memory }
 
 
+nelmio_cors:
+    defaults:
+        allow_credentials: false
+        allow_origin: ['*']
+        allow_headers: ['*']
+        allow_methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+        max_age: 3600
+        hosts: []
+        origin_regex: false
+ 
+            
 snc_redis:
     clients:
         default:

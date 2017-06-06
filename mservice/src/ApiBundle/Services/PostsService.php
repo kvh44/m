@@ -118,7 +118,7 @@ class PostsService
 
                 if(!$post){
                     $this->utileService->setResponseState(false);
-                    $this->utileService->setResponseMessage('post.id.wrong');
+                    $this->utileService->setResponseMessage($this->translator->trans('post.id.invalid'));
                     return $this->utileService->getResponse();
                 }
 
@@ -212,7 +212,7 @@ class PostsService
         try{
             $user = $this->findUserByInternalToken($request->headers->get('internal_token'));
             if(!$user){
-                    $this->utileService->setResponseMessage($this->translator->trans('user.token.wrong'));
+                    $this->utileService->setResponseMessage($this->translator->trans('user.internal_token.wrong'));
                     $this->utileService->setResponseState(false);
                     return $this->utileService->getResponse();
             }

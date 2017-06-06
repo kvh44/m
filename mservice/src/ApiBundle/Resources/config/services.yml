@@ -82,3 +82,8 @@ services:
             - "@fos_elastica.index.app.user"
         tags:
             - { name: fos_elastica.provider, index: app, type: user }        
+            
+    api_massage.controller.preExecuteListener:
+        class: ApiBundle\EventListener\ControllerListener
+        tags:
+          -  { name: kernel.event_listener, event: kernel.controller, method: onCoreController }        

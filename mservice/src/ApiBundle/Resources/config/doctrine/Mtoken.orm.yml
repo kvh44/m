@@ -1,0 +1,46 @@
+ApiBundle\Entity\Mtoken:
+    type: entity
+    table: mtoken
+    uniqueConstraints:
+        token:
+            columns:
+                - token
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        token:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        tokenType:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: token_type    
+        userId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: user_id
+        tokenExpiredTime:
+            type: datetime
+            nullable: false
+            column: token_expired_time
+        created:
+            type: datetime
+            nullable: false
+        updated:
+            type: datetime
+            nullable: false
+    lifecycleCallbacks: {  }

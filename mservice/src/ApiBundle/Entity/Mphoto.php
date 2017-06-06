@@ -443,4 +443,18 @@ class Mphoto
     {
         return $this->user;
     }
+
+    /**
+     * Set userId
+     *
+     * @param string $userId
+     *
+     * @return Mphoto
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+
+        return $this;
+    }
 }
