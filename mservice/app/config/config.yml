@@ -312,6 +312,9 @@ fos_elastica:
                                 shopAddress:
                                     type: text
                                     boost: 10
+                                shopName: 
+                                    type: text
+                                    boost: 10
                                 description:
                                     type: text
                                     boost: 5
@@ -349,6 +352,12 @@ fos_elastica:
                                     type: keyword
                                     index: not_analyzed
                                 otherWeb:
+                                    type: keyword
+                                    index: not_analyzed
+                                otherWebReference:
+                                    type: keyword
+                                    index: not_analyzed
+                                draftId:
                                     type: keyword
                                     index: not_analyzed
                                 slug:
