@@ -6,7 +6,7 @@ CREATE TABLE `mip` (
   `is_blacked` tinyint(1) NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -22,7 +22,7 @@ CREATE TABLE `mtoken` (
   `token_expired_time` datetime NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8_unicode_ci;
 
 --
 -- Indexes for dumped tables
@@ -69,7 +69,7 @@ ALTER TABLE `muser`
 ADD COLUMN `other_web_reference` varchar(255) COLLATE utf8_unicode_ci NULL AFTER `other_web`;
 
 ALTER TABLE `muser`
-ADD COLUMN `draft_id` int(255) COLLATE utf8_unicode_ci NULL AFTER `other_web_reference`;
+ADD COLUMN `draft_id` int(11) COLLATE utf8_unicode_ci NULL AFTER `other_web_reference`;
 
 ALTER TABLE `muser`
   ADD CONSTRAINT `FK_DC4EF770A76ED5786876` FOREIGN KEY (`draft_id`) REFERENCES `mdraft` (`id`);
@@ -78,8 +78,9 @@ ALTER TABLE `muser`
   ADD KEY `country_id` (`country_id`),
   ADD KEY `location_id` (`location_id`);
 
-ALTER TABLE `muser` CHANGE `country_id` `country_id` INT(255) DEFAULT NULL;
-ALTER TABLE `muser` CHANGE `location_id` `location_id` INT(255) DEFAULT NULL;
+ALTER TABLE `muser` CHANGE `draft_id` `draft_id` INT(11) DEFAULT NULL;
+ALTER TABLE `muser` CHANGE `country_id` `country_id` INT(11) DEFAULT NULL;
+ALTER TABLE `muser` CHANGE `location_id` `location_id` INT(11) DEFAULT NULL;
 
 ALTER TABLE `muser`
   ADD CONSTRAINT `FK_DC4EF77SHFSHFSH5675675` FOREIGN KEY (`country_id`) REFERENCES `mcountry` (`id`);
