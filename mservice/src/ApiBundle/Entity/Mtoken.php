@@ -196,5 +196,33 @@ class Mtoken
     {
         return $this->updated;
     }
-}
+    /**
+     * @var integer
+     */
+    private $tokenType;
 
+
+    /**
+     * Set tokenType
+     *
+     * @param integer $tokenType
+     *
+     * @return Mtoken
+     */
+    public function setTokenType($tokenType)
+    {
+        $this->tokenType = $tokenType;
+
+        return $this;
+    }
+
+    /**
+     * Get tokenType
+     *
+     * @return integer
+     */
+    public function getTokenType()
+    {
+        return $this->tokenType;
+    }
+}

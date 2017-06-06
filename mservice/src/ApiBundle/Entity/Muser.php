@@ -1501,4 +1501,149 @@ class Muser
     {
         return $this->isTest;
     }
+    /**
+     * @var string
+     */
+    private $shopName;
+
+    /**
+     * @var string
+     */
+    private $otherWebReference;
+
+    /**
+     * @var int
+     */
+    private $draftId;
+
+    /**
+     * @var \ApiBundle\Entity\Mcountry
+     */
+    private $mcountry;
+
+    /**
+     * @var \ApiBundle\Entity\Mlocation
+     */
+    private $mlocation;
+
+
+    /**
+     * Set shopName
+     *
+     * @param string $shopName
+     *
+     * @return Muser
+     */
+    public function setShopName($shopName)
+    {
+        $this->shopName = $shopName;
+
+        return $this;
+    }
+
+    /**
+     * Get shopName
+     *
+     * @return string
+     */
+    public function getShopName()
+    {
+        return $this->shopName;
+    }
+
+    /**
+     * Set otherWebReference
+     *
+     * @param string $otherWebReference
+     *
+     * @return Muser
+     */
+    public function setOtherWebReference($otherWebReference)
+    {
+        $this->otherWebReference = $otherWebReference;
+
+        return $this;
+    }
+
+    /**
+     * Get otherWebReference
+     *
+     * @return string
+     */
+    public function getOtherWebReference()
+    {
+        return $this->otherWebReference;
+    }
+
+    /**
+     * Set draftId
+     *
+     * @param $draftId
+     *
+     * @return Muser
+     */
+    public function setDraftId($draftId)
+    {
+        $this->draftId = $draftId;
+
+        return $this;
+    }
+
+    /**
+     * Get draftId
+     *
+     * @return \int
+     */
+    public function getDraftId()
+    {
+        return $this->draftId;
+    }
+
+    /**
+     * Set mcountry
+     *
+     * @param \ApiBundle\Entity\Mcountry $mcountry
+     *
+     * @return Muser
+     */
+    public function setMcountry(\ApiBundle\Entity\Mcountry $mcountry = null)
+    {
+        $this->mcountry = $mcountry;
+
+        return $this;
+    }
+
+    /**
+     * Get mcountry
+     *
+     * @return \ApiBundle\Entity\Mcountry
+     */
+    public function getMcountry()
+    {
+        return $this->mcountry;
+    }
+
+    /**
+     * Set mlocation
+     *
+     * @param \ApiBundle\Entity\Mlocation $mlocation
+     *
+     * @return Muser
+     */
+    public function setMlocation(\ApiBundle\Entity\Mlocation $mlocation = null)
+    {
+        $this->mlocation = $mlocation;
+
+        return $this;
+    }
+
+    /**
+     * Get mlocation
+     *
+     * @return \ApiBundle\Entity\Mlocation
+     */
+    public function getMlocation()
+    {
+        return $this->mlocation;
+    }
 }

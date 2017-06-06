@@ -13,6 +13,11 @@ class Mphoto
     private $id;
 
     /**
+     * @var integer
+     */
+    private $userId;
+
+    /**
      * @var string
      */
     private $photoType;
@@ -36,6 +41,11 @@ class Mphoto
      * @var string
      */
     private $photoSmall;
+    
+    /**
+     * @var string
+     */
+    private $photoIcon;
 
     /**
      * @var string
@@ -86,6 +96,16 @@ class Mphoto
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get user_id
+     *
+     * @return integer
+     */
+    public function getUserId()
+    {
+        return $this->userId;
     }
 
     /**
@@ -206,6 +226,30 @@ class Mphoto
     public function getPhotoSmall()
     {
         return $this->photoSmall;
+    }
+    
+    /**
+     * Set photoIcon
+     *
+     * @param string $photoIcon
+     *
+     * @return Mphoto
+     */
+    public function setPhotoIcon($photoIcon)
+    {
+        $this->photoIcon = $photoIcon;
+
+        return $this;
+    }
+    
+    /**
+     * Get photoIcon
+     *
+     * @return string
+     */
+    public function getPhotoIcon()
+    {
+        return $this->photoIcon;
     }
 
     /**
@@ -398,5 +442,19 @@ class Mphoto
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set userId
+     *
+     * @param string $userId
+     *
+     * @return Mphoto
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+
+        return $this;
     }
 }

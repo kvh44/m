@@ -17,7 +17,7 @@ CREATE TABLE `mip` (
 CREATE TABLE `mtoken` (
   `id` int(255) NOT NULL,
   `token` varchar(255) NOT NULL,
-  `type` int(2) NOT NULL,
+  `token_type` int(2) NOT NULL,
   `user_id` int(255) NOT NULL,
   `token_expired_time` datetime NOT NULL,
   `created` datetime NOT NULL,

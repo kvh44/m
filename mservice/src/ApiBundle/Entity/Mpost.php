@@ -501,4 +501,18 @@ class Mpost
     {
         return $this->deletedByUserId;
     }
+
+    /**
+     * Set userId
+     *
+     * @param string $userId
+     *
+     * @return Mpost
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+
+        return $this;
+    }
 }

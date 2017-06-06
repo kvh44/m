@@ -3,9 +3,9 @@
 namespace ApiBundle\Entity;
 
 /**
- * Mip
+ * Mtoken
  */
-class Mip
+class Mtoken
 {
     /**
      * @var integer
@@ -15,7 +15,12 @@ class Mip
     /**
      * @var string
      */
-    private $ip;
+    private $token;
+
+    /**
+     * @var integer
+     */
+    private $type;
 
     /**
      * @var integer
@@ -23,14 +28,9 @@ class Mip
     private $userId;
 
     /**
-     * @var boolean
+     * @var \DateTime
      */
-    private $isAllowed;
-
-    /**
-     * @var boolean
-     */
-    private $isBlacked;
+    private $tokenExpiredTime;
 
     /**
      * @var \DateTime
@@ -54,27 +54,51 @@ class Mip
     }
 
     /**
-     * Set ip
+     * Set token
      *
-     * @param string $ip
+     * @param string $token
      *
-     * @return Mip
+     * @return Mtoken
      */
-    public function setIp($ip)
+    public function setToken($token)
     {
-        $this->ip = $ip;
+        $this->token = $token;
 
         return $this;
     }
 
     /**
-     * Get ip
+     * Get token
      *
      * @return string
      */
-    public function getIp()
+    public function getToken()
     {
-        return $this->ip;
+        return $this->token;
+    }
+
+    /**
+     * Set type
+     *
+     * @param integer $type
+     *
+     * @return Mtoken
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return integer
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 
     /**
@@ -82,7 +106,7 @@ class Mip
      *
      * @param integer $userId
      *
-     * @return Mip
+     * @return Mtoken
      */
     public function setUserId($userId)
     {
@@ -102,51 +126,27 @@ class Mip
     }
 
     /**
-     * Set isAllowed
+     * Set tokenExpiredTime
      *
-     * @param boolean $isAllowed
+     * @param \DateTime $tokenExpiredTime
      *
-     * @return Mip
+     * @return Mtoken
      */
-    public function setIsAllowed($isAllowed)
+    public function setTokenExpiredTime($tokenExpiredTime)
     {
-        $this->isAllowed = $isAllowed;
+        $this->tokenExpiredTime = $tokenExpiredTime;
 
         return $this;
     }
 
     /**
-     * Get isAllowed
+     * Get tokenExpiredTime
      *
-     * @return boolean
+     * @return \DateTime
      */
-    public function getIsAllowed()
+    public function getTokenExpiredTime()
     {
-        return $this->isAllowed;
-    }
-
-    /**
-     * Set isBlacked
-     *
-     * @param boolean $isBlacked
-     *
-     * @return Mip
-     */
-    public function setIsBlacked($isBlacked)
-    {
-        $this->isBlacked = $isBlacked;
-
-        return $this;
-    }
-
-    /**
-     * Get isBlacked
-     *
-     * @return boolean
-     */
-    public function getIsBlacked()
-    {
-        return $this->isBlacked;
+        return $this->tokenExpiredTime;
     }
 
     /**
@@ -154,7 +154,7 @@ class Mip
      *
      * @param \DateTime $created
      *
-     * @return Mip
+     * @return Mtoken
      */
     public function setCreated($created)
     {
@@ -178,7 +178,7 @@ class Mip
      *
      * @param \DateTime $updated
      *
-     * @return Mip
+     * @return Mtoken
      */
     public function setUpdated($updated)
     {

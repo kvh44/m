@@ -21,11 +21,12 @@ ApiBundle\Entity\Mtoken:
             length: 255
             options:
                 fixed: false
-        type:
+        tokenType:
             type: integer
             nullable: false
             options:
                 unsigned: false
+            column: token_type    
         userId:
             type: integer
             nullable: false

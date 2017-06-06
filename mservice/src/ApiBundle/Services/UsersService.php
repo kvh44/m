@@ -677,7 +677,7 @@ class UsersService
                 return $this->utileService->getResponse();
             }
             
-            if ($user->getInternalId() !== $internal_id) {
+            if ($user->getInternalId() !== $request->headers->get('internal_id')) {
                 $this->utileService->setResponseState(false);
                 $this->utileService->setResponseMessage($this->translator->trans('user.internal_id.wrong'));
                 return $this->utileService->getResponse();
