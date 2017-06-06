@@ -1,0 +1,45 @@
+ApiBundle\Entity\Mip:
+    type: entity
+    table: mip
+    uniqueConstraints:
+        mip_unique_index:
+            columns:
+                - ip
+                - user_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        ip:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        userId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: user_id
+        isAllowed:
+            type: boolean
+            nullable: false
+            column: is_allowed
+        isBlacked:
+            type: boolean
+            nullable: false
+            column: is_blacked
+        created:
+            type: datetime
+            nullable: false
+        updated:
+            type: datetime
+            nullable: false
+    lifecycleCallbacks: {  }
