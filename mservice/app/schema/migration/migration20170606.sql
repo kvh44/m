@@ -6,13 +6,8 @@ CREATE TABLE `mip` (
   `is_blacked` tinyint(1) NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- --------------------------------------------------------
-
---
--- 表的结构 `mtoken`
---
 
 CREATE TABLE `mtoken` (
   `id` int(255) NOT NULL,
@@ -22,43 +17,24 @@ CREATE TABLE `mtoken` (
   `token_expired_time` datetime NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Indexes for dumped tables
---
 
---
--- Indexes for table `mip`
---
 ALTER TABLE `mip`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `mip_unique_index` (`ip`,`user_id`);
 
---
--- Indexes for table `mtoken`
---
+
 ALTER TABLE `mtoken`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `token` (`token`);
 
---
--- 在导出的表使用AUTO_INCREMENT
---
 
---
--- 使用表AUTO_INCREMENT `mip`
---
 ALTER TABLE `mip`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
---
--- 使用表AUTO_INCREMENT `mtoken`
---
+
 ALTER TABLE `mtoken`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 
 
