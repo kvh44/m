@@ -34,7 +34,9 @@
         "nelmio/cors-bundle": "^1.5",
         "predis/predis": "^1.0",
         "snc/redis-bundle": "2.x-dev",
-        "friendsofsymfony/elastica-bundle": "^4.0"
+        "friendsofsymfony/elastica-bundle": "^4.0",
+        "sonata-project/admin-bundle": "^3.19",
+        "sonata-project/doctrine-orm-admin-bundle": "^3.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

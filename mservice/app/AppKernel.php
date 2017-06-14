@@ -15,11 +15,28 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+            
+            // api
             new FOS\RestBundle\FOSRestBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Nelmio\CorsBundle\NelmioCorsBundle(),
+            
+            // cache
             new Snc\RedisBundle\SncRedisBundle(),
+            
+            // search
             new FOS\ElasticaBundle\FOSElasticaBundle(),
+            
+            // Sonata admin
+            new Sonata\CoreBundle\SonataCoreBundle(),
+            new Sonata\BlockBundle\SonataBlockBundle(),
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            
+            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
+            
+            new Sonata\AdminBundle\SonataAdminBundle(),
+            
+            // personal
             new AppBundle\AppBundle(),
             new ApiBundle\ApiBundle(),
             new MiddleBundle\MiddleBundle(),
