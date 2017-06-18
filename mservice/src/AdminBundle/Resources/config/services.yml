@@ -2,10 +2,21 @@ services:
     admin.user:
         class: AdminBundle\Admin\UserAdmin
         tags:
-            - { name: sonata.admin, manager_type: orm, group: "Content", label: "User" }
+            - { name: sonata.admin, manager_type: orm, group: "Users", label: "user", label_catalogue: "AdminBundle"}
         arguments:
             - ~
             - ApiBundle\Entity\Muser
             - ~
         calls:
             - [ setTranslationDomain, [AdminBundle]]
+            
+    admin.country:
+        class: AdminBundle\Admin\CountryAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Countries", label: "country", label_catalogue: "AdminBundle"}
+        arguments:
+            - ~
+            - ApiBundle\Entity\Mcountry
+            - ~
+        calls:
+            - [ setTranslationDomain, [AdminBundle]]        

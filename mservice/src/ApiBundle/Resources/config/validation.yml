@@ -38,7 +38,12 @@ ApiBundle\Entity\Muser:
             - Regex:
                 pattern: '/^[0-9]{8,20}$/'
                 match:   true
-                message: user.telephone.format.invalid       
+                message: user.telephone.format.invalid    
+        email:
+            - Regex:
+                pattern: '/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/'
+                match:   true
+                message: user.email.format.invalid 
 
 ApiBundle\Entity\Mpost:
     properties:

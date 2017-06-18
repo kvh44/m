@@ -15,7 +15,7 @@ imports:
 parameters:
     api_application_key: ibJg1A6N8yOIVK158aFYHksSTaW0WCPHHn1rNbP38hYza6T9xSjv6eCDT570R6gslFP02P5E0uPmVd0fmp3Ksp5wisUUU9dztngtqBBcivuvOHa7qyvXrzdcuxWHxCLl
     api_version : 0
-    locale: zh
+    locale: zh_CN
     min_top_time: 1800
     service_mail: service@xxx.com
     cc_mail: cc@xxx.com
@@ -121,14 +121,13 @@ swiftmailer:
 sonata_block:
     default_contexts: [cms]
     blocks:
-
         # enable the SonataAdminBundle block
         sonata.admin.block.admin_list:
             contexts:   [admin]
 
 sonata_admin:
     title:      Paris Massage
-    title_logo: bundles/app/images/fancy_acme_logo.png            
+    #title_logo: bundles/app/images/fancy_acme_logo.png            
             
 nelmio_cors:
     defaults:
