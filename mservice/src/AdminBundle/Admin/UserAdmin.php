@@ -28,20 +28,26 @@ class UserAdmin extends AbstractAdmin
             ->add('country')
             ->add('city')
             ->add('postNumber')     
-            ->add('countryId')
-            ->add('locationId')
+            ->add('countryId', 'sonata_type_model', array(
+                'class' => 'ApiBundle\Entity\Mcountry',
+                'property' => 'countryEn'
+            ))
+            ->add('locationId', 'sonata_type_model', array(
+                'class' => 'ApiBundle\Entity\Mlocation',
+                'property' => 'cityEn'
+            ))
             ->add('skinColor')   
             ->add('weight')  
             ->add('height')
-            ->add('birthday')
+            ->add('birthday', 'date', array('years'=> range(1970, (date("Y") - 18)), 'format' => 'yyyy MM dd'))
             ->add('hourPrice')  
             ->add('hourPriceUnit')    
             ->add('nightPrice')  
             ->add('nightPriceUnit')    
             ->add('shopAddress')
             ->add('shopName')   
-            ->add('description')
-            ->add('translatedDescription')
+            ->add('description', 'textarea', array('required' => false))
+            ->add('translatedDescription', 'textarea', array('required' => false))
             ->add('isActive')
             ->add('isDeleted')    
             ->add('isPremium')       
@@ -55,12 +61,16 @@ class UserAdmin extends AbstractAdmin
             ->add('isFromOtherWeb')
             ->add('otherWeb')  
             ->add('otherWebReference') 
-            ->add('draftId') 
+            ->add('draftId', 'sonata_type_model', array(
+                'class' => 'ApiBundle\Entity\Mdraft',
+                'property' => 'link'
+            )) 
             ->add('viewNumber')
-            ->add('topTime')
-            ->add('lastSynchronizedFromOtherWebTime')   
-            ->add('paymentExpiredTime')   
-            ->add('updated')    
+            ->add('topTime', 'datetime', array('years'=> range(2017, date("Y"))))
+            ->add('lastSynchronizedFromOtherWebTime', 'datetime', array('years'=> range(2017, date("Y"))))  
+            ->add('paymentExpiredTime', 'datetime', array('years'=> range(2017, date("Y")))) 
+            ->add('updated', 'datetime', array('years'=> range(2017, date("Y"))))
+            ->add('created', 'datetime', array('years'=> range(2017, date("Y"))))     
        ;
     }
 
@@ -83,6 +93,8 @@ class UserAdmin extends AbstractAdmin
             ->add('email')
             ->add('telephone')
             ->add('wechat') 
+            ->add('updated')
+            ->add('created')    
        ;
     }
 
