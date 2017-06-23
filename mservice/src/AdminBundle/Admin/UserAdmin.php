@@ -28,13 +28,14 @@ class UserAdmin extends AbstractAdmin
             ->add('country')
             ->add('city')
             ->add('postNumber')     
-            ->add('countryId', 'sonata_type_model', array(
+            ->add('countryId', 'entity', array(
                 'class' => 'ApiBundle\Entity\Mcountry',
-                'property' => 'countryEn'
+				'data' => '4',
+                'choice_label' => 'countryEn'
             ))
-            ->add('locationId', 'sonata_type_model', array(
+            ->add('locationId', 'entity', array(
                 'class' => 'ApiBundle\Entity\Mlocation',
-                'property' => 'cityEn'
+                'choice_label' => 'cityEn'
             ))
             ->add('skinColor')   
             ->add('weight')  

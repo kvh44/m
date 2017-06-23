@@ -52,19 +52,23 @@ class IndexListener extends Listener implements EventSubscriber
 
     public function postPersist(LifecycleEventArgs $args)
     {
-        $entity = $args->getObject();
+		try{
+			$entity = $args->getObject();
 
-        if ($entity instanceof Muser || $entity instanceof Mpost) {
+			if ($entity instanceof Muser || $entity instanceof Mpost) {
+				
+				if($entity->getIsdeleted()){
+					$this->preRemove($args);
+				}
+				
+				if ($this->objectPersister->handlesObject($entity)) {
+					if ($this->isObjectIndexable($entity)) {
+						$this->scheduledForInsertion[] = $entity;
+					}
+				}
+			}
+		} catch (\Exception $e) {
             
-            if($entity->getIsdeleted()){
-                $this->preRemove($args);
-            }
-            
-            if ($this->objectPersister->handlesObject($entity)) {
-                if ($this->isObjectIndexable($entity)) {
-                    $this->scheduledForInsertion[] = $entity;
-                }
-            }
         }
     }
     
@@ -76,25 +80,29 @@ class IndexListener extends Listener implements EventSubscriber
                 $entity = $this->testSearchEngineAliasesInfo($entity);
             }
         } catch (\Exception $e) {
-            
+ 
         }
     }
 
     public function postUpdate(LifecycleEventArgs $args)
     {
-        $entity = $args->getObject();
+		try{
+			$entity = $args->getObject();
 
-        if ($entity instanceof Muser || $entity instanceof Mpost) {
+			if ($entity instanceof Muser || $entity instanceof Mpost) {
 
-            if($entity->getIsdeleted()){
-                $this->preRemove($args);
-            }
-        
-            if ($this->objectPersister->handlesObject($entity)) {
-                if ($this->isObjectIndexable($entity)) {
-                    $this->scheduledForUpdate[] = $entity;
-                }
-            }
+				if($entity->getIsdeleted()){
+					$this->preRemove($args);
+				}
+			
+				if ($this->objectPersister->handlesObject($entity)) {
+					if ($this->isObjectIndexable($entity)) {
+						$this->scheduledForUpdate[] = $entity;
+					}
+				}
+			}
+		} catch (\Exception $e) {
+            
         }
     }
 
