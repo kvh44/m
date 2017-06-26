@@ -191,6 +191,8 @@ class MassageUserRepository extends EntityRepository implements UserLoaderInterf
             }
 
         }
+		
+		$q->orderBy('u.updated', 'DESC');
         
         $q->setParameters($parameters);
         $q->distinct();

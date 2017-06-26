@@ -28,7 +28,7 @@ class IndexCustomPropertyListener implements EventSubscriberInterface
                 if(array_key_exists(UtileService::DATA_STRUCTURE_PROFILE_PHOTO, $profile_photo['data'])){
                     $document->set(UtileService::DATA_STRUCTURE_PROFILE_PHOTO, $profile_photo['data'][UtileService::DATA_STRUCTURE_PROFILE_PHOTO]);
                 } else {
-                    $document->set(UtileService::DATA_STRUCTURE_PROFILE_PHOTO, $profile_photo['data']);
+                    $document->set(UtileService::DATA_STRUCTURE_PROFILE_PHOTO, $profile_photo[UtileService::DATA_STRUCTURE_PROFILE_PHOTO]);
                 }
             }
             
