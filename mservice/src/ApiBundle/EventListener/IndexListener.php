@@ -40,6 +40,7 @@ class IndexListener extends Listener implements EventSubscriber
     
     public function prePersist(LifecycleEventArgs $args)
     {
+		/*
         try{
             $entity = $args->getObject();
             if ($entity instanceof Muser || $entity instanceof Mpost) {
@@ -48,6 +49,7 @@ class IndexListener extends Listener implements EventSubscriber
         } catch (\Exception $e) {
             
         }
+		*/
     }        
 
     public function postPersist(LifecycleEventArgs $args)
@@ -74,6 +76,7 @@ class IndexListener extends Listener implements EventSubscriber
     
     public function preUpdate(LifecycleEventArgs $args)
     {
+		/*
         try{
             $entity = $args->getObject();
             if ($entity instanceof Muser || $entity instanceof Mpost) {
@@ -82,6 +85,7 @@ class IndexListener extends Listener implements EventSubscriber
         } catch (\Exception $e) {
  
         }
+		*/
     }
 
     public function postUpdate(LifecycleEventArgs $args)
