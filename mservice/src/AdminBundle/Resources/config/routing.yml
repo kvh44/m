@@ -1,0 +1,7 @@
+admin_muser:
+    resource: "@AdminBundle/Resources/config/routing/muser.yml"
+    prefix:   /user
+
+admin_homepage:
+    path:     /
+    defaults: { _controller: AdminBundle:Default:index }

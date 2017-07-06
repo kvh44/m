@@ -1,0 +1,24 @@
+muser_index:
+    path:     /
+    defaults: { _controller: "AdminBundle:Muser:index" }
+    methods:  GET
+
+muser_show:
+    path:     /{id}/show
+    defaults: { _controller: "AdminBundle:Muser:show" }
+    methods:  GET
+
+muser_new:
+    path:     /new
+    defaults: { _controller: "AdminBundle:Muser:new" }
+    methods:  [GET, POST]
+
+muser_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AdminBundle:Muser:edit" }
+    methods:  [GET, POST]
+
+muser_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AdminBundle:Muser:delete" }
+    methods:  DELETE
