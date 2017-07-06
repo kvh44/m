@@ -23,13 +23,3 @@ app:
     resource: "@AppBundle/Controller/"
     type:     annotation
     prefix:   /
-
-
-admin:
-    resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
-    prefix: /3721
-
-_sonata_admin:
-    resource: .
-    type: sonata_admin
-    prefix: /3721      

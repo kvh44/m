@@ -27,21 +27,11 @@ class AppKernel extends Kernel
             // search
             new FOS\ElasticaBundle\FOSElasticaBundle(),
             
-            // Sonata admin
-            new Sonata\CoreBundle\SonataCoreBundle(),
-            new Sonata\BlockBundle\SonataBlockBundle(),
-            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
-            
-            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
-            
-            new Sonata\AdminBundle\SonataAdminBundle(),
-            
             // personal
             new AppBundle\AppBundle(),
             new ApiBundle\ApiBundle(),
             new MiddleBundle\MiddleBundle(),
             new FrontBundle\FrontBundle(),
-            new AdminBundle\AdminBundle(),
             new MobileBundle\MobileBundle(),
             new TestBundle\TestBundle(),
         ];

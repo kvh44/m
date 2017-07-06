@@ -6,7 +6,6 @@ imports:
     - { resource: "@ApiBundle/Resources/config/services.yml" }
     - { resource: "@MiddleBundle/Resources/config/services.yml" }
     - { resource: "@FrontBundle/Resources/config/services.yml" }
-    - { resource: "@AdminBundle/Resources/config/services.yml" }
     - { resource: "@MobileBundle/Resources/config/services.yml" }
     - { resource: "@TestBundle/Resources/config/services.yml" }
 
@@ -116,18 +115,7 @@ swiftmailer:
     host:      "%mailer_host%"
     username:  "%mailer_user%"
     password:  "%mailer_password%"
-    #spool:     { type: memory }
-
-sonata_block:
-    default_contexts: [cms]
-    blocks:
-        # enable the SonataAdminBundle block
-        sonata.admin.block.admin_list:
-            contexts:   [admin]
-
-sonata_admin:
-    title:      Paris Massage
-    #title_logo: bundles/app/images/fancy_acme_logo.png            
+    #spool:     { type: memory }          
             
 nelmio_cors:
     defaults:
