@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 2017-04-27 00:41:20
+-- Generation Time: 2017-07-12 00:29:11
 -- 服务器版本： 5.7.17
 -- PHP Version: 5.5.36
 
@@ -84,6 +84,22 @@ CREATE TABLE `mdraft` (
 -- --------------------------------------------------------
 
 --
+-- 表的结构 `mip`
+--
+
+CREATE TABLE `mip` (
+  `id` int(255) NOT NULL,
+  `ip` varchar(255) CHARACTER SET latin1 NOT NULL,
+  `user_id` int(255) NOT NULL,
+  `is_allowed` tinyint(1) NOT NULL,
+  `is_blacked` tinyint(1) NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- 表的结构 `mlocation`
 --
 
@@ -93,7 +109,7 @@ CREATE TABLE `mlocation` (
   `city_zh` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `city_fr` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `city_en` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `post_number` varchar(11) NOT NULL,
+  `post_number` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
   `post_number_zh` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `internal_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL
@@ -170,6 +186,22 @@ CREATE TABLE `mpost` (
 -- --------------------------------------------------------
 
 --
+-- 表的结构 `mtoken`
+--
+
+CREATE TABLE `mtoken` (
+  `id` int(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `token_type` int(2) NOT NULL,
+  `user_id` int(255) NOT NULL,
+  `token_expired_time` datetime NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- 表的结构 `muser`
 --
 
@@ -198,6 +230,7 @@ CREATE TABLE `muser` (
   `night_price` int(11) DEFAULT NULL,
   `night_price_unit` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   `shop_address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `shop_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `description` tinyblob,
   `translated_description` tinyblob,
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
@@ -214,6 +247,8 @@ CREATE TABLE `muser` (
   `is_synchronized_by_search` tinyint(1) DEFAULT NULL,
   `is_from_other_web` tinyint(1) DEFAULT NULL,
   `other_web` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `other_web_reference` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `draft_id` int(11) DEFAULT NULL,
   `view_number` int(11) DEFAULT NULL,
   `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `token` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -270,6 +305,13 @@ ALTER TABLE `mdraft`
   ADD KEY `link_id` (`link_id`);
 
 --
+-- Indexes for table `mip`
+--
+ALTER TABLE `mip`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `mip_unique_index` (`ip`,`user_id`);
+
+--
 -- Indexes for table `mlocation`
 --
 ALTER TABLE `mlocation`
@@ -317,6 +359,13 @@ ALTER TABLE `mpost`
   ADD KEY `title` (`title`);
 
 --
+-- Indexes for table `mtoken`
+--
+ALTER TABLE `mtoken`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `token` (`token`);
+
+--
 -- Indexes for table `muser`
 --
 ALTER TABLE `muser`
@@ -330,7 +379,10 @@ ALTER TABLE `muser`
   ADD UNIQUE KEY `telephone_2` (`telephone`),
   ADD KEY `wechat` (`wechat`),
   ADD KEY `email_2` (`email`),
-  ADD KEY `nickname` (`nickname`);
+  ADD KEY `nickname` (`nickname`),
+  ADD KEY `FK_DC4EF770A76ED5786876` (`draft_id`),
+  ADD KEY `country_id` (`country_id`),
+  ADD KEY `location_id` (`location_id`);
 
 --
 -- 在导出的表使用AUTO_INCREMENT
@@ -345,37 +397,47 @@ ALTER TABLE `madmin`
 -- 使用表AUTO_INCREMENT `mcountry`
 --
 ALTER TABLE `mcountry`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- 使用表AUTO_INCREMENT `mdraft`
 --
 ALTER TABLE `mdraft`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- 使用表AUTO_INCREMENT `mip`
+--
+ALTER TABLE `mip`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
+--
 -- 使用表AUTO_INCREMENT `mlocation`
 --
 ALTER TABLE `mlocation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- 使用表AUTO_INCREMENT `mpassword`
 --
 ALTER TABLE `mpassword`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 --
 -- 使用表AUTO_INCREMENT `mphoto`
 --
 ALTER TABLE `mphoto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 --
 -- 使用表AUTO_INCREMENT `mpost`
 --
 ALTER TABLE `mpost`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
+--
+-- 使用表AUTO_INCREMENT `mtoken`
+--
+ALTER TABLE `mtoken`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 --
 -- 使用表AUTO_INCREMENT `muser`
 --
 ALTER TABLE `muser`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 --
 -- 限制导出的表
 --
@@ -397,6 +459,14 @@ ALTER TABLE `mphoto`
 --
 ALTER TABLE `mpost`
   ADD CONSTRAINT `FK_DC4EF770A76ED395` FOREIGN KEY (`user_id`) REFERENCES `muser` (`id`);
+
+--
+-- 限制表 `muser`
+--
+ALTER TABLE `muser`
+  ADD CONSTRAINT `FK_DC4EF770A76ED5786876` FOREIGN KEY (`draft_id`) REFERENCES `mdraft` (`id`),
+  ADD CONSTRAINT `FK_DC4EF77SHFSHFSH5675675` FOREIGN KEY (`country_id`) REFERENCES `mcountry` (`id`),
+  ADD CONSTRAINT `FK_GGYUGYGVDF345356` FOREIGN KEY (`location_id`) REFERENCES `mlocation` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

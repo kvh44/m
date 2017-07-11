@@ -254,4 +254,9 @@ class Mlocation
     {
         return $this->slug;
     }
+    
+    public function __toString()
+    {
+        return $this->cityEn.' '.$this->postNumber;
+    }
 }

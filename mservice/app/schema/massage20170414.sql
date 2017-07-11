@@ -93,7 +93,7 @@ CREATE TABLE `mlocation` (
   `city_zh` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `city_fr` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `city_en` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `post_number` int(11) NOT NULL,
+  `post_number` varchar(11) NOT NULL,
   `post_number_zh` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `internal_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL

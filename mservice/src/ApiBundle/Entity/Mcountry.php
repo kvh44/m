@@ -168,8 +168,9 @@ class Mcountry
         return $this->slug;
     }
 	
-	public function __toString()
-	{
-		return (string)$this->id;
-	}
+    
+    public function __toString()
+    {
+        return $this->countryEn;
+    }
 }

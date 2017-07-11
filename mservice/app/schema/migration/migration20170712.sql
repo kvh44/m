@@ -1,0 +1,1 @@
+ALTER TABLE `mlocation` CHANGE `post_number` `post_number` VARCHAR(11) NOT NULL;
