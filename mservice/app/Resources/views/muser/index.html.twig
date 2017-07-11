@@ -12,53 +12,14 @@
                 <th>Telephone</th>
                 <th>Nickname</th>
                 <th>Wechat</th>
-                <th>Facebook</th>
-                <th>Instagram</th>
-                <th>Website</th>
-                <th>Timezone</th>
-                <th>Country</th>
-                <th>City</th>
-                <th>Postnumber</th>
                 <th>Countryid</th>
                 <th>Locationid</th>
-                <th>Skincolor</th>
-                <th>Weight</th>
-                <th>Height</th>
-                <th>Birthday</th>
-                <th>Hourprice</th>
-                <th>Hourpriceunit</th>
-                <th>Nightprice</th>
-                <th>Nightpriceunit</th>
-                <th>Shopaddress</th>
                 <th>Shopname</th>
-                <th>Description</th>
-                <th>Translateddescription</th>
                 <th>Isactive</th>
                 <th>Isdeleted</th>
-                <th>Ispremium</th>
-                <th>Issingle</th>
-                <th>Isshop</th>
-                <th>Iszh</th>
-                <th>Isen</th>
-                <th>Isfr</th>
-                <th>Isadmin</th>
-                <th>Istest</th>
-                <th>Issynchronizedbycache</th>
-                <th>Issynchronizedbysearch</th>
-                <th>Isfromotherweb</th>
-                <th>Otherweb</th>
-                <th>Otherwebreference</th>
-                <th>Draftid</th>
-                <th>Viewnumber</th>
-                <th>Slug</th>
-                <th>Token</th>
-                <th>Internaltoken</th>
-                <th>Externaltoken</th>
-                <th>Internalid</th>
+                <th>Ispremium</th> 
                 <th>Toptime</th>
-                <th>Lastsynchronizedfromotherwebtime</th>
                 <th>Paymentexpiredtime</th>
-                <th>Allowedip</th>
                 <th>Created</th>
                 <th>Updated</th>
                 <th>Actions</th>
@@ -73,53 +34,14 @@
                 <td>{{ muser.telephone }}</td>
                 <td>{{ muser.nickname }}</td>
                 <td>{{ muser.wechat }}</td>
-                <td>{{ muser.facebook }}</td>
-                <td>{{ muser.instagram }}</td>
-                <td>{{ muser.website }}</td>
-                <td>{{ muser.timezone }}</td>
-                <td>{{ muser.country }}</td>
-                <td>{{ muser.city }}</td>
-                <td>{{ muser.postNumber }}</td>
                 <td>{{ muser.countryId }}</td>
                 <td>{{ muser.locationId }}</td>
-                <td>{{ muser.skinColor }}</td>
-                <td>{{ muser.weight }}</td>
-                <td>{{ muser.height }}</td>
-                <td>{% if muser.birthday %}{{ muser.birthday|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ muser.hourPrice }}</td>
-                <td>{{ muser.hourPriceUnit }}</td>
-                <td>{{ muser.nightPrice }}</td>
-                <td>{{ muser.nightPriceUnit }}</td>
-                <td>{{ muser.shopAddress }}</td>
                 <td>{{ muser.shopName }}</td>
-                <td>{{ muser.description }}</td>
-                <td>{{ muser.translatedDescription }}</td>
                 <td>{% if muser.isActive %}Yes{% else %}No{% endif %}</td>
                 <td>{% if muser.isDeleted %}Yes{% else %}No{% endif %}</td>
                 <td>{% if muser.isPremium %}Yes{% else %}No{% endif %}</td>
-                <td>{% if muser.isSingle %}Yes{% else %}No{% endif %}</td>
-                <td>{% if muser.isShop %}Yes{% else %}No{% endif %}</td>
-                <td>{% if muser.isZh %}Yes{% else %}No{% endif %}</td>
-                <td>{% if muser.isEn %}Yes{% else %}No{% endif %}</td>
-                <td>{% if muser.isFr %}Yes{% else %}No{% endif %}</td>
-                <td>{% if muser.isAdmin %}Yes{% else %}No{% endif %}</td>
-                <td>{% if muser.isTest %}Yes{% else %}No{% endif %}</td>
-                <td>{% if muser.isSynchronizedByCache %}Yes{% else %}No{% endif %}</td>
-                <td>{% if muser.isSynchronizedBySearch %}Yes{% else %}No{% endif %}</td>
-                <td>{% if muser.isFromOtherWeb %}Yes{% else %}No{% endif %}</td>
-                <td>{{ muser.otherWeb }}</td>
-                <td>{{ muser.otherWebReference }}</td>
-                <td>{{ muser.draftId }}</td>
-                <td>{{ muser.viewNumber }}</td>
-                <td>{{ muser.slug }}</td>
-                <td>{{ muser.token }}</td>
-                <td>{{ muser.internalToken }}</td>
-                <td>{{ muser.externalToken }}</td>
-                <td>{{ muser.internalId }}</td>
                 <td>{% if muser.topTime %}{{ muser.topTime|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if muser.lastSynchronizedFromOtherWebTime %}{{ muser.lastSynchronizedFromOtherWebTime|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{% if muser.paymentExpiredTime %}{{ muser.paymentExpiredTime|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ muser.allowedIp }}</td>
                 <td>{% if muser.created %}{{ muser.created|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{% if muser.updated %}{{ muser.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>
