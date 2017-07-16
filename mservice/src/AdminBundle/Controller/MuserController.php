@@ -20,9 +20,9 @@ class MuserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $musers = $em->getRepository('ApiBundle:Muser')->findAll();
+        $musers = $em->getRepository('ApiBundle:Muser')->getUserListBo();
 
-        return $this->render('muser/index.html.twig', array(
+        return $this->render('admin/muser/index.html.twig', array(
             'musers' => $musers,
         ));
     }
@@ -45,7 +45,7 @@ class MuserController extends Controller
             return $this->redirectToRoute('muser_show', array('id' => $muser->getId()));
         }
 
-        return $this->render('muser/new.html.twig', array(
+        return $this->render('admin/muser/new.html.twig', array(
             'muser' => $muser,
             'form' => $form->createView(),
         ));
@@ -59,7 +59,7 @@ class MuserController extends Controller
     {
         $deleteForm = $this->createDeleteForm($muser);
 
-        return $this->render('muser/show.html.twig', array(
+        return $this->render('admin/muser/show.html.twig', array(
             'muser' => $muser,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -81,7 +81,7 @@ class MuserController extends Controller
             return $this->redirectToRoute('muser_edit', array('id' => $muser->getId()));
         }
 
-        return $this->render('muser/edit.html.twig', array(
+        return $this->render('admin/muser/edit.html.twig', array(
             'muser' => $muser,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

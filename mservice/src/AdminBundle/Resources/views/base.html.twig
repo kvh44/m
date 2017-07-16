@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>{% block title %}Admin Application{% endblock %}</title>
+        
+        {% stylesheets output='css/compiled/admin.css' 
+            '@FrontBundle/Resources/public/css/bootstrap.min.css' 
+            '@FrontBundle/Resources/public/font-awesome/css/font-awesome.css' 
+            '@FrontBundle/Resources/public/css/plugins/dataTables/datatables.min.css' 
+            '@FrontBundle/Resources/public/css/animate.css' 
+            '@FrontBundle/Resources/public/css/style.css' 
+            filter='cssrewrite' 
+        %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    </head>
+    <body>
+        <div id="wrapper">
+            {% block body %}{% endblock %}
+        </div>
+    
+    {% javascripts output='js/compiled/admin.js' 
+        '@FrontBundle/Resources/public/js/jquery-3.1.1.min.js'
+        '@FrontBundle/Resources/public/js/bootstrap.min.js'
+        '@FrontBundle/Resources/public/js/plugins/metisMenu/jquery.metisMenu.js'
+        '@FrontBundle/Resources/public/js/plugins/slimscroll/jquery.slimscroll.min.js' 
+        '@FrontBundle/Resources/public/js/plugins/dataTables/datatables.min.js' 
+        '@FrontBundle/Resources/public/js/inspinia.js' 
+        '@FrontBundle/Resources/public/js/plugins/pace/pace.min.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    
+    {% block js %}
+    {% endblock %}
+    
+    </body>
+</html>

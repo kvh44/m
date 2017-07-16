@@ -118,7 +118,7 @@ class MassageUserRepository extends EntityRepository implements UserLoaderInterf
             $color = null, $lang = null, $is_single = null, $age_period = array(), $em)
     {   
         $q = $this->createQueryBuilder('u');
-        $q->select('u.id, u.username, u.email, u.telephone, u.nickname, u.nickname, u.wechat, u.facebook,
+        $q->select('u.id, u.username, u.email, u.telephone, u.nickname, u.wechat, u.facebook,
         u.instagram, u.website, u.timezone, u.country, u.city, u.postNumber, u.countryId, u.locationId,
         u.skinColor, u.birthday, u.shopAddress, u.description, u.translatedDescription, u.isActive, u.isDeleted,
         u.isPremium, u.isSingle, u.isShop, u.isZh, u.isEn, u.isFr, u.isTest, u.isFromOtherWeb, u.otherWeb,
@@ -128,22 +128,22 @@ class MassageUserRepository extends EntityRepository implements UserLoaderInterf
         $q->where('u.isDeleted <> :is_deleted');
         $parameters = array(':is_deleted' => UtileService::TINY_INT_TRUE);
         
-        if(strlen($country_id)){
+        if(strlen($country_id) > 0){
             $q->andWhere('u.countryId = :country_id');
             $parameters[':country_id'] = $country_id;
         }
         
-        if(strlen($location_id)){
+        if(strlen($location_id) > 0){
             $q->andWhere('u.locationId = :location_id');
             $parameters[':location_id'] = $location_id;
         }
         
-        if(strlen($color)){
+        if(strlen($color) > 0){
             $q->andWhere('u.skinColor = :skin_color');
             $parameters[':skin_color'] = $color;
         }
         
-        if(strlen($lang)){
+        if(strlen($lang) > 0){
             switch ($lang){
                 case UtileService::LANG_ZH : 
                     $q->andWhere('u.isZh = :is_zh');
@@ -192,7 +192,7 @@ class MassageUserRepository extends EntityRepository implements UserLoaderInterf
 
         }
 		
-		$q->orderBy('u.updated', 'DESC');
+	$q->orderBy('u.updated', 'DESC');
         
         $q->setParameters($parameters);
         $q->distinct();
@@ -211,4 +211,77 @@ class MassageUserRepository extends EntityRepository implements UserLoaderInterf
         }
         return $users;
     }
+    
+    public function getUserListBo($only_total = false, $offset = 0, $limit = 15, $country_id = null, $lang = null,
+        $is_single = null, $is_active = null)
+    {
+        $q = $this->createQueryBuilder('u');
+        $q->select('u.id, u.username, u.email, u.telephone, u.wechat, c.countryEn, l.cityEn, l.postNumber,
+        u.shopName, u.isActive, u.isDeleted, u.isSingle, u.isShop, u.isZh, u.isEn, u.isFr, u.isTest, u.isFromOtherWeb, u.otherWeb,
+        u.topTime, u.paymentExpiredTime, u.created, u.updated');
+        
+        $q->leftJoin('ApiBundle:Mcountry', 'c','WITH','c.id = u.countryId');  
+        $q->leftJoin('ApiBundle:Mlocation', 'l','WITH','l.id = u.locationId');        
+        
+        $q->where(' 1 = 1 ');
+        
+        if(strlen($country_id) > 0){
+            $q->andWhere('u.countryId = :country_id');
+            $parameters[':country_id'] = $country_id;
+        }
+        
+        if(strlen($lang)){
+            switch ($lang){
+                case UtileService::LANG_ZH : 
+                    $q->andWhere('u.isZh = :is_zh');
+                    $parameters[':is_zh'] = UtileService::TINY_INT_TRUE;
+                   break; 
+               case UtileService::LANG_FR : 
+                   $q->andWhere('u.isFr = :is_fr');
+                   $parameters[':is_fr'] = UtileService::TINY_INT_TRUE;
+                   break; 
+               case UtileService::LANG_EN : 
+                   $q->andWhere('u.isEn = :is_en');
+                   $parameters[':is_en'] = UtileService::TINY_INT_TRUE;
+                   break; 
+               default :
+                   break;
+            }
+        }
+        
+        if(strlen($is_active) > 0) {
+            if($is_active == 1){
+                $q->andWhere('u.isActive = :is_active');
+                $parameters[':is_active'] = UtileService::TINY_INT_TRUE;
+            } else {
+                $q->andWhere('u.isActive = :is_active');
+                $parameters[':is_active'] = UtileService::TINY_INT_FALSE;
+            }
+        }
+        
+        if(strlen($is_single) > 0) {
+            if($is_single == 1){
+                $q->andWhere('u.isSingle = :is_single');
+                $parameters[':is_single'] = UtileService::TINY_INT_TRUE;
+            } else {
+                $q->andWhere('u.isSingle = :is_single');
+                $parameters[':is_single'] = UtileService::TINY_INT_FALSE;
+            }
+        }
+        
+        $q->orderBy('u.updated', 'DESC');
+        
+        if(isset($parameters)){
+            $q->setParameters($parameters);
+        }
+        
+        $q->distinct();
+        if($only_total){
+            return count($q->getQuery()->getResult());
+        }
+        $q->setMaxResults($limit);
+        $q->setFirstResult($offset);
+        $users = $q->getQuery()->getResult();
+        return $users;
+    }        
 }

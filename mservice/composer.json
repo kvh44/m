@@ -36,7 +36,8 @@
         "snc/redis-bundle": "2.x-dev",
         "friendsofsymfony/elastica-bundle": "^4.0",
         "sonata-project/admin-bundle": "^3.19",
-        "sonata-project/doctrine-orm-admin-bundle": "^3.1"
+        "sonata-project/doctrine-orm-admin-bundle": "^3.1",
+        "symfony/assetic-bundle": "^2.8"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
