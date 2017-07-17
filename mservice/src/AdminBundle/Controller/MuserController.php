@@ -5,7 +5,7 @@ namespace AdminBundle\Controller;
 use ApiBundle\Entity\Muser;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-
+use Symfony\Component\HttpFoundation\JsonResponse;
 /**
  * Muser controller.
  *
@@ -18,14 +18,58 @@ class MuserController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        //$em = $this->getDoctrine()->getManager();
 
-        $musers = $em->getRepository('ApiBundle:Muser')->getUserListBo();
-
+        //$musers = $em->getRepository('ApiBundle:Muser')->getUserListBo();
+        $musers = array();
         return $this->render('admin/muser/index.html.twig', array(
             'musers' => $musers,
         ));
     }
+    
+    public function userListAjaxAction(Request $request)
+    {
+        if(!$request->getSession()->get('draw_users')){
+            $request->getSession()->set('draw_users', 1);
+        } else {
+            $draw = $request->getSession()->get('draw_users');
+            $request->getSession()->set('draw_users', (int)$draw + 1);
+        }
+        
+        if(strlen($request->query->get('start')) > 0){
+            $offset = $request->query->get('start');
+        } else {
+            $offset = 0;
+        }
+        
+        if(strlen($request->query->get('length')) > 0){
+            $limit = $request->query->get('length');
+        } else {
+            $limit = 15;
+        }
+        
+        $search = $request->query->get('search');
+        if(is_array($search)){
+            if(array_key_exists('value', $search)){
+                $word = $search['value'];
+            }
+        }
+        $em = $this->getDoctrine()->getManager();
+        $total = $em->getRepository('ApiBundle:Muser')->getUserListBo(true);
+        $users = $em->getRepository('ApiBundle:Muser')->getUserListBo(false, $offset, $limit, null, null, null, null, $word);
+
+        return new JsonResponse(
+            array(
+                'data' => $users, 
+                'draw' => $request->getSession()->get('draw_users'), 
+                'recordsTotal' => $total, 
+                'recordsFiltered' => $total,
+                //'iTotalRecords' => $total,
+                //'iTotalDisplayRecords' => $total,
+                //'aaData' => $users
+            )
+        );
+    }        
 
     /**
      * Creates a new muser entity.

@@ -29,14 +29,12 @@
                     <div class="ibox-content">
 
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-hover dataTables" >
+                        <table class="table table-striped table-bordered table-hover dataTables" id="userListTable">
                             <thead>
                             <tr>
                                 <th>Id</th>
                                 <th>username</th>
-                                <th>email</th>
                                 <th>telephone</th>
-                                <th>wechat</th>
                                 <th>country</th>
                                 <th>city</th>
                                 <th>shopName</th>
@@ -53,9 +51,7 @@
                                 <tr class="gradeX">
                                     <td><a href="{{ path('muser_show', { 'id': muser.id }) }}">{{ muser.id }}</a></td>
                                     <td>{{ muser.username }}</td>
-                                    <td>{{ muser.email }}</td>
                                     <td>{{ muser.telephone }}</td>
-                                    <td>{{ muser.wechat }}</td>
                                     <td>{{ muser.countryEn }}</td>
                                     <td>{{ muser.cityEn }} {{ muser.postNumber }}</td>
                                     <td>{{ muser.shopName }}</td>
@@ -100,13 +96,46 @@
     <!-- Page-Level Scripts -->
     <script>
         $(document).ready(function(){
-            $('.dataTables').DataTable({
-                pageLength: 25,
-                responsive: true,
-                dom: '<"html5buttons"B>lTfgitp',
-                buttons: [
-                ]
-
+            $('#userListTable').DataTable({
+                serverSide: true,
+                processing: true,
+                ajax: '{{ path('muser_list_ajax') }}',
+                columns: [
+                    { data: 'id' },
+                    { data: 'username' },
+                    { data: 'telephone' },
+                    { data: 'countryEn' },
+                    { data: 'cityEn' },
+                    { data: 'shopName' },
+                    { data: 'isActive' },
+                    { data: 'isDeleted' },
+                    { data: function ( row ) {
+                               if(row.topTime){
+                                   return row.topTime.date;
+                               } else {
+                                   return '';
+                               }
+                            }
+                    },
+                    { data: function ( row ) {
+                               if(row.created){
+                                   return row.created.date;
+                               } else {
+                                   return '';
+                               }
+                            }
+                    },
+                    { data: function ( row ) {
+                               if(row.updated){
+                                   return row.updated.date;
+                               } else {
+                                   return '';
+                               }
+                            }
+                    },
+                ],
+                pageLength: 15,
+                responsive: true
             });
 
         });

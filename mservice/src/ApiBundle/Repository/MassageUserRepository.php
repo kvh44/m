@@ -213,12 +213,16 @@ class MassageUserRepository extends EntityRepository implements UserLoaderInterf
     }
     
     public function getUserListBo($only_total = false, $offset = 0, $limit = 15, $country_id = null, $lang = null,
-        $is_single = null, $is_active = null)
+        $is_single = null, $is_active = null, $word = null)
     {
         $q = $this->createQueryBuilder('u');
         $q->select('u.id, u.username, u.email, u.telephone, u.wechat, c.countryEn, l.cityEn, l.postNumber,
         u.shopName, u.isActive, u.isDeleted, u.isSingle, u.isShop, u.isZh, u.isEn, u.isFr, u.isTest, u.isFromOtherWeb, u.otherWeb,
         u.topTime, u.paymentExpiredTime, u.created, u.updated');
+        
+        if($only_total){
+            $q->select(' count(u.id) ');
+        }
         
         $q->leftJoin('ApiBundle:Mcountry', 'c','WITH','c.id = u.countryId');  
         $q->leftJoin('ApiBundle:Mlocation', 'l','WITH','l.id = u.locationId');        
@@ -269,6 +273,15 @@ class MassageUserRepository extends EntityRepository implements UserLoaderInterf
             }
         }
         
+        if(strlen($word) > 0){
+            $q->andWhere('u.username LIKE :username');
+            $q->orWhere('u.telephone LIKE :telephone');
+            $q->orWhere('u.wechat LIKE :wechat');
+            $parameters[':username'] = '%'.$word.'%';
+            $parameters[':telephone'] = '%'.$word.'%';
+            $parameters[':wechat'] = '%'.$word.'%';
+        }
+        
         $q->orderBy('u.updated', 'DESC');
         
         if(isset($parameters)){
@@ -276,9 +289,13 @@ class MassageUserRepository extends EntityRepository implements UserLoaderInterf
         }
         
         $q->distinct();
+        
         if($only_total){
-            return count($q->getQuery()->getResult());
+            //return count($q->getQuery()->getResult());
+            $total = $q->getQuery()->getResult();
+            return $total[0][1];
         }
+
         $q->setMaxResults($limit);
         $q->setFirstResult($offset);
         $users = $q->getQuery()->getResult();

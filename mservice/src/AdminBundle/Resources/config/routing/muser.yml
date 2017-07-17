@@ -2,6 +2,11 @@ muser_index:
     path:     /
     defaults: { _controller: "AdminBundle:Muser:index" }
     methods:  GET
+    
+muser_list_ajax:
+    path:     /user-list-ajax
+    defaults: { _controller: "AdminBundle:Muser:userListAjax" }
+    methods:  GET    
 
 muser_show:
     path:     /{id}/show
