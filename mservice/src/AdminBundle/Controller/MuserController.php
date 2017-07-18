@@ -29,12 +29,15 @@ class MuserController extends Controller
     
     public function userListAjaxAction(Request $request)
     {
+        /*
         if(!$request->getSession()->get('draw_users')){
             $request->getSession()->set('draw_users', 1);
         } else {
             $draw = $request->getSession()->get('draw_users');
             $request->getSession()->set('draw_users', (int)$draw + 1);
         }
+         * 
+         */
         
         if(strlen($request->query->get('start')) > 0){
             $offset = $request->query->get('start');
@@ -56,14 +59,15 @@ class MuserController extends Controller
         }
         $em = $this->getDoctrine()->getManager();
         $total = $em->getRepository('ApiBundle:Muser')->getUserListBo(true);
+        $totalFiltered = $em->getRepository('ApiBundle:Muser')->getUserListBo(true, null, null, null, null, null, null, $word);
         $users = $em->getRepository('ApiBundle:Muser')->getUserListBo(false, $offset, $limit, null, null, null, null, $word);
 
         return new JsonResponse(
             array(
                 'data' => $users, 
-                'draw' => $request->getSession()->get('draw_users'), 
+                //'draw' => $request->getSession()->get('draw_users'), 
                 'recordsTotal' => $total, 
-                'recordsFiltered' => $total,
+                'recordsFiltered' => $totalFiltered,
                 //'iTotalRecords' => $total,
                 //'iTotalDisplayRecords' => $total,
                 //'aaData' => $users
