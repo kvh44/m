@@ -140,8 +140,9 @@ class MuserController extends Controller
      * Deletes a muser entity.
      *
      */
-    public function deleteAction(Request $request, Muser $muser)
+    public function deleteAction(Request $request)
     {
+        /*
         $form = $this->createDeleteForm($muser);
         $form->handleRequest($request);
 
@@ -150,7 +151,7 @@ class MuserController extends Controller
             $em->remove($muser);
             $em->flush($muser);
         }
-
+        */
         return $this->redirectToRoute('muser_index');
     }
 

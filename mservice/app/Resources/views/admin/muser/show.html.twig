@@ -1,232 +1,258 @@
-{% extends 'base.html.twig' %}
+{% extends '@Admin/base.html.twig' %}
 
 {% block body %}
-    <h1>Muser</h1>
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>User Page</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#">Config option 1</a>
+                                </li>
+                                <li><a href="#">Config option 2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="ibox-content">
+                        <div class="row">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th><label class="control-label">Id</label></th>
+                                <td>{{ muser.id }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Username</label></th>
+                                <td>{{ muser.username }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Email</label></th>
+                                <td>{{ muser.email }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Telephone</label></th>
+                                <td>{{ muser.telephone }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Nickname</label></th>
+                                <td>{{ muser.nickname }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Wechat</label></th>
+                                <td>{{ muser.wechat }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Facebook</label></th>
+                                <td>{{ muser.facebook }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Instagram</label></th>
+                                <td>{{ muser.instagram }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Website</label></th>
+                                <td>{{ muser.website }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Timezone</label></th>
+                                <td>{{ muser.timezone }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Country</label></th>
+                                <td>{{ muser.country }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">City</label></th>
+                                <td>{{ muser.city }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Postnumber</label></th>
+                                <td>{{ muser.postNumber }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Countryid</label></th>
+                                <td>{{ muser.countryId }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Locationid</label></th>
+                                <td>{{ muser.locationId }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Skincolor</label></th>
+                                <td>{{ muser.skinColor }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Weight</label></th>
+                                <td>{{ muser.weight }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Height</label></th>
+                                <td>{{ muser.height }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Birthday</label></th>
+                                <td>{% if muser.birthday %}{{ muser.birthday|date('Y-m-d') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Hourprice</label></th>
+                                <td>{{ muser.hourPrice }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Hourpriceunit</label></th>
+                                <td>{{ muser.hourPriceUnit }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Nightprice</label></th>
+                                <td>{{ muser.nightPrice }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Nightpriceunit</label></th>
+                                <td>{{ muser.nightPriceUnit }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Shopaddress</label></th>
+                                <td>{{ muser.shopAddress }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Shopname</label></th>
+                                <td>{{ muser.shopName }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Description</label></th>
+                                <td>{{ muser.description }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Translateddescription</label></th>
+                                <td>{{ muser.translatedDescription }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Isactive</label></th>
+                                <td>{% if muser.isActive %}Yes{% else %}No{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Isdeleted</label></th>
+                                <td>{% if muser.isDeleted %}Yes{% else %}No{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Ispremium</label></th>
+                                <td>{% if muser.isPremium %}Yes{% else %}No{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Issingle</label></th>
+                                <td>{% if muser.isSingle %}Yes{% else %}No{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Isshop</label></th>
+                                <td>{% if muser.isShop %}Yes{% else %}No{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Iszh</label></th>
+                                <td>{% if muser.isZh %}Yes{% else %}No{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Isen</label></th>
+                                <td>{% if muser.isEn %}Yes{% else %}No{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Isfr</label></th>
+                                <td>{% if muser.isFr %}Yes{% else %}No{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Isadmin</label></th>
+                                <td>{% if muser.isAdmin %}Yes{% else %}No{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Istest</label></th>
+                                <td>{% if muser.isTest %}Yes{% else %}No{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Issynchronizedbycache</label></th>
+                                <td>{% if muser.isSynchronizedByCache %}Yes{% else %}No{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Issynchronizedbysearch</label></th>
+                                <td>{% if muser.isSynchronizedBySearch %}Yes{% else %}No{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Isfromotherweb</label></th>
+                                <td>{% if muser.isFromOtherWeb %}Yes{% else %}No{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Otherweb</label></th>
+                                <td>{{ muser.otherWeb }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Otherwebreference</label></th>
+                                <td>{{ muser.otherWebReference }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Draftid</label></th>
+                                <td>{{ muser.draftId }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Viewnumber</label></th>
+                                <td>{{ muser.viewNumber }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Slug</label></th>
+                                <td>{{ muser.slug }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Internalid</label></th>
+                                <td>{{ muser.internalId }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Toptime</label></th>
+                                <td>{% if muser.topTime %}{{ muser.topTime|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Lastsynchronizedfromotherwebtime</label></th>
+                                <td>{% if muser.lastSynchronizedFromOtherWebTime %}{{ muser.lastSynchronizedFromOtherWebTime|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Paymentexpiredtime</label></th>
+                                <td>{% if muser.paymentExpiredTime %}{{ muser.paymentExpiredTime|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Allowedip</label></th>
+                                <td>{{ muser.allowedIp }}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Created</label></th>
+                                <td>{% if muser.created %}{{ muser.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th><label class="control-label">Updated</label></th>
+                                <td>{% if muser.updated %}{{ muser.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ muser.id }}</td>
-            </tr>
-            <tr>
-                <th>Username</th>
-                <td>{{ muser.username }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ muser.email }}</td>
-            </tr>
-            <tr>
-                <th>Telephone</th>
-                <td>{{ muser.telephone }}</td>
-            </tr>
-            <tr>
-                <th>Nickname</th>
-                <td>{{ muser.nickname }}</td>
-            </tr>
-            <tr>
-                <th>Wechat</th>
-                <td>{{ muser.wechat }}</td>
-            </tr>
-            <tr>
-                <th>Facebook</th>
-                <td>{{ muser.facebook }}</td>
-            </tr>
-            <tr>
-                <th>Instagram</th>
-                <td>{{ muser.instagram }}</td>
-            </tr>
-            <tr>
-                <th>Website</th>
-                <td>{{ muser.website }}</td>
-            </tr>
-            <tr>
-                <th>Timezone</th>
-                <td>{{ muser.timezone }}</td>
-            </tr>
-            <tr>
-                <th>Country</th>
-                <td>{{ muser.country }}</td>
-            </tr>
-            <tr>
-                <th>City</th>
-                <td>{{ muser.city }}</td>
-            </tr>
-            <tr>
-                <th>Postnumber</th>
-                <td>{{ muser.postNumber }}</td>
-            </tr>
-            <tr>
-                <th>Countryid</th>
-                <td>{{ muser.countryId }}</td>
-            </tr>
-            <tr>
-                <th>Locationid</th>
-                <td>{{ muser.locationId }}</td>
-            </tr>
-            <tr>
-                <th>Skincolor</th>
-                <td>{{ muser.skinColor }}</td>
-            </tr>
-            <tr>
-                <th>Weight</th>
-                <td>{{ muser.weight }}</td>
-            </tr>
-            <tr>
-                <th>Height</th>
-                <td>{{ muser.height }}</td>
-            </tr>
-            <tr>
-                <th>Birthday</th>
-                <td>{% if muser.birthday %}{{ muser.birthday|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Hourprice</th>
-                <td>{{ muser.hourPrice }}</td>
-            </tr>
-            <tr>
-                <th>Hourpriceunit</th>
-                <td>{{ muser.hourPriceUnit }}</td>
-            </tr>
-            <tr>
-                <th>Nightprice</th>
-                <td>{{ muser.nightPrice }}</td>
-            </tr>
-            <tr>
-                <th>Nightpriceunit</th>
-                <td>{{ muser.nightPriceUnit }}</td>
-            </tr>
-            <tr>
-                <th>Shopaddress</th>
-                <td>{{ muser.shopAddress }}</td>
-            </tr>
-            <tr>
-                <th>Shopname</th>
-                <td>{{ muser.shopName }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ muser.description }}</td>
-            </tr>
-            <tr>
-                <th>Translateddescription</th>
-                <td>{{ muser.translatedDescription }}</td>
-            </tr>
-            <tr>
-                <th>Isactive</th>
-                <td>{% if muser.isActive %}Yes{% else %}No{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Isdeleted</th>
-                <td>{% if muser.isDeleted %}Yes{% else %}No{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Ispremium</th>
-                <td>{% if muser.isPremium %}Yes{% else %}No{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Issingle</th>
-                <td>{% if muser.isSingle %}Yes{% else %}No{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Isshop</th>
-                <td>{% if muser.isShop %}Yes{% else %}No{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Iszh</th>
-                <td>{% if muser.isZh %}Yes{% else %}No{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Isen</th>
-                <td>{% if muser.isEn %}Yes{% else %}No{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Isfr</th>
-                <td>{% if muser.isFr %}Yes{% else %}No{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Isadmin</th>
-                <td>{% if muser.isAdmin %}Yes{% else %}No{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Istest</th>
-                <td>{% if muser.isTest %}Yes{% else %}No{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Issynchronizedbycache</th>
-                <td>{% if muser.isSynchronizedByCache %}Yes{% else %}No{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Issynchronizedbysearch</th>
-                <td>{% if muser.isSynchronizedBySearch %}Yes{% else %}No{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Isfromotherweb</th>
-                <td>{% if muser.isFromOtherWeb %}Yes{% else %}No{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Otherweb</th>
-                <td>{{ muser.otherWeb }}</td>
-            </tr>
-            <tr>
-                <th>Otherwebreference</th>
-                <td>{{ muser.otherWebReference }}</td>
-            </tr>
-            <tr>
-                <th>Draftid</th>
-                <td>{{ muser.draftId }}</td>
-            </tr>
-            <tr>
-                <th>Viewnumber</th>
-                <td>{{ muser.viewNumber }}</td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ muser.slug }}</td>
-            </tr>
-            <tr>
-                <th>Internalid</th>
-                <td>{{ muser.internalId }}</td>
-            </tr>
-            <tr>
-                <th>Toptime</th>
-                <td>{% if muser.topTime %}{{ muser.topTime|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Lastsynchronizedfromotherwebtime</th>
-                <td>{% if muser.lastSynchronizedFromOtherWebTime %}{{ muser.lastSynchronizedFromOtherWebTime|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Paymentexpiredtime</th>
-                <td>{% if muser.paymentExpiredTime %}{{ muser.paymentExpiredTime|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Allowedip</th>
-                <td>{{ muser.allowedIp }}</td>
-            </tr>
-            <tr>
-                <th>Created</th>
-                <td>{% if muser.created %}{{ muser.created|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Updated</th>
-                <td>{% if muser.updated %}{{ muser.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('muser_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('muser_edit', { 'id': muser.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+                    <a href="{{ path('muser_index') }}" class="btn btn-lg btn-default">Back to the list</a>
+
+                    <a href="{{ path('muser_edit', { 'id': muser.id }) }}" class="btn btn-lg btn-success">Edit</a>
+
+                    <a href="{{ path('muser_delete', { 'id': muser.id }) }}" class="btn btn-lg btn-danger">Delete</a>
+                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
