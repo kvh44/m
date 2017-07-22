@@ -521,7 +521,7 @@
         {% if muser.isDeleted %}
             <a href="{{ path('muser_enable', { 'internalToken': muser.internalToken }) }}" class="btn btn-lg btn-info">Enable</a>
         {% else %}    
-            <a href="{{ path('muser_delete', { 'internalToken': muser.internalToken }) }}" class="btn btn-lg btn-danger">Delete</a>
+            <a href="{{ path('muser_delete', { 'internalToken': muser.internalToken }) }}" class="btn btn-lg btn-danger" id="deleteUser">Delete</a>
         {% endif %}
      {% endif %}
 

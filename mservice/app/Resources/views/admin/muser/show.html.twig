@@ -247,7 +247,7 @@
                     {% if muser.isDeleted %}
                        <a href="{{ path('muser_enable', { 'internalToken': muser.internalToken }) }}" class="btn btn-lg btn-info">Enable</a>
                     {% else %}    
-                        <a href="{{ path('muser_delete', { 'internalToken': muser.internalToken }) }}" class="btn btn-lg btn-danger">Delete</a>
+                        <a href="{{ path('muser_delete', { 'internalToken': muser.internalToken }) }}" class="btn btn-lg btn-danger" id="deleteUser">Delete</a>
                     {% endif %}
                     <a href="{{ path('muser_edit', { 'internalToken': muser.internalToken }) }}" class="btn btn-lg btn-success">Edit</a>
                         </div>
@@ -257,4 +257,20 @@
         </div>
     </div>
 
+{% endblock %}
+
+
+{% block js %}  
+    <!-- Page-Level Scripts -->
+    
+    {% javascripts output='js/compiled/useredit.js' 
+            '@FrontBundle/Resources/public/js/plugins/sweetalert/sweetalert.min.js' 
+            '@AdminBundle/Resources/public/js/admin/user/show.js' 
+            '@AdminBundle/Resources/public/js/admin/user/common.js' 
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    
+    
+    
 {% endblock %}
