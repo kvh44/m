@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 
 class MuserType extends AbstractType
 {
@@ -32,7 +33,10 @@ class MuserType extends AbstractType
                 ->add('skinColor')
                 ->add('weight')
                 ->add('height')
-                ->add('birthday')
+                ->add('birthday', BirthdayType::class, array(
+                    'label' => 'Date of Birth',
+                    'years' => range(date('Y') - 18, date('Y') - 50)
+                ))
                 ->add('hourPrice')
                 ->add('hourPriceUnit')
                 ->add('nightPrice')

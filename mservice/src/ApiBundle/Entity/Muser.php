@@ -140,27 +140,27 @@ class Muser
     /**
      * @var boolean
      */
-    private $isActive = '1';
+    private $isActive = true;
 
     /**
      * @var boolean
      */
-    private $isDeleted = '0';
+    private $isDeleted = false;
 
     /**
      * @var boolean
      */
-    private $isPremium = '0';
+    private $isPremium = false;
 
     /**
      * @var boolean
      */
-    private $isSingle = '1';
+    private $isSingle = true;
 
     /**
      * @var boolean
      */
-    private $isShop = '0';
+    private $isShop = false;
 
     /**
      * @var boolean
@@ -180,12 +180,12 @@ class Muser
     /**
      * @var boolean
      */
-    private $isAdmin = '0';
+    private $isAdmin = false;
 
     /**
      * @var boolean
      */
-    private $isTest = '0';  
+    private $isTest = false;  
 
     /**
      * @var boolean
