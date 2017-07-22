@@ -242,14 +242,14 @@
                     </table>
 
 
-                    <a href="{{ path('muser_index') }}" class="btn btn-lg btn-outline btn-success">Back to the list</a>
+                    <a href="{{ path('muser_index') }}" class="btn btn-lg btn-outline btn-primary">Back to the list</a>
 
                     {% if muser.isDeleted %}
-                       <a href="{{ path('muser_enable', { 'id': muser.id }) }}" class="btn btn-lg btn-info">Enable</a>
+                       <a href="{{ path('muser_enable', { 'internalToken': muser.internalToken }) }}" class="btn btn-lg btn-info">Enable</a>
                     {% else %}    
-                        <a href="{{ path('muser_delete', { 'id': muser.id }) }}" class="btn btn-lg btn-danger">Delete</a>
+                        <a href="{{ path('muser_delete', { 'internalToken': muser.internalToken }) }}" class="btn btn-lg btn-danger">Delete</a>
                     {% endif %}
-                    <a href="{{ path('muser_edit', { 'id': muser.id }) }}" class="btn btn-lg btn-success">Edit</a>
+                    <a href="{{ path('muser_edit', { 'internalToken': muser.internalToken }) }}" class="btn btn-lg btn-success">Edit</a>
                         </div>
                     </div>
                 </div>

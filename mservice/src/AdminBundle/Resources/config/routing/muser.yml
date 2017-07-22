@@ -19,16 +19,16 @@ muser_new:
     methods:  [GET, POST]
 
 muser_edit:
-    path:     /{id}/edit
+    path:     /{internalToken}/edit
     defaults: { _controller: "AdminBundle:Muser:edit" }
     methods:  [GET, POST]
 
 muser_delete:
-    path:     /{id}/delete
+    path:     /{internalToken}/delete
     defaults: { _controller: "AdminBundle:Muser:delete" }
     methods:  [GET, POST]
     
 muser_enable:
-    path:     /{id}/enable
+    path:     /{internalToken}/enable
     defaults: { _controller: "AdminBundle:Muser:enable" }
     methods:  [GET, POST]    

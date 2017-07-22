@@ -18,10 +18,10 @@ class MuserController extends Controller
      */
     public function indexAction()
     {
-        //$em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
-        //$musers = $em->getRepository('ApiBundle:Muser')->getUserListBo();
-        $musers = array();
+        $musers = $em->getRepository('ApiBundle:Muser')->getUserListBo();
+        //$musers = array();
         return $this->render('admin/muser/index.html.twig', array(
             'musers' => $musers,
         ));
@@ -137,16 +137,6 @@ class MuserController extends Controller
      */
     public function deleteAction(Request $request, Muser $muser)
     {
-        /*
-        $form = $this->createDeleteForm($muser);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($muser);
-            $em->flush($muser);
-        }
-        */
        $this->get('api_massage.UsersService')->deleteUser($muser->getInternalId(), $muser->getInternalToken());
        return $this->redirectToRoute('muser_index');
     }

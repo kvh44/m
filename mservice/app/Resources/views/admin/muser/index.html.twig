@@ -1,5 +1,14 @@
 {% extends '@Admin/base.html.twig' %}
 
+{% block css %}
+    {% stylesheets output='css/compiled/userlist.css' 
+            '@FrontBundle/Resources/public/css/plugins/dataTables/datatables.min.css' 
+            filter='cssrewrite' 
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
 {% block body %}
         
     <div class="wrapper wrapper-content animated fadeInRight">
@@ -66,7 +75,7 @@
                                                 <a href="{{ path('muser_show', { 'id': muser.id }) }}">show</a>
                                             </li>
                                             <li>
-                                                <a href="{{ path('muser_edit', { 'id': muser.id }) }}">edit</a>
+                                                <a href="{{ path('muser_edit', { 'internalToken': muser.internalToken }) }}">edit</a>
                                             </li>
                                         </ul>
                                     </td>
@@ -74,6 +83,7 @@
                             {% endfor %}
                             </tbody>
                         </table>
+                            <a href="{{ path('muser_new') }}" class="btn btn-primary btn-lg">Create a new user</a>
                     </div>
 
                     </div>
@@ -81,7 +91,7 @@
             </div>
             </div>
         </div>
-        <a href="{{ path('muser_new') }}" class="btn btn-primary btn-lg">Create a new user</a>
+        
 {% endblock %}
 
 
@@ -89,6 +99,8 @@
     <!-- Page-Level Scripts -->
     <script>
         var muserListAjaxUrl = '{{ path('muser_list_ajax') }}';
+        var muserEditUrl = '{{ path('muser_edit', {'internalToken' : 'internalToken'}) }}';
+        var muserShowUrl = '{{ path('muser_show', {'id' : 'id'}) }}';
     </script>
     
     {% javascripts output='js/compiled/userlist.js' 

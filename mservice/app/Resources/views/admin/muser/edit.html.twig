@@ -294,59 +294,262 @@
                             </div>
                                 
                             <div class="form-group {% if edit_form.isActive.vars.valid == false  %} has-error {% endif %}">
-                                <label class="col-sm-2 control-label">isActive</label> 
+                                <label class="col-sm-2 control-label"></label> 
                                 <div class="col-lg-10">
-                                    <div class="i-checks">
-                                        <label> 
-                                            {{ form_widget(edit_form.isActive) }}
-                                        </label>
-                                    </div>
+                                    <label> {{ form_widget(edit_form.isActive, { 'attr': {'class': 'i-checks'} }) }} isActive </label>    
                                 </div>
-                            </div>     
+                            </div>  
                                         
                             <div class="form-group {% if edit_form.isDeleted.vars.valid == false  %} has-error {% endif %}">
-                                <label class="col-sm-2 control-label">isDeleted</label> 
+                                <label class="col-sm-2 control-label"></label> 
                                 <div class="col-lg-10">
-                                    <div class="i-checks">
-                                        <label> 
-                                            {{ form_widget(edit_form.isDeleted) }}
-                                        </label>
-                                    </div>
+                                    <label> {{ form_widget(edit_form.isDeleted, { 'attr': {'class': 'i-checks'} }) }} isDeleted </label>    
                                 </div>
                             </div>  
 
-                                {{ form_row(edit_form.isPremium) }}
-                                {{ form_row(edit_form.isSingle) }}
-                                {{ form_row(edit_form.isShop) }}
-                                {{ form_row(edit_form.isZh) }}
-                                {{ form_row(edit_form.isEn) }}
-                                {{ form_row(edit_form.isFr) }}
-                                {{ form_row(edit_form.isAdmin) }}
-                                {{ form_row(edit_form.isTest) }}
-                                {{ form_row(edit_form.isSynchronizedByCache) }}
-                                {{ form_row(edit_form.isSynchronizedBySearch) }}
-                                {{ form_row(edit_form.isFromOtherWeb) }}
-                                {{ form_row(edit_form.otherWeb) }}
-                                {{ form_row(edit_form.otherWebReference) }}
-                                {{ form_row(edit_form.draftId) }}
-                                {{ form_row(edit_form.slug) }}
-                                {{ form_row(edit_form.token) }}
-                                {{ form_row(edit_form.internalToken) }}
-                                {{ form_row(edit_form.externalToken) }}
-                                {{ form_row(edit_form.internalId) }}
-                                {{ form_row(edit_form.topTime) }}
-                                {{ form_row(edit_form.lastSynchronizedFromOtherWebTime) }}
-                                {{ form_row(edit_form.paymentExpiredTime) }}
-                                {{ form_row(edit_form.viewNumber) }}
-                                {{ form_row(edit_form.created) }}
-                                {{ form_row(edit_form.updated) }}
+                            <div class="form-group {% if edit_form.isPremium.vars.valid == false  %} has-error {% endif %}">
+                                <label class="col-sm-2 control-label"></label> 
+                                <div class="col-lg-10">
+                                    <label> {{ form_widget(edit_form.isPremium, { 'attr': {'class': 'i-checks'} }) }} isPremium </label>    
+                                </div>
+                            </div>     
+                            
+                            <div class="form-group {% if edit_form.isSingle.vars.valid == false  %} has-error {% endif %}">
+                                <label class="col-sm-2 control-label"></label> 
+                                <div class="col-lg-10">
+                                    <label> {{ form_widget(edit_form.isSingle, { 'attr': {'class': 'i-checks'} }) }} isSingle </label>    
+                                </div>
+                            </div>      
+                                
+                            <div class="form-group {% if edit_form.isShop.vars.valid == false  %} has-error {% endif %}">
+                                <label class="col-sm-2 control-label"></label> 
+                                <div class="col-lg-10">
+                                    <label> {{ form_widget(edit_form.isShop, { 'attr': {'class': 'i-checks'} }) }} isShop </label>    
+                                </div>
+                            </div>      
+                                
+                            <div class="form-group {% if edit_form.isZh.vars.valid == false  %} has-error {% endif %}">
+                                <label class="col-sm-2 control-label"></label> 
+                                <div class="col-lg-10">
+                                    <label> {{ form_widget(edit_form.isZh, { 'attr': {'class': 'i-checks'} }) }} isZh </label>    
+                                </div>
+                            </div>   
+                                
+                            <div class="form-group {% if edit_form.isEn.vars.valid == false  %} has-error {% endif %}">
+                                <label class="col-sm-2 control-label"></label> 
+                                <div class="col-lg-10">
+                                    <label> {{ form_widget(edit_form.isEn, { 'attr': {'class': 'i-checks'} }) }} isEn </label>    
+                                </div>
+                            </div>   
+                                
+                            <div class="form-group {% if edit_form.isFr.vars.valid == false  %} has-error {% endif %}">
+                                <label class="col-sm-2 control-label"></label> 
+                                <div class="col-lg-10">
+                                    <label> {{ form_widget(edit_form.isFr, { 'attr': {'class': 'i-checks'} }) }} isFr </label>    
+                                </div>
+                            </div>   
+                                
+                            <div class="form-group {% if edit_form.isAdmin.vars.valid == false  %} has-error {% endif %}">
+                                <label class="col-sm-2 control-label"></label> 
+                                <div class="col-lg-10">
+                                    <label> {{ form_widget(edit_form.isAdmin, { 'attr': {'class': 'i-checks'} }) }} isAdmin </label>    
+                                </div>
+                            </div>   
+                                
+                            <div class="form-group {% if edit_form.isTest.vars.valid == false  %} has-error {% endif %}">
+                                <label class="col-sm-2 control-label"></label> 
+                                <div class="col-lg-10">
+                                    <label> {{ form_widget(edit_form.isTest, { 'attr': {'class': 'i-checks'} }) }} isTest </label>    
+                                </div>
+                            </div>   
+                                
+                            <div class="form-group {% if edit_form.isSynchronizedByCache.vars.valid == false  %} has-error {% endif %}">
+                                <label class="col-sm-2 control-label"></label> 
+                                <div class="col-lg-10">
+                                    <label> {{ form_widget(edit_form.isSynchronizedByCache, { 'attr': {'class': 'i-checks'} }) }} isSynchronizedByCache </label>    
+                                </div>
+                            </div>   
+                                
+                            <div class="form-group {% if edit_form.isSynchronizedBySearch.vars.valid == false  %} has-error {% endif %}">
+                                <label class="col-sm-2 control-label"></label> 
+                                <div class="col-lg-10">
+                                    <label> {{ form_widget(edit_form.isSynchronizedBySearch, { 'attr': {'class': 'i-checks'} }) }} isSynchronizedBySearch </label>    
+                                </div>
+                            </div>   
+                                
+                            <div class="form-group {% if edit_form.isFromOtherWeb.vars.valid == false  %} has-error {% endif %}">
+                                <label class="col-sm-2 control-label"></label> 
+                                <div class="col-lg-10">
+                                    <label> {{ form_widget(edit_form.isFromOtherWeb, { 'attr': {'class': 'i-checks'} }) }} isFromOtherWeb </label>    
+                                </div>
+                            </div>       
+                            
+                            <div class="form-group {% if edit_form.otherWeb.vars.valid == false  %} has-error {% endif %}">
+                                <label class="col-lg-2 control-label">otherWeb</label> 
+                                <div class="col-lg-10">
+                                    {{ form_widget(edit_form.otherWeb, { 'attr': {'class': 'form-control'} }) }}
+                                <span class="help-block m-b-none {% if edit_form.otherWeb.vars.valid == false  %} alert alert-danger {% endif %}">
+                                    {{ form_errors(edit_form.otherWeb) }}
+                                </span>
+                                </div>
+                            </div>      
+ 
+                            <div class="form-group {% if edit_form.otherWebReference.vars.valid == false  %} has-error {% endif %}">
+                                <label class="col-lg-2 control-label">otherWebReference</label> 
+                                <div class="col-lg-10">
+                                    {{ form_widget(edit_form.otherWebReference, { 'attr': {'class': 'form-control'} }) }}
+                                <span class="help-block m-b-none {% if edit_form.otherWebReference.vars.valid == false  %} alert alert-danger {% endif %}">
+                                    {{ form_errors(edit_form.otherWebReference) }}
+                                </span>
+                                </div>
+                            </div>  
+                                
+                            <div class="form-group {% if edit_form.draftId.vars.valid == false  %} has-error {% endif %}">
+                                <label class="col-lg-2 control-label">draftId</label> 
+                                <div class="col-lg-10">
+                                    {{ form_widget(edit_form.draftId, { 'attr': {'class': 'form-control'} }) }}
+                                <span class="help-block m-b-none {% if edit_form.draftId.vars.valid == false  %} alert alert-danger {% endif %}">
+                                    {{ form_errors(edit_form.draftId) }}
+                                </span>
+                                </div>
+                            </div>      
+                                
+                            <div class="form-group {% if edit_form.slug.vars.valid == false  %} has-error {% endif %}">
+                                <label class="col-lg-2 control-label">slug</label> 
+                                <div class="col-lg-10">
+                                    {{ form_widget(edit_form.slug, { 'attr': {'class': 'form-control'} }) }}
+                                <span class="help-block m-b-none {% if edit_form.slug.vars.valid == false  %} alert alert-danger {% endif %}">
+                                    {{ form_errors(edit_form.slug) }}
+                                </span>
+                                </div>
+                            </div>       
+                                
+                            <div class="form-group {% if edit_form.token.vars.valid == false  %} has-error {% endif %}">
+                                <label class="col-lg-2 control-label">token</label> 
+                                <div class="col-lg-10">
+                                    {{ form_widget(edit_form.token, { 'attr': {'class': 'form-control'} }) }}
+                                <span class="help-block m-b-none {% if edit_form.token.vars.valid == false  %} alert alert-danger {% endif %}">
+                                    {{ form_errors(edit_form.token) }}
+                                </span>
+                                </div>
+                            </div>      
+                                
+                            <div class="form-group {% if edit_form.internalToken.vars.valid == false  %} has-error {% endif %}">
+                                <label class="col-lg-2 control-label">internalToken</label> 
+                                <div class="col-lg-10">
+                                    {{ form_widget(edit_form.internalToken, { 'attr': {'class': 'form-control'} }) }}
+                                <span class="help-block m-b-none {% if edit_form.internalToken.vars.valid == false  %} alert alert-danger {% endif %}">
+                                    {{ form_errors(edit_form.internalToken) }}
+                                </span>
+                                </div>
+                            </div>  
+                                
+                            <div class="form-group {% if edit_form.externalToken.vars.valid == false  %} has-error {% endif %}">
+                                <label class="col-lg-2 control-label">externalToken</label> 
+                                <div class="col-lg-10">
+                                    {{ form_widget(edit_form.externalToken, { 'attr': {'class': 'form-control'} }) }}
+                                <span class="help-block m-b-none {% if edit_form.externalToken.vars.valid == false  %} alert alert-danger {% endif %}">
+                                    {{ form_errors(edit_form.externalToken) }}
+                                </span>
+                                </div>
+                            </div>   
+                                
+                            <div class="form-group {% if edit_form.internalId.vars.valid == false  %} has-error {% endif %}">
+                                <label class="col-lg-2 control-label">internalId</label> 
+                                <div class="col-lg-10">
+                                    {{ form_widget(edit_form.internalId, { 'attr': {'class': 'form-control'} }) }}
+                                <span class="help-block m-b-none {% if edit_form.internalId.vars.valid == false  %} alert alert-danger {% endif %}">
+                                    {{ form_errors(edit_form.internalId) }}
+                                </span>
+                                </div>
+                            </div>     
+                                
+                            <div class="form-group {% if edit_form.viewNumber.vars.valid == false  %} has-error {% endif %}">
+                                <label class="col-lg-2 control-label">viewNumber</label> 
+                                <div class="col-lg-10">
+                                    {{ form_widget(edit_form.viewNumber, { 'attr': {'class': 'form-control'} }) }}
+                                <span class="help-block m-b-none {% if edit_form.viewNumber.vars.valid == false  %} alert alert-danger {% endif %}">
+                                    {{ form_errors(edit_form.viewNumber) }}
+                                </span>
+                                </div>
+                            </div>         
 
-                            <a href="{{ path('muser_index') }}" class="btn btn-lg btn-outline btn-success">Back to the list</a>
+                            <div class="form-group {% if edit_form.topTime.vars.valid == false  %} has-error {% endif %}">
+                                <label class="col-lg-2 control-label">topTime</label> 
+                                <div class="col-lg-10">
+                                    {{ form_widget(edit_form.topTime.date.year, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+                                    {{ form_widget(edit_form.topTime.date.month, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+                                    {{ form_widget(edit_form.topTime.date.day, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+                                    {{ form_widget(edit_form.topTime.time.hour, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+                                    {{ form_widget(edit_form.topTime.time.minute, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+                                <span class="help-block m-b-none {% if edit_form.topTime.vars.valid == false  %} alert alert-danger {% endif %}">
+                                    {{ form_errors(edit_form.topTime) }}
+                                </span>
+                                </div>
+                            </div>   
+                                
+                            <div class="form-group {% if edit_form.lastSynchronizedFromOtherWebTime.vars.valid == false  %} has-error {% endif %}">
+                                <label class="col-lg-2 control-label">lastSynchronizedFromOtherWebTime</label> 
+                                <div class="col-lg-10">
+                                    {{ form_widget(edit_form.lastSynchronizedFromOtherWebTime.date.year, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+                                    {{ form_widget(edit_form.lastSynchronizedFromOtherWebTime.date.month, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+                                    {{ form_widget(edit_form.lastSynchronizedFromOtherWebTime.date.day, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+                                    {{ form_widget(edit_form.lastSynchronizedFromOtherWebTime.time.hour, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+                                    {{ form_widget(edit_form.lastSynchronizedFromOtherWebTime.time.minute, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+                                <span class="help-block m-b-none {% if edit_form.lastSynchronizedFromOtherWebTime.vars.valid == false  %} alert alert-danger {% endif %}">
+                                    {{ form_errors(edit_form.lastSynchronizedFromOtherWebTime) }}
+                                </span>
+                                </div>
+                            </div>    
+  
+                            <div class="form-group {% if edit_form.paymentExpiredTime.vars.valid == false  %} has-error {% endif %}">
+                                <label class="col-lg-2 control-label">paymentExpiredTime</label> 
+                                <div class="col-lg-10">
+                                    {{ form_widget(edit_form.paymentExpiredTime.date.year, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+                                    {{ form_widget(edit_form.paymentExpiredTime.date.month, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+                                    {{ form_widget(edit_form.paymentExpiredTime.date.day, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+                                    {{ form_widget(edit_form.paymentExpiredTime.time.hour, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+                                    {{ form_widget(edit_form.paymentExpiredTime.time.minute, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+                                <span class="help-block m-b-none {% if edit_form.paymentExpiredTime.vars.valid == false  %} alert alert-danger {% endif %}">
+                                    {{ form_errors(edit_form.paymentExpiredTime) }}
+                                </span>
+                                </div>
+                            </div>    
+                                
+                            <div class="form-group {% if edit_form.created.vars.valid == false  %} has-error {% endif %}">
+                                <label class="col-lg-2 control-label">created</label> 
+                                <div class="col-lg-10">
+                                    {{ form_widget(edit_form.created.date.year, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+                                    {{ form_widget(edit_form.created.date.month, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+                                    {{ form_widget(edit_form.created.date.day, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+                                    {{ form_widget(edit_form.created.time.hour, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+                                    {{ form_widget(edit_form.created.time.minute, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+                                <span class="help-block m-b-none {% if edit_form.created.vars.valid == false  %} alert alert-danger {% endif %}">
+                                    {{ form_errors(edit_form.created) }}
+                                </span>
+                                </div>
+                            </div>      
+                                
+                            <div class="form-group {% if edit_form.updated.vars.valid == false  %} has-error {% endif %}">
+                                <label class="col-lg-2 control-label">updated</label> 
+                                <div class="col-lg-10">
+                                    {{ form_widget(edit_form.updated.date.year, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+                                    {{ form_widget(edit_form.updated.date.month, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+                                    {{ form_widget(edit_form.updated.date.day, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+                                    {{ form_widget(edit_form.updated.time.hour, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+                                    {{ form_widget(edit_form.updated.time.minute, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+                                <span class="help-block m-b-none {% if edit_form.updated.vars.valid == false  %} alert alert-danger {% endif %}">
+                                    {{ form_errors(edit_form.updated) }}
+                                </span>
+                                </div>
+                            </div>          
 
+                            <a href="{{ path('muser_index') }}" class="btn btn-lg btn-outline btn-primary">Back to the list</a>
+                            <a href="{{ path('muser_show', { 'id' : muser.id }) }}" class="btn btn-lg btn-info">Show</a>
                             {% if muser.isDeleted %}
-                                <a href="{{ path('muser_enable', { 'id': muser.id }) }}" class="btn btn-lg btn-info">Enable</a>
+                                <a href="{{ path('muser_enable', { 'internalToken': muser.internalToken }) }}" class="btn btn-lg btn-info">Enable</a>
                              {% else %}    
-                                 <a href="{{ path('muser_delete', { 'id': muser.id }) }}" class="btn btn-lg btn-danger">Delete</a>
+                                <a href="{{ path('muser_delete', { 'internalToken': muser.internalToken }) }}" class="btn btn-lg btn-danger">Delete</a>
                              {% endif %}
                              
                              <input type="submit" value="Save" class="btn btn-lg btn-success" />

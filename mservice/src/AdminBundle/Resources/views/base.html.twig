@@ -9,14 +9,17 @@
         {% stylesheets output='css/compiled/admin.css' 
             '@FrontBundle/Resources/public/css/bootstrap.min.css' 
             '@FrontBundle/Resources/public/font-awesome/css/font-awesome.css' 
-            '@FrontBundle/Resources/public/css/plugins/dataTables/datatables.min.css' 
             '@FrontBundle/Resources/public/css/animate.css' 
             '@FrontBundle/Resources/public/css/style.css' 
             '@FrontBundle/Resources/public/css/plugins/iCheck/custom.css' 
+            '@FrontBundle/Resources/public/css/admin/bo.css' 
             filter='cssrewrite' 
         %}
             <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
+        
+        {% block css %}
+        {% endblock %}
         <!--link rel="stylesheet" href="/bundles/front/css/bootstrap.min.css" /-->
         <!--link rel="stylesheet" href="/bundles/front/font-awesome/css/font-awesome.css" /-->
         <!--link rel="stylesheet" href="/bundles/front/css/plugins/dataTables/datatables.min.css" /-->

@@ -218,7 +218,7 @@ class MassageUserRepository extends EntityRepository implements UserLoaderInterf
         $q = $this->createQueryBuilder('u');
         $q->select('u.id, u.username, u.email, u.telephone, u.wechat, c.countryEn, l.cityEn, l.postNumber,
         u.shopName, u.isActive, u.isDeleted, u.isSingle, u.isShop, u.isZh, u.isEn, u.isFr, u.isTest, u.isFromOtherWeb, u.otherWeb,
-        u.topTime, u.paymentExpiredTime, u.created, u.updated');
+        u.internalToken, u.topTime, u.paymentExpiredTime, u.created, u.updated');
         
         if($only_total){
             $q->select(' count(u.id) ');

@@ -3,6 +3,7 @@ $(document).ready(function(){
     $('#userListTable').DataTable({
         serverSide: true,
         processing: true,
+        ordering: false,
         ajax: muserListAjaxUrl,
         columns: [
             { data: 'id' },
@@ -37,6 +38,14 @@ $(document).ready(function(){
                        }
                     }
             },
+            { data: function ( data, type, row ) {
+                    var editUrl = muserEditUrl;
+                    var showUrl = muserShowUrl;
+                    editUrl = editUrl.replace('internalToken', data.internalToken);
+                    showUrl = showUrl.replace('id', data.id);
+                           return '<a href="'+editUrl+'">edit</a>'+'<br>'+'<a href="'+showUrl+'">show</a>';
+                    }
+            }
         ],
         pageLength: 25,
         responsive: true
