@@ -1034,4 +1034,68 @@ class UsersService
             return $this->utileService->getResponse();
         }
     }        
+    
+    public function deleteUser($internal_id, $internal_token)
+    {
+        try{
+            $user = $this->findUserByInternalId($internal_id);
+            if(!$user){
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage($this->translator->trans('user.internal_id.not.exist'));
+                return $this->utileService->getResponse();
+            }
+
+            if($user->getInternalToken() !== $internal_token){
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage($this->translator->trans('user.internal_token.wrong'));
+                return $this->utileService->getResponse();
+            }
+
+            $user->setIsDeleted(true);
+            $user->setIsActive(false);
+            $this->em->persist($user);
+            $this->em->flush();
+            
+            $this->utileService->setResponseState(true);
+            $this->utileService->setResponseData($user);
+            $this->utileService->setResponseMessage($this->translator->trans('user.deleted'));
+            return $this->utileService->getResponse();
+        } catch (\Exception $e) {
+            $this->utileService->setResponseState(false);
+            $this->utileService->setResponseMessage($e->getMessage());
+            return $this->utileService->getResponse();
+        }
+    }
+    
+    public function enableUser($internal_id, $internal_token)
+    {
+        try{
+            $user = $this->findUserByInternalId($internal_id);
+            if(!$user){
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage($this->translator->trans('user.internal_id.not.exist'));
+                return $this->utileService->getResponse();
+            }
+
+            if($user->getInternalToken() !== $internal_token){
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage($this->translator->trans('user.internal_token.wrong'));
+                return $this->utileService->getResponse();
+            }
+
+            $user->setIsDeleted(false);
+            $user->setIsActive(true);
+            $this->em->persist($user);
+            $this->em->flush();
+            
+            $this->utileService->setResponseState(true);
+            $this->utileService->setResponseData($user);
+            $this->utileService->setResponseMessage($this->translator->trans('user.enabled'));
+            return $this->utileService->getResponse();
+        } catch (\Exception $e) {
+            $this->utileService->setResponseState(false);
+            $this->utileService->setResponseMessage($e->getMessage());
+            return $this->utileService->getResponse();
+        }
+    }
 }

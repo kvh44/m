@@ -5,6 +5,7 @@ namespace AdminBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class MuserType extends AbstractType
 {
@@ -38,8 +39,8 @@ class MuserType extends AbstractType
                 ->add('nightPriceUnit')
                 ->add('shopAddress')
                 ->add('shopName')
-                ->add('description')
-                ->add('translatedDescription')
+                ->add('description', TextareaType::class)
+                ->add('translatedDescription', TextareaType::class)
                 ->add('isActive')
                 ->add('isDeleted')
                 ->add('isPremium')
@@ -65,7 +66,6 @@ class MuserType extends AbstractType
                 ->add('topTime')
                 ->add('lastSynchronizedFromOtherWebTime')
                 ->add('paymentExpiredTime')
-                ->add('allowedIp')
                 ->add('created')
                 ->add('updated')
                 ->add('mcountry')

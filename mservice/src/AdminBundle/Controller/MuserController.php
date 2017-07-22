@@ -48,7 +48,7 @@ class MuserController extends Controller
         if(strlen($request->query->get('length')) > 0){
             $limit = $request->query->get('length');
         } else {
-            $limit = 15;
+            $limit = 25;
         }
         
         $search = $request->query->get('search');
@@ -105,11 +105,8 @@ class MuserController extends Controller
      */
     public function showAction(Muser $muser)
     {
-        $deleteForm = $this->createDeleteForm($muser);
-
         return $this->render('admin/muser/show.html.twig', array(
-            'muser' => $muser,
-            'delete_form' => $deleteForm->createView(),
+            'muser' => $muser
         ));
     }
 
@@ -119,20 +116,18 @@ class MuserController extends Controller
      */
     public function editAction(Request $request, Muser $muser)
     {
-        $deleteForm = $this->createDeleteForm($muser);
         $editForm = $this->createForm('AdminBundle\Form\MuserType', $muser);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('muser_edit', array('id' => $muser->getId()));
+            return $this->redirectToRoute('muser_show', array('id' => $muser->getId()));
         }
 
         return $this->render('admin/muser/edit.html.twig', array(
             'muser' => $muser,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form' => $editForm->createView()
         ));
     }
 
@@ -140,7 +135,7 @@ class MuserController extends Controller
      * Deletes a muser entity.
      *
      */
-    public function deleteAction(Request $request)
+    public function deleteAction(Request $request, Muser $muser)
     {
         /*
         $form = $this->createDeleteForm($muser);
@@ -152,8 +147,21 @@ class MuserController extends Controller
             $em->flush($muser);
         }
         */
-        return $this->redirectToRoute('muser_index');
+       $this->get('api_massage.UsersService')->deleteUser($muser->getInternalId(), $muser->getInternalToken());
+       return $this->redirectToRoute('muser_index');
     }
+    
+    /**
+     * Enable a muser entity
+     * @param Request $request
+     * @param Muser $muser
+     * @return type
+     */
+    public function enableAction(Request $request, Muser $muser)
+    {
+       $this->get('api_massage.UsersService')->enableUser($muser->getInternalId(), $muser->getInternalToken());
+       return $this->redirectToRoute('muser_index');
+    }        
 
     /**
      * Creates a form to delete a muser entity.
@@ -162,6 +170,7 @@ class MuserController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
+    /*
     private function createDeleteForm(Muser $muser)
     {
         return $this->createFormBuilder()
@@ -170,4 +179,6 @@ class MuserController extends Controller
             ->getForm()
         ;
     }
+     * 
+     */
 }

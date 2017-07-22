@@ -27,3 +27,8 @@ muser_delete:
     path:     /{id}/delete
     defaults: { _controller: "AdminBundle:Muser:delete" }
     methods:  [GET, POST]
+    
+muser_enable:
+    path:     /{id}/enable
+    defaults: { _controller: "AdminBundle:Muser:enable" }
+    methods:  [GET, POST]    

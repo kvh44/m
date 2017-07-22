@@ -38,7 +38,7 @@ $(document).ready(function(){
                     }
             },
         ],
-        pageLength: 15,
+        pageLength: 25,
         responsive: true
     });
 

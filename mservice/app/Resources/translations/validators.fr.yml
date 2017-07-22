@@ -1,0 +1,6 @@
+user:
+    telephone:
+        exist: Le numéro téléphone n'est pas disponible
+    password:
+        too:
+            short: Mot de passe très court (au moins 8 lettres)

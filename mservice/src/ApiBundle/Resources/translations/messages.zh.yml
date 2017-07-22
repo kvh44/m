@@ -22,6 +22,7 @@ messages:
         contactus: 联系我们
         passwordChangedWords: 您的密码已经成功改为%password%,如果刚刚不是您本人修改的密码,请尽快联系我们。
         passwordForgetWords: 您忘记密码了?您的密码提示为%password%,如果还没有想起来,请点击下面的链接进行修改。
+
 user:
     email:
         sent: 您即将会收到一封电子邮件
@@ -92,6 +93,9 @@ user:
         old_password:
             same: 新旧密码一样,请换一个不一样的新密码
             wrong: 密码不对
+    deleted: 用户删除成功
+    enabled: 用户恢复成功
+        
 photo:
     original:
         not:

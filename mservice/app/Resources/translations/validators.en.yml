@@ -1,0 +1,6 @@
+user:
+    telephone:
+        exist: The telephone number is occupied
+    password:
+        too:
+            short: Password too short (at least 8 lettrers)
