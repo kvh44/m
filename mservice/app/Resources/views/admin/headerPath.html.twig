@@ -1,0 +1,22 @@
+<div class="row wrapper border-bottom white-bg page-heading page-heading-path-block">
+    <div class="col-lg-12">
+        <ul class="breadcrumb">
+            <li>
+                <a href="{{ path('admin_homepage') }}">Admin Home</a>
+            </li>
+            {% if paths|length > 0 %}
+                {% for path in paths %}
+                    {% if(path == paths|last) %}
+                        <li class="active">
+                            <a href='{{ path.url }}'><strong>{{ path.title }}</strong></a>
+                        </li>  
+                    {% else %}
+                        <li>
+                            <a href='{{ path.url }}'>{{ path.title }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </ul>
+    </div>
+</div>

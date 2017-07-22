@@ -21,9 +21,14 @@ class MuserController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $musers = $em->getRepository('ApiBundle:Muser')->getUserListBo();
-        //$musers = array();
+        
+        $path['title'] ='User list';
+        $path['url'] = $this->generateUrl('muser_index');
+        $paths[] = $path;
+        
         return $this->render('admin/muser/index.html.twig', array(
             'musers' => $musers,
+            'paths' => $paths
         ));
     }
     
@@ -92,10 +97,19 @@ class MuserController extends Controller
 
             return $this->redirectToRoute('muser_show', array('id' => $muser->getId()));
         }
+        
+        $path['title'] ='User list';
+        $path['url'] = $this->generateUrl('muser_index');
+        $paths[] = $path;
+        
+        $path['title'] ='New User';
+        $path['url'] = $this->generateUrl('muser_new');
+        $paths[] = $path;
 
         return $this->render('admin/muser/new.html.twig', array(
             'muser' => $muser,
             'form' => $form->createView(),
+            'paths' => $paths
         ));
     }
 
@@ -105,8 +119,17 @@ class MuserController extends Controller
      */
     public function showAction(Muser $muser)
     {
+        $path['title'] ='User list';
+        $path['url'] = $this->generateUrl('muser_index');
+        $paths[] = $path;
+        
+        $path['title'] ='Show User ' . $muser->getUsername();
+        $path['url'] = $this->generateUrl('muser_show', array('id'=> $muser->getId()));
+        $paths[] = $path;
+        
         return $this->render('admin/muser/show.html.twig', array(
-            'muser' => $muser
+            'muser' => $muser,
+            'paths' => $paths
         ));
     }
 
@@ -124,10 +147,19 @@ class MuserController extends Controller
 
             return $this->redirectToRoute('muser_show', array('id' => $muser->getId()));
         }
+        
+        $path['title'] ='User list';
+        $path['url'] = $this->generateUrl('muser_index');
+        $paths[] = $path;
 
+        $path['title'] ='Edit User ' . $muser->getUsername();
+        $path['url'] = $this->generateUrl('muser_edit', array('internalToken'=> $muser->getInternalToken()));
+        $paths[] = $path;
+        
         return $this->render('admin/muser/edit.html.twig', array(
             'muser' => $muser,
-            'edit_form' => $editForm->createView()
+            'edit_form' => $editForm->createView(),
+            'paths' => $paths
         ));
     }
 
