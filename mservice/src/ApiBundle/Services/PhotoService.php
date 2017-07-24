@@ -87,7 +87,7 @@ class PhotoService {
 
     public function __construct(Registry $doctrine, Translator $translator, UsersService $usersService, CacheService $cacheService, UtileService $utileService, $size_limit_photo, $upload_directory,
                                 $profile_photo_directory, $user_photo_directory, $post_photo_directory, $original_directory, $medium_directory, 
-                                $small_directory, $medium_photo_max_width, $small_photo_max_width, $icon_photo_max_width, $photo_default_mime_type,
+                                $small_directory, $icon_directory, $medium_photo_max_width, $small_photo_max_width, $icon_photo_max_width, $photo_default_mime_type,
                                 $photo_default_type)
     {
         $this->doctrine = $doctrine;
@@ -103,6 +103,7 @@ class PhotoService {
         $this->originalDirectory = $original_directory;
         $this->mediumDirectory = $medium_directory;
         $this->smallDirectory = $small_directory;
+		$this->iconDirectory = $icon_directory;
         $this->mediumPhotoMaxWidth = (int)$medium_photo_max_width;
         $this->smallPhotoMaxWidth = (int)$small_photo_max_width;
         $this->iconPhotoMaxWidth = (int)$icon_photo_max_width;
@@ -144,6 +145,7 @@ class PhotoService {
             if(is_array($directory_original)){
                 return $directory_original;
             }
+			
             $result_upload = $uploader->handleUpload($directory_original, $file_name, $is_local);
             $file_name_origin = $result_upload['newFilename'];
             if(array_key_exists('success',$result_upload)){

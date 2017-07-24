@@ -119,6 +119,15 @@ class MuserController extends Controller
      */
     public function showAction(Muser $muser)
     {
+		$photos = $this->get('api_massage.PhotoService')->findProfilePhotosByUserIdCache($muser->getId());
+		
+		$profil_photo = '';
+		if(array_key_exists('profile_photo', $photos['data'])){
+			if(count($photos['data']['profile_photo']) > 0){
+				$profil_photo = '/'.$this->getParameter('upload_directory').$this->getParameter('profile_photo_directory').$this->getParameter('small_directory').$muser->getId().'/'.$photos['data']['profile_photo'][0]['photoSmall'];
+			}
+		}
+		
         $path['title'] ='User list';
         $path['url'] = $this->generateUrl('muser_index');
         $paths[] = $path;
@@ -129,6 +138,7 @@ class MuserController extends Controller
         
         return $this->render('admin/muser/show.html.twig', array(
             'muser' => $muser,
+			'profil_photo' => $profil_photo,
             'paths' => $paths
         ));
     }
@@ -139,6 +149,16 @@ class MuserController extends Controller
      */
     public function editAction(Request $request, Muser $muser)
     {
+		$photos = $this->get('api_massage.PhotoService')->findProfilePhotosByUserIdCache($muser->getId());
+		
+		$profil_photo = '';
+		if(array_key_exists('profile_photo', $photos['data'])){
+			dump($photos['data']['profile_photo']);
+			if(count($photos['data']['profile_photo']) > 0){
+				$profil_photo = '/'.$this->getParameter('upload_directory').$this->getParameter('profile_photo_directory').$this->getParameter('small_directory').$muser->getId().'/'.$photos['data']['profile_photo'][0]['photoSmall'];
+			}
+		}
+		
         $editForm = $this->createForm('AdminBundle\Form\MuserType', $muser);
         $editForm->handleRequest($request);
 
@@ -159,6 +179,7 @@ class MuserController extends Controller
         return $this->render('admin/muser/edit.html.twig', array(
             'muser' => $muser,
             'edit_form' => $editForm->createView(),
+			'profil_photo' => $profil_photo,
             'paths' => $paths
         ));
     }
