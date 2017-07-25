@@ -93,6 +93,12 @@ assetic:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        upload_directory: "%upload_directory%"
+        profile_photo_directory: "%profile_photo_directory%"
+        user_photo_directory: "%user_photo_directory%"
+        post_photo_directory: "%post_photo_directory%"
+        icon_directory: "%icon_directory%"
 
 # Doctrine Configuration
 doctrine:

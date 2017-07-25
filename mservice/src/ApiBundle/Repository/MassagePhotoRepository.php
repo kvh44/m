@@ -60,5 +60,52 @@ class MassagePhotoRepository extends EntityRepository {
             ->getQuery()
             ->getOneOrNullResult();
     }
+	
+	public function getPhotoListBo($only_total = false, $offset = 0, $limit = 25, $type = null, $is_deleted = null, $word = null) 
+	{
+		$q= $this->createQueryBuilder('p');
+		$q->select('p.id, p.userId, p.photoType, p.postId, p.photoOrigin, p.photoMedium, p.photoSmall, p.photoIcon, p.title, p.isDeleted, p.internalId, p.created, p.updated');
+		
+		if($only_total){
+            $q->select(' count(p.id) ');
+        }
+		
+		$q->where(' 1 = 1 ');
+		
+		if(strlen($is_deleted) > 0) {
+            if($is_deleted == 1){
+                $q->andWhere('p.isDeleted = :is_deleted');
+                $parameters[':is_deleted'] = UtileService::TINY_INT_TRUE;
+            } else {
+                $q->andWhere('p.isDeleted = :is_deleted');
+                $parameters[':is_deleted'] = UtileService::TINY_INT_FALSE;
+            }
+        }
+		
+		if(strlen($word) > 0){
+            $q->andWhere('p.title LIKE :title');
+            $parameters[':title'] = '%'.$word.'%';
+        }
+		
+		$q->orderBy('p.updated', 'DESC');
+		
+		if(isset($parameters)){
+            $q->setParameters($parameters);
+        }
+		
+		$q->distinct();
+        
+        if($only_total){
+            //return count($q->getQuery()->getResult());
+            $total = $q->getQuery()->getResult();
+            return $total[0][1];
+        }
+		
+		$q->setMaxResults($limit);
+        $q->setFirstResult($offset);
+        $photos = $q->getQuery()->getResult();
+        return $photos;
+		
+	}
     
 }

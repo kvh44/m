@@ -212,7 +212,7 @@ class MassageUserRepository extends EntityRepository implements UserLoaderInterf
         return $users;
     }
     
-    public function getUserListBo($only_total = false, $offset = 0, $limit = 15, $country_id = null, $lang = null,
+    public function getUserListBo($only_total = false, $offset = 0, $limit = 25, $country_id = null, $lang = null,
         $is_single = null, $is_active = null, $word = null)
     {
         $q = $this->createQueryBuilder('u');

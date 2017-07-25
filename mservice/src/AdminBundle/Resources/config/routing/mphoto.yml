@@ -1,0 +1,10 @@
+mphoto_index:
+    path:     /
+    defaults: { _controller: "AdminBundle:Mphoto:index" }
+    methods:  GET
+    
+mphoto_list_ajax:
+    path:     /photo-list-ajax
+    defaults: { _controller: "AdminBundle:Mphoto:photoListAjax" }
+    methods:  GET    
+
