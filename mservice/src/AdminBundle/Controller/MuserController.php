@@ -205,6 +205,13 @@ class MuserController extends Controller
        $this->get('api_massage.UsersService')->enableUser($muser->getInternalId(), $muser->getInternalToken());
        return $this->redirectToRoute('muser_index');
     }        
+    
+    public function managePhotoAction(Request $request, Muser $muser)
+    {
+        return $this->render('admin/mphoto/managePhoto.html.twig', array(
+            'muser' => $muser
+        ));
+    } 
 
     /**
      * Creates a form to delete a muser entity.

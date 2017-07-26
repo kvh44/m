@@ -7,4 +7,3 @@ mphoto_list_ajax:
     path:     /photo-list-ajax
     defaults: { _controller: "AdminBundle:Mphoto:photoListAjax" }
     methods:  GET    
-
