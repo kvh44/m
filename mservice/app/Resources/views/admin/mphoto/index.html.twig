@@ -2,7 +2,7 @@
 
 {% block css %}
     {% stylesheets output='css/compiled/userlist.css' 
-            '@FrontBundle/Resources/public/css/plugins/dataTables/datatables.min.css' 
+            '@FrontBundle/Resources/public/inspinia/css/plugins/dataTables/datatables.min.css' 
             filter='cssrewrite' 
     %}
         <link rel="stylesheet" href="{{ asset_url }}" />
@@ -117,7 +117,7 @@
     </script>
     
     {% javascripts output='js/compiled/photolist.js' 
-            '@FrontBundle/Resources/public/js/plugins/dataTables/datatables.min.js'
+            '@FrontBundle/Resources/public/inspinia/js/plugins/dataTables/datatables.min.js'
             '@AdminBundle/Resources/public/js/admin/photo/index.js' 
     %}
         <script src="{{ asset_url }}"></script>

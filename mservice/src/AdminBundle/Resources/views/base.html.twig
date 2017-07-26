@@ -7,12 +7,12 @@
         <title>{% block title %}Admin Application{% endblock %}</title>
         
         {% stylesheets output='css/compiled/admin.css' 
-            '@FrontBundle/Resources/public/css/bootstrap.min.css' 
-            '@FrontBundle/Resources/public/font-awesome/css/font-awesome.css' 
-            '@FrontBundle/Resources/public/css/animate.css' 
-            '@FrontBundle/Resources/public/css/style.css' 
-            '@FrontBundle/Resources/public/css/plugins/sweetalert/sweetalert.css' 
-            '@FrontBundle/Resources/public/css/plugins/iCheck/custom.css' 
+            '@FrontBundle/Resources/public/inspinia/css/bootstrap.min.css' 
+            '@FrontBundle/Resources/public/inspinia/font-awesome/css/font-awesome.css' 
+            '@FrontBundle/Resources/public/inspinia/css/animate.css' 
+            '@FrontBundle/Resources/public/inspinia/css/style.css' 
+            '@FrontBundle/Resources/public/inspinia/css/plugins/sweetalert/sweetalert.css' 
+            '@FrontBundle/Resources/public/inspinia/css/plugins/iCheck/custom.css' 
             '@AdminBundle/Resources/public/css/admin/bo.css' 
             filter='cssrewrite' 
         %}
@@ -21,11 +21,11 @@
         
         {% block css %}
         {% endblock %}
-        <!--link rel="stylesheet" href="/bundles/front/css/bootstrap.min.css" /-->
-        <!--link rel="stylesheet" href="/bundles/front/font-awesome/css/font-awesome.css" /-->
-        <!--link rel="stylesheet" href="/bundles/front/css/plugins/dataTables/datatables.min.css" /-->
-        <!--link rel="stylesheet" href="/bundles/front/css/animate.css" /-->
-        <!--link rel="stylesheet" href="/bundles/front/css/style.css" /-->
+        <!--link rel="stylesheet" href="/bundles/front/inspinia/css/bootstrap.min.css" /-->
+        <!--link rel="stylesheet" href="/bundles/front/inspinia/font-awesome/css/font-awesome.css" /-->
+        <!--link rel="stylesheet" href="/bundles/front/inspinia/css/plugins/dataTables/datatables.min.css" /-->
+        <!--link rel="stylesheet" href="/bundles/front/inspinia/css/animate.css" /-->
+        <!--link rel="stylesheet" href="/bundles/front/inspinia/css/style.css" /-->
     </head>
     <body>
         <div id="wrapper">
@@ -199,22 +199,22 @@
         </div>
     
     {% javascripts output='js/compiled/admin.js' 
-        '@FrontBundle/Resources/public/js/jquery-3.1.1.min.js'
-        '@FrontBundle/Resources/public/js/bootstrap.min.js'
-        '@FrontBundle/Resources/public/js/plugins/metisMenu/jquery.metisMenu.js'
-        '@FrontBundle/Resources/public/js/plugins/slimscroll/jquery.slimscroll.min.js' 
-        '@FrontBundle/Resources/public/js/inspinia.js' 
-        '@FrontBundle/Resources/public/js/plugins/pace/pace.min.js'
+        '@FrontBundle/Resources/public/inspinia/js/jquery-3.1.1.min.js'
+        '@FrontBundle/Resources/public/inspinia/js/bootstrap.min.js'
+        '@FrontBundle/Resources/public/inspinia/js/plugins/metisMenu/jquery.metisMenu.js'
+        '@FrontBundle/Resources/public/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js' 
+        '@FrontBundle/Resources/public/inspinia/js/inspinia.js' 
+        '@FrontBundle/Resources/public/inspinia/js/plugins/pace/pace.min.js'
     %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
-    <!--script src="/bundles/front/js/jquery-3.1.1.min.js"></script-->
-    <!--script src="/bundles/front/js/bootstrap.min.js"></script-->
-    <!--script src="/bundles/front/js/plugins/metisMenu/jquery.metisMenu.js"></script-->
-    <!--script src="/bundles/front/js/plugins/slimscroll/jquery.slimscroll.min.js"></script-->
-    <!--script src="/bundles/front/js/plugins/dataTables/datatables.min.js"></script-->
-    <!--script src="/bundles/front/js/inspinia.js"></script-->
-    <!--script src="/bundles/front/js/plugins/pace/pace.min.js"></script-->
+    <!--script src="/bundles/front/inspinia/js/jquery-3.1.1.min.js"></script-->
+    <!--script src="/bundles/front/inspinia/js/bootstrap.min.js"></script-->
+    <!--script src="/bundles/front/inspinia/js/plugins/metisMenu/jquery.metisMenu.js"></script-->
+    <!--script src="/bundles/front/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js"></script-->
+    <!--script src="/bundles/front/inspinia/js/plugins/dataTables/datatables.min.js"></script-->
+    <!--script src="/bundles/front/inspinia/js/inspinia.js"></script-->
+    <!--script src="/bundles/front/inspinia/js/plugins/pace/pace.min.js"></script-->
     
     {% block js %}
     {% endblock %}
