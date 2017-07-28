@@ -1,529 +1,529 @@
 {{ form_start(form,{ 'attr': {'class': 'form-horizontal'} }) }}
-                            
-    <div class="form-group {% if form.username.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">Username</label> 
-        <div class="col-lg-10">
+
+<div class="form-group {% if form.username.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">Username</label> 
+    <div class="col-lg-10">
         {{ form_widget(form.username, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.username.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.username) }}
         </span>
-        </div>
-    </div>    
+    </div>
+</div>    
 
-    <div class="form-group {% if form.email.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">Email</label> 
-        <div class="col-lg-10">
+<div class="form-group {% if form.email.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">Email</label> 
+    <div class="col-lg-10">
         {{ form_widget(form.email, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.email.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.email) }}
         </span>
-        </div>
-    </div>  
+    </div>
+</div>  
 
-    <div class="form-group {% if form.telephone.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">Telephone</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.telephone, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.telephone.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">Telephone</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.telephone, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.telephone.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.telephone) }}
         </span>
-        </div>
-    </div>  
+    </div>
+</div>  
 
-    <div class="form-group {% if form.nickname.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">nickname</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.nickname, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.nickname.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">nickname</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.nickname, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.nickname.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.nickname) }}
         </span>
-        </div>
-    </div>      
+    </div>
+</div>      
 
-    <div class="form-group {% if form.wechat.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">wechat</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.wechat, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.wechat.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">wechat</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.wechat, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.wechat.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.wechat) }}
         </span>
-        </div>
-    </div>       
+    </div>
+</div>       
 
-    <div class="form-group {% if form.facebook.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">facebook</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.facebook, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.facebook.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">facebook</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.facebook, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.facebook.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.facebook) }}
         </span>
-        </div>
-    </div>       
+    </div>
+</div>       
 
-    <div class="form-group {% if form.instagram.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">instagram</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.instagram, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.instagram.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">instagram</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.instagram, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.instagram.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.instagram) }}
         </span>
-        </div>
-    </div>      
+    </div>
+</div>      
 
-    <div class="form-group {% if form.website.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">website</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.website, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.website.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">website</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.website, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.website.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.website) }}
         </span>
-        </div>
-    </div>     
+    </div>
+</div>     
 
-    <div class="form-group {% if form.timezone.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">timezone</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.timezone, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.timezone.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">timezone</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.timezone, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.timezone.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.timezone) }}
         </span>
-        </div>
-    </div>         
+    </div>
+</div>         
 
-    <div class="form-group {% if form.country.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">country</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.country, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.country.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">country</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.country, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.country.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.country) }}
         </span>
-        </div>
-    </div>        
+    </div>
+</div>        
 
-    <div class="form-group {% if form.city.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">city</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.city, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.city.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">city</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.city, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.city.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.city) }}
         </span>
-        </div>
-    </div>      
+    </div>
+</div>      
 
-    <div class="form-group {% if form.postNumber.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">postNumber</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.postNumber, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.postNumber.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">postNumber</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.postNumber, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.postNumber.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.postNumber) }}
         </span>
-        </div>
-    </div>      
+    </div>
+</div>      
 
-    <div class="form-group {% if form.mcountry.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">select country</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.mcountry, { 'attr': {'class': 'form-control m-b'} }) }}
+<div class="form-group {% if form.mcountry.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">select country</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.mcountry, { 'attr': {'class': 'form-control m-b'} }) }}
         <span class="help-block m-b-none {% if form.mcountry.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.mcountry) }}
         </span>
-        </div>
-    </div>   
+    </div>
+</div>   
 
-    <div class="form-group {% if form.mlocation.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">select location</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.mlocation, { 'attr': {'class': 'form-control m-b'} }) }}
+<div class="form-group {% if form.mlocation.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">select location</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.mlocation, { 'attr': {'class': 'form-control m-b'} }) }}
         <span class="help-block m-b-none {% if form.mlocation.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.mlocation) }}
         </span>
-        </div>
-    </div>      
+    </div>
+</div>      
 
-    <div class="form-group {% if form.skinColor.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">skinColor</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.skinColor, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.skinColor.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">skinColor</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.skinColor, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.skinColor.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.skinColor) }}
         </span>
-        </div>
-    </div>        
+    </div>
+</div>        
 
-    <div class="form-group {% if form.weight.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">weight</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.weight, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.weight.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">weight</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.weight, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.weight.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.weight) }}
         </span>
-        </div>
-    </div>        
+    </div>
+</div>        
 
-    <div class="form-group {% if form.height.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">height</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.height, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.height.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">height</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.height, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.height.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.height) }}
         </span>
-        </div>
-    </div>            
+    </div>
+</div>            
 
-    <div class="form-group {% if form.birthday.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">birthday</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.birthday.year, { 'attr': {'class': 'form-control m-b'} }) }}
-            {{ form_widget(form.birthday.month, { 'attr': {'class': 'form-control m-b'} }) }}
-            {{ form_widget(form.birthday.day, { 'attr': {'class': 'form-control m-b'} }) }}
+<div class="form-group {% if form.birthday.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">birthday</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.birthday.year, { 'attr': {'class': 'form-control m-b'} }) }}
+        {{ form_widget(form.birthday.month, { 'attr': {'class': 'form-control m-b'} }) }}
+        {{ form_widget(form.birthday.day, { 'attr': {'class': 'form-control m-b'} }) }}
         <span class="help-block m-b-none {% if form.birthday.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.birthday) }}
         </span>
-        </div>
-    </div>           
+    </div>
+</div>           
 
-    <div class="form-group {% if form.hourPrice.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">hourPrice</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.hourPrice, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.hourPrice.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">hourPrice</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.hourPrice, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.hourPrice.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.hourPrice) }}
         </span>
-        </div>
-    </div>      
+    </div>
+</div>      
 
-    <div class="form-group {% if form.hourPriceUnit.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">hourPriceUnit</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.hourPriceUnit, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.hourPriceUnit.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">hourPriceUnit</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.hourPriceUnit, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.hourPriceUnit.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.hourPriceUnit) }}
         </span>
-        </div>
-    </div>          
+    </div>
+</div>          
 
-    <div class="form-group {% if form.nightPrice.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">nightPrice</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.nightPrice, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.nightPrice.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">nightPrice</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.nightPrice, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.nightPrice.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.nightPrice) }}
         </span>
-        </div>
-    </div>      
+    </div>
+</div>      
 
-    <div class="form-group {% if form.nightPriceUnit.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">nightPriceUnit</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.nightPriceUnit, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.nightPriceUnit.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">nightPriceUnit</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.nightPriceUnit, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.nightPriceUnit.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.nightPriceUnit) }}
         </span>
-        </div>
-    </div>    
+    </div>
+</div>    
 
-    <div class="form-group {% if form.shopAddress.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">shopAddress</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.shopAddress, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.shopAddress.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">shopAddress</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.shopAddress, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.shopAddress.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.shopAddress) }}
         </span>
-        </div>
-    </div>       
+    </div>
+</div>       
 
-    <div class="form-group {% if form.shopName.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">shopName</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.shopName, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.shopName.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">shopName</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.shopName, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.shopName.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.shopName) }}
         </span>
-        </div>
-    </div>           
+    </div>
+</div>           
 
-    <div class="form-group {% if form.description.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">description</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.description, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.description.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">description</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.description, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.description.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.description) }}
         </span>
-        </div>
-    </div>        
+    </div>
+</div>        
 
-    <div class="form-group {% if form.translatedDescription.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">translatedDescription</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.translatedDescription, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.translatedDescription.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">translatedDescription</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.translatedDescription, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.translatedDescription.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.translatedDescription) }}
         </span>
-        </div>
     </div>
+</div>
 
-    <div class="form-group {% if form.isActive.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-sm-2 control-label"></label> 
-        <div class="col-lg-10">
-            <label> {{ form_widget(form.isActive, { 'attr': {'class': 'i-checks'} }) }} isActive </label>    
-        </div>
-    </div>  
+<div class="form-group {% if form.isActive.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-sm-2 control-label"></label> 
+    <div class="col-lg-10">
+        <label> {{ form_widget(form.isActive, { 'attr': {'class': 'i-checks'} }) }} isActive </label>    
+    </div>
+</div>  
 
-    <div class="form-group {% if form.isDeleted.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-sm-2 control-label"></label> 
-        <div class="col-lg-10">
-            <label> {{ form_widget(form.isDeleted, { 'attr': {'class': 'i-checks'} }) }} isDeleted </label>    
-        </div>
-    </div>  
+<div class="form-group {% if form.isDeleted.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-sm-2 control-label"></label> 
+    <div class="col-lg-10">
+        <label> {{ form_widget(form.isDeleted, { 'attr': {'class': 'i-checks'} }) }} isDeleted </label>    
+    </div>
+</div>  
 
-    <div class="form-group {% if form.isPremium.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-sm-2 control-label"></label> 
-        <div class="col-lg-10">
-            <label> {{ form_widget(form.isPremium, { 'attr': {'class': 'i-checks'} }) }} isPremium </label>    
-        </div>
-    </div>     
+<div class="form-group {% if form.isPremium.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-sm-2 control-label"></label> 
+    <div class="col-lg-10">
+        <label> {{ form_widget(form.isPremium, { 'attr': {'class': 'i-checks'} }) }} isPremium </label>    
+    </div>
+</div>     
 
-    <div class="form-group {% if form.isSingle.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-sm-2 control-label"></label> 
-        <div class="col-lg-10">
-            <label> {{ form_widget(form.isSingle, { 'attr': {'class': 'i-checks'} }) }} isSingle </label>    
-        </div>
-    </div>      
+<div class="form-group {% if form.isSingle.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-sm-2 control-label"></label> 
+    <div class="col-lg-10">
+        <label> {{ form_widget(form.isSingle, { 'attr': {'class': 'i-checks'} }) }} isSingle </label>    
+    </div>
+</div>      
 
-    <div class="form-group {% if form.isShop.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-sm-2 control-label"></label> 
-        <div class="col-lg-10">
-            <label> {{ form_widget(form.isShop, { 'attr': {'class': 'i-checks'} }) }} isShop </label>    
-        </div>
-    </div>      
+<div class="form-group {% if form.isShop.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-sm-2 control-label"></label> 
+    <div class="col-lg-10">
+        <label> {{ form_widget(form.isShop, { 'attr': {'class': 'i-checks'} }) }} isShop </label>    
+    </div>
+</div>      
 
-    <div class="form-group {% if form.isZh.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-sm-2 control-label"></label> 
-        <div class="col-lg-10">
-            <label> {{ form_widget(form.isZh, { 'attr': {'class': 'i-checks'} }) }} isZh </label>    
-        </div>
-    </div>   
+<div class="form-group {% if form.isZh.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-sm-2 control-label"></label> 
+    <div class="col-lg-10">
+        <label> {{ form_widget(form.isZh, { 'attr': {'class': 'i-checks'} }) }} isZh </label>    
+    </div>
+</div>   
 
-    <div class="form-group {% if form.isEn.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-sm-2 control-label"></label> 
-        <div class="col-lg-10">
-            <label> {{ form_widget(form.isEn, { 'attr': {'class': 'i-checks'} }) }} isEn </label>    
-        </div>
-    </div>   
+<div class="form-group {% if form.isEn.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-sm-2 control-label"></label> 
+    <div class="col-lg-10">
+        <label> {{ form_widget(form.isEn, { 'attr': {'class': 'i-checks'} }) }} isEn </label>    
+    </div>
+</div>   
 
-    <div class="form-group {% if form.isFr.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-sm-2 control-label"></label> 
-        <div class="col-lg-10">
-            <label> {{ form_widget(form.isFr, { 'attr': {'class': 'i-checks'} }) }} isFr </label>    
-        </div>
-    </div>   
+<div class="form-group {% if form.isFr.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-sm-2 control-label"></label> 
+    <div class="col-lg-10">
+        <label> {{ form_widget(form.isFr, { 'attr': {'class': 'i-checks'} }) }} isFr </label>    
+    </div>
+</div>   
 
-    <div class="form-group {% if form.isAdmin.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-sm-2 control-label"></label> 
-        <div class="col-lg-10">
-            <label> {{ form_widget(form.isAdmin, { 'attr': {'class': 'i-checks'} }) }} isAdmin </label>    
-        </div>
-    </div>   
+<div class="form-group {% if form.isAdmin.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-sm-2 control-label"></label> 
+    <div class="col-lg-10">
+        <label> {{ form_widget(form.isAdmin, { 'attr': {'class': 'i-checks'} }) }} isAdmin </label>    
+    </div>
+</div>   
 
-    <div class="form-group {% if form.isTest.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-sm-2 control-label"></label> 
-        <div class="col-lg-10">
-            <label> {{ form_widget(form.isTest, { 'attr': {'class': 'i-checks'} }) }} isTest </label>    
-        </div>
-    </div>   
+<div class="form-group {% if form.isTest.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-sm-2 control-label"></label> 
+    <div class="col-lg-10">
+        <label> {{ form_widget(form.isTest, { 'attr': {'class': 'i-checks'} }) }} isTest </label>    
+    </div>
+</div>   
 
-    <div class="form-group {% if form.isSynchronizedByCache.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-sm-2 control-label"></label> 
-        <div class="col-lg-10">
-            <label> {{ form_widget(form.isSynchronizedByCache, { 'attr': {'class': 'i-checks'} }) }} isSynchronizedByCache </label>    
-        </div>
-    </div>   
+<div class="form-group {% if form.isSynchronizedByCache.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-sm-2 control-label"></label> 
+    <div class="col-lg-10">
+        <label> {{ form_widget(form.isSynchronizedByCache, { 'attr': {'class': 'i-checks'} }) }} isSynchronizedByCache </label>    
+    </div>
+</div>   
 
-    <div class="form-group {% if form.isSynchronizedBySearch.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-sm-2 control-label"></label> 
-        <div class="col-lg-10">
-            <label> {{ form_widget(form.isSynchronizedBySearch, { 'attr': {'class': 'i-checks'} }) }} isSynchronizedBySearch </label>    
-        </div>
-    </div>   
+<div class="form-group {% if form.isSynchronizedBySearch.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-sm-2 control-label"></label> 
+    <div class="col-lg-10">
+        <label> {{ form_widget(form.isSynchronizedBySearch, { 'attr': {'class': 'i-checks'} }) }} isSynchronizedBySearch </label>    
+    </div>
+</div>   
 
-    <div class="form-group {% if form.isFromOtherWeb.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-sm-2 control-label"></label> 
-        <div class="col-lg-10">
-            <label> {{ form_widget(form.isFromOtherWeb, { 'attr': {'class': 'i-checks'} }) }} isFromOtherWeb </label>    
-        </div>
-    </div>       
+<div class="form-group {% if form.isFromOtherWeb.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-sm-2 control-label"></label> 
+    <div class="col-lg-10">
+        <label> {{ form_widget(form.isFromOtherWeb, { 'attr': {'class': 'i-checks'} }) }} isFromOtherWeb </label>    
+    </div>
+</div>       
 
-    <div class="form-group {% if form.otherWeb.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">otherWeb</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.otherWeb, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.otherWeb.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">otherWeb</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.otherWeb, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.otherWeb.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.otherWeb) }}
         </span>
-        </div>
-    </div>      
+    </div>
+</div>      
 
-    <div class="form-group {% if form.otherWebReference.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">otherWebReference</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.otherWebReference, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.otherWebReference.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">otherWebReference</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.otherWebReference, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.otherWebReference.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.otherWebReference) }}
         </span>
-        </div>
-    </div>  
+    </div>
+</div>  
 
-    <div class="form-group {% if form.draftId.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">draftId</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.draftId, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.draftId.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">draftId</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.draftId, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.draftId.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.draftId) }}
         </span>
-        </div>
-    </div>      
+    </div>
+</div>      
 
-    <div class="form-group {% if form.slug.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">slug</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.slug, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.slug.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">slug</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.slug, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.slug.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.slug) }}
         </span>
-        </div>
-    </div>       
+    </div>
+</div>       
 
-    <div class="form-group {% if form.token.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">token</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.token, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.token.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">token</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.token, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.token.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.token) }}
         </span>
-        </div>
-    </div>      
+    </div>
+</div>      
 
-    <div class="form-group {% if form.internalToken.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">internalToken</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.internalToken, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.internalToken.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">internalToken</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.internalToken, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.internalToken.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.internalToken) }}
         </span>
-        </div>
-    </div>  
+    </div>
+</div>  
 
-    <div class="form-group {% if form.externalToken.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">externalToken</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.externalToken, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.externalToken.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">externalToken</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.externalToken, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.externalToken.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.externalToken) }}
         </span>
-        </div>
-    </div>   
+    </div>
+</div>   
 
-    <div class="form-group {% if form.internalId.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">internalId</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.internalId, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.internalId.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">internalId</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.internalId, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.internalId.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.internalId) }}
         </span>
-        </div>
-    </div>     
+    </div>
+</div>     
 
-    <div class="form-group {% if form.viewNumber.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">viewNumber</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.viewNumber, { 'attr': {'class': 'form-control'} }) }}
+<div class="form-group {% if form.viewNumber.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">viewNumber</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.viewNumber, { 'attr': {'class': 'form-control'} }) }}
         <span class="help-block m-b-none {% if form.viewNumber.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.viewNumber) }}
         </span>
-        </div>
-    </div>         
+    </div>
+</div>         
 
-    <div class="form-group {% if form.topTime.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">topTime</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.topTime.date.year, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
-            {{ form_widget(form.topTime.date.month, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
-            {{ form_widget(form.topTime.date.day, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
-            {{ form_widget(form.topTime.time.hour, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
-            {{ form_widget(form.topTime.time.minute, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+<div class="form-group {% if form.topTime.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">topTime</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.topTime.date.year, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        {{ form_widget(form.topTime.date.month, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        {{ form_widget(form.topTime.date.day, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        {{ form_widget(form.topTime.time.hour, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        {{ form_widget(form.topTime.time.minute, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
         <span class="help-block m-b-none {% if form.topTime.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.topTime) }}
         </span>
-        </div>
-    </div>   
+    </div>
+</div>   
 
-    <div class="form-group {% if form.lastSynchronizedFromOtherWebTime.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">lastSynchronizedFromOtherWebTime</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.lastSynchronizedFromOtherWebTime.date.year, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
-            {{ form_widget(form.lastSynchronizedFromOtherWebTime.date.month, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
-            {{ form_widget(form.lastSynchronizedFromOtherWebTime.date.day, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
-            {{ form_widget(form.lastSynchronizedFromOtherWebTime.time.hour, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
-            {{ form_widget(form.lastSynchronizedFromOtherWebTime.time.minute, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+<div class="form-group {% if form.lastSynchronizedFromOtherWebTime.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">lastSynchronizedFromOtherWebTime</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.lastSynchronizedFromOtherWebTime.date.year, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        {{ form_widget(form.lastSynchronizedFromOtherWebTime.date.month, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        {{ form_widget(form.lastSynchronizedFromOtherWebTime.date.day, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        {{ form_widget(form.lastSynchronizedFromOtherWebTime.time.hour, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        {{ form_widget(form.lastSynchronizedFromOtherWebTime.time.minute, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
         <span class="help-block m-b-none {% if form.lastSynchronizedFromOtherWebTime.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.lastSynchronizedFromOtherWebTime) }}
         </span>
-        </div>
-    </div>    
+    </div>
+</div>    
 
-    <div class="form-group {% if form.paymentExpiredTime.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">paymentExpiredTime</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.paymentExpiredTime.date.year, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
-            {{ form_widget(form.paymentExpiredTime.date.month, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
-            {{ form_widget(form.paymentExpiredTime.date.day, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
-            {{ form_widget(form.paymentExpiredTime.time.hour, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
-            {{ form_widget(form.paymentExpiredTime.time.minute, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+<div class="form-group {% if form.paymentExpiredTime.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">paymentExpiredTime</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.paymentExpiredTime.date.year, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        {{ form_widget(form.paymentExpiredTime.date.month, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        {{ form_widget(form.paymentExpiredTime.date.day, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        {{ form_widget(form.paymentExpiredTime.time.hour, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        {{ form_widget(form.paymentExpiredTime.time.minute, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
         <span class="help-block m-b-none {% if form.paymentExpiredTime.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.paymentExpiredTime) }}
         </span>
-        </div>
-    </div>    
+    </div>
+</div>    
 
-    <div class="form-group {% if form.created.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">created</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.created.date.year, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
-            {{ form_widget(form.created.date.month, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
-            {{ form_widget(form.created.date.day, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
-            {{ form_widget(form.created.time.hour, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
-            {{ form_widget(form.created.time.minute, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+<div class="form-group {% if form.created.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">created</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.created.date.year, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        {{ form_widget(form.created.date.month, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        {{ form_widget(form.created.date.day, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        {{ form_widget(form.created.time.hour, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        {{ form_widget(form.created.time.minute, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
         <span class="help-block m-b-none {% if form.created.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.created) }}
         </span>
-        </div>
-    </div>      
+    </div>
+</div>      
 
-    <div class="form-group {% if form.updated.vars.valid == false  %} has-error {% endif %}">
-        <label class="col-lg-2 control-label">updated</label> 
-        <div class="col-lg-10">
-            {{ form_widget(form.updated.date.year, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
-            {{ form_widget(form.updated.date.month, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
-            {{ form_widget(form.updated.date.day, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
-            {{ form_widget(form.updated.time.hour, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
-            {{ form_widget(form.updated.time.minute, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+<div class="form-group {% if form.updated.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">updated</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.updated.date.year, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        {{ form_widget(form.updated.date.month, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        {{ form_widget(form.updated.date.day, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        {{ form_widget(form.updated.time.hour, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        {{ form_widget(form.updated.time.minute, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
         <span class="help-block m-b-none {% if form.updated.vars.valid == false  %} alert alert-danger {% endif %}">
             {{ form_errors(form.updated) }}
         </span>
-        </div>
-    </div>          
+    </div>
+</div>          
 
-    <a href="{{ path('muser_index') }}" class="btn btn-lg btn-outline btn-primary">Back to the list</a>
-    {% if muser.id is not null %}
-        <a href="{{ path('muser_show', { 'id' : muser.id }) }}" class="btn btn-lg btn-info">Show</a>
+<a href="{{ path('muser_index') }}" class="btn btn-lg btn-outline btn-primary">Back to the list</a>
+{% if muser.id is not null %}
+    <a href="{{ path('muser_show', { 'id' : muser.id }) }}" class="btn btn-lg btn-info">Show</a>
+{% endif %}
+{% if muser.id is not null %}
+    {% if muser.isDeleted %}
+        <a href="{{ path('muser_enable', { 'internalToken': muser.internalToken }) }}" class="btn btn-lg btn-info">Enable</a>
+    {% else %}    
+        <a href="{{ path('muser_delete', { 'internalToken': muser.internalToken }) }}" class="btn btn-lg btn-danger" id="deleteUser">Delete</a>
     {% endif %}
-    {% if muser.id is not null %}
-        {% if muser.isDeleted %}
-            <a href="{{ path('muser_enable', { 'internalToken': muser.internalToken }) }}" class="btn btn-lg btn-info">Enable</a>
-        {% else %}    
-            <a href="{{ path('muser_delete', { 'internalToken': muser.internalToken }) }}" class="btn btn-lg btn-danger" id="deleteUser">Delete</a>
-        {% endif %}
-     {% endif %}
+{% endif %}
 
-     <input type="submit" value="Save" class="btn btn-lg btn-success" />
+<input type="submit" value="Save" class="btn btn-lg btn-success" />
 {{ form_end(form) }}

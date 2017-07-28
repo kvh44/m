@@ -25,12 +25,12 @@
                             </a>
                         </div>
                     </div>
-                    
+
                     <div class="ibox-content">
                         <div class="row">
 
                             {% include 'admin/muser/form.html.twig' with {'form' : form, 'muser': muser} %}
-                            
+
                         </div>
                     </div>
                 </div>
@@ -42,14 +42,14 @@
 
 {% block js %}  
     <!-- Page-Level Scripts -->
-    
+
     {% javascripts output='js/compiled/useredit.js' 
             '@FrontBundle/Resources/public/inspinia/js/plugins/iCheck/icheck.min.js' 
             '@AdminBundle/Resources/public/js/admin/user/edit.js' 
     %}
-        <script src="{{ asset_url }}"></script>
+    <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
-    
-    
-    
+
+
+
 {% endblock %}
