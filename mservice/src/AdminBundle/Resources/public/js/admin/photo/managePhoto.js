@@ -4,12 +4,17 @@ $(document).ready(function () {
 
     jQuery('#choose_profile_photo').show();
 
-    var galleryUploader = new qq.FineUploader({
+    var profileUploader = initiateUploader('choose_profile_photo', true, 1, '<div>profile</div>');
+    var userUploader = initiateUploader('choose_user_photo', true, 2, '<div>user</div>');
+});
+
+var initiateUploader = function(buttonId, isLocal, photoType, uploadButtonHtml){
+    return new qq.FineUploader({
         // pass the dom node (ex. $(selector)[0] for jQuery users)
-        element: document.getElementById('choose_profile_photo'),
+        element: document.getElementById(buttonId),
         request: {
             endpoint: urlUploadPhoto,
-            params: {internal_token: internalToken, internal_id: internalId, type: 1, is_local: true}
+            params: {internal_token: internalToken, internal_id: internalId, type: photoType, is_local: isLocal}
         },
         validation: {
             allowedExtensions: ["jpeg", "jpg", "bmp", "gif", "png", "png8", "png24"],
@@ -24,7 +29,7 @@ $(document).ready(function () {
         },
         template: 'uploader-template',
         text: {
-            uploadButton: '<i class="icon-cloud icon-white"></i> uploader',
+            fileInputTitle: uploadButtonHtml,
             formatProgress: '{percent}%'
         },
         multiple: false,
@@ -32,9 +37,9 @@ $(document).ready(function () {
         maxConnections: 1,
         callbacks: {
             onComplete: function (id, fileName, responseJSON) {
-                console.log(responseJSON);
+                //console.log(responseJSON);
+                $(location).attr('href', window.location.href);
             }
         }
     });
-
-});
+}

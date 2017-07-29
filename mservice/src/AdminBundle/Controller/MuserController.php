@@ -6,59 +6,58 @@ use ApiBundle\Entity\Muser;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+
 /**
  * Muser controller.
  *
  */
-class MuserController extends Controller
-{
+class MuserController extends Controller {
+
     /**
      * Lists all muser entities.
      *
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
         $musers = $em->getRepository('ApiBundle:Muser')->getUserListBo();
-        
-        $path['title'] ='User list';
+
+        $path['title'] = 'User list';
         $path['url'] = $this->generateUrl('muser_index');
         $paths[] = $path;
-        
+
         return $this->render('admin/muser/index.html.twig', array(
-            'musers' => $musers,
-            'paths' => $paths
+                    'musers' => $musers,
+                    'paths' => $paths
         ));
     }
-    
-    public function userListAjaxAction(Request $request)
-    {
+
+    public function userListAjaxAction(Request $request) {
         /*
-        if(!$request->getSession()->get('draw_users')){
-            $request->getSession()->set('draw_users', 1);
-        } else {
-            $draw = $request->getSession()->get('draw_users');
-            $request->getSession()->set('draw_users', (int)$draw + 1);
-        }
+          if(!$request->getSession()->get('draw_users')){
+          $request->getSession()->set('draw_users', 1);
+          } else {
+          $draw = $request->getSession()->get('draw_users');
+          $request->getSession()->set('draw_users', (int)$draw + 1);
+          }
          * 
          */
-        
-        if(strlen($request->query->get('start')) > 0){
+
+        if (strlen($request->query->get('start')) > 0) {
             $offset = $request->query->get('start');
         } else {
             $offset = 0;
         }
-        
-        if(strlen($request->query->get('length')) > 0){
+
+        if (strlen($request->query->get('length')) > 0) {
             $limit = $request->query->get('length');
         } else {
             $limit = 25;
         }
-        
+
         $search = $request->query->get('search');
-        if(is_array($search)){
-            if(array_key_exists('value', $search)){
+        if (is_array($search)) {
+            if (array_key_exists('value', $search)) {
                 $word = $search['value'];
             }
         }
@@ -68,24 +67,23 @@ class MuserController extends Controller
         $users = $em->getRepository('ApiBundle:Muser')->getUserListBo(false, $offset, $limit, null, null, null, null, $word);
 
         return new JsonResponse(
-            array(
-                'data' => $users, 
-                //'draw' => $request->getSession()->get('draw_users'), 
-                'recordsTotal' => $total, 
-                'recordsFiltered' => $totalFiltered,
+                array(
+            'data' => $users,
+            //'draw' => $request->getSession()->get('draw_users'), 
+            'recordsTotal' => $total,
+            'recordsFiltered' => $totalFiltered,
                 //'iTotalRecords' => $total,
                 //'iTotalDisplayRecords' => $total,
                 //'aaData' => $users
-            )
+                )
         );
-    }        
+    }
 
     /**
      * Creates a new muser entity.
      *
      */
-    public function newAction(Request $request)
-    {
+    public function newAction(Request $request) {
         $muser = new Muser();
         $form = $this->createForm('AdminBundle\Form\MuserType', $muser);
         $form->handleRequest($request);
@@ -97,19 +95,19 @@ class MuserController extends Controller
 
             return $this->redirectToRoute('muser_show', array('id' => $muser->getId()));
         }
-        
-        $path['title'] ='User list';
+
+        $path['title'] = 'User list';
         $path['url'] = $this->generateUrl('muser_index');
         $paths[] = $path;
-        
-        $path['title'] ='New User';
+
+        $path['title'] = 'New User';
         $path['url'] = $this->generateUrl('muser_new');
         $paths[] = $path;
 
         return $this->render('admin/muser/new.html.twig', array(
-            'muser' => $muser,
-            'form' => $form->createView(),
-            'paths' => $paths
+                    'muser' => $muser,
+                    'form' => $form->createView(),
+                    'paths' => $paths
         ));
     }
 
@@ -117,29 +115,28 @@ class MuserController extends Controller
      * Finds and displays a muser entity.
      *
      */
-    public function showAction(Muser $muser)
-    {
-		$photos = $this->get('api_massage.PhotoService')->findProfilePhotosByUserIdCache($muser->getId());
-		
-		$profil_photo = '';
-		if(array_key_exists('profile_photo', $photos['data'])){
-			if(count($photos['data']['profile_photo']) > 0){
-				$profil_photo = '/'.$this->getParameter('upload_directory').$this->getParameter('profile_photo_directory').$this->getParameter('small_directory').$muser->getId().'/'.$photos['data']['profile_photo'][0]['photoSmall'];
-			}
-		}
-		
-        $path['title'] ='User list';
+    public function showAction(Muser $muser) {
+        $photos = $this->get('api_massage.PhotoService')->findProfilePhotosByUserIdCache($muser->getId());
+
+        $profil_photo = '';
+        if (array_key_exists('profile_photo', $photos['data'])) {
+            if (count($photos['data']['profile_photo']) > 0) {
+                $profil_photo = '/' . $this->getParameter('upload_directory') . $this->getParameter('profile_photo_directory') . $this->getParameter('small_directory') . $muser->getId() . '/' . $photos['data']['profile_photo'][0]['photoSmall'];
+            }
+        }
+
+        $path['title'] = 'User list';
         $path['url'] = $this->generateUrl('muser_index');
         $paths[] = $path;
-        
-        $path['title'] ='Show User ' . $muser->getUsername();
-        $path['url'] = $this->generateUrl('muser_show', array('id'=> $muser->getId()));
+
+        $path['title'] = 'Show User ' . $muser->getUsername();
+        $path['url'] = $this->generateUrl('muser_show', array('id' => $muser->getId()));
         $paths[] = $path;
-        
+
         return $this->render('admin/muser/show.html.twig', array(
-            'muser' => $muser,
-			'profil_photo' => $profil_photo,
-            'paths' => $paths
+                    'muser' => $muser,
+                    'profil_photo' => $profil_photo,
+                    'paths' => $paths
         ));
     }
 
@@ -147,18 +144,17 @@ class MuserController extends Controller
      * Displays a form to edit an existing muser entity.
      *
      */
-    public function editAction(Request $request, Muser $muser)
-    {
-		$photos = $this->get('api_massage.PhotoService')->findProfilePhotosByUserIdCache($muser->getId());
-		
-		$profil_photo = '';
-		if(array_key_exists('profile_photo', $photos['data'])){
-			dump($photos['data']['profile_photo']);
-			if(count($photos['data']['profile_photo']) > 0){
-				$profil_photo = '/'.$this->getParameter('upload_directory').$this->getParameter('profile_photo_directory').$this->getParameter('small_directory').$muser->getId().'/'.$photos['data']['profile_photo'][0]['photoSmall'];
-			}
-		}
-		
+    public function editAction(Request $request, Muser $muser) {
+        $photos = $this->get('api_massage.PhotoService')->findProfilePhotosByUserIdCache($muser->getId());
+
+        $profil_photo = '';
+        if (array_key_exists('profile_photo', $photos['data'])) {
+            dump($photos['data']['profile_photo']);
+            if (count($photos['data']['profile_photo']) > 0) {
+                $profil_photo = '/' . $this->getParameter('upload_directory') . $this->getParameter('profile_photo_directory') . $this->getParameter('small_directory') . $muser->getId() . '/' . $photos['data']['profile_photo'][0]['photoSmall'];
+            }
+        }
+
         $editForm = $this->createForm('AdminBundle\Form\MuserType', $muser);
         $editForm->handleRequest($request);
 
@@ -167,20 +163,20 @@ class MuserController extends Controller
 
             return $this->redirectToRoute('muser_show', array('id' => $muser->getId()));
         }
-        
-        $path['title'] ='User list';
+
+        $path['title'] = 'User list';
         $path['url'] = $this->generateUrl('muser_index');
         $paths[] = $path;
 
-        $path['title'] ='Edit User ' . $muser->getUsername();
-        $path['url'] = $this->generateUrl('muser_edit', array('internalToken'=> $muser->getInternalToken()));
+        $path['title'] = 'Edit User ' . $muser->getUsername();
+        $path['url'] = $this->generateUrl('muser_edit', array('internalToken' => $muser->getInternalToken()));
         $paths[] = $path;
-        
+
         return $this->render('admin/muser/edit.html.twig', array(
-            'muser' => $muser,
-            'edit_form' => $editForm->createView(),
-			'profil_photo' => $profil_photo,
-            'paths' => $paths
+                    'muser' => $muser,
+                    'edit_form' => $editForm->createView(),
+                    'profil_photo' => $profil_photo,
+                    'paths' => $paths
         ));
     }
 
@@ -188,30 +184,43 @@ class MuserController extends Controller
      * Deletes a muser entity.
      *
      */
-    public function deleteAction(Request $request, Muser $muser)
-    {
-       $this->get('api_massage.UsersService')->deleteUser($muser->getInternalId(), $muser->getInternalToken());
-       return $this->redirectToRoute('muser_index');
+    public function deleteAction(Request $request, Muser $muser) {
+        $this->get('api_massage.UsersService')->deleteUser($muser->getInternalId(), $muser->getInternalToken());
+        return $this->redirectToRoute('muser_index');
     }
-    
+
     /**
      * Enable a muser entity
      * @param Request $request
      * @param Muser $muser
      * @return type
      */
-    public function enableAction(Request $request, Muser $muser)
-    {
-       $this->get('api_massage.UsersService')->enableUser($muser->getInternalId(), $muser->getInternalToken());
-       return $this->redirectToRoute('muser_index');
-    }        
-    
-    public function managePhotoAction(Request $request, Muser $muser)
-    {
+    public function enableAction(Request $request, Muser $muser) {
+        $this->get('api_massage.UsersService')->enableUser($muser->getInternalId(), $muser->getInternalToken());
+        return $this->redirectToRoute('muser_index');
+    }
+
+    public function managePhotoAction(Request $request, Muser $muser) {
+        $allUserPhotos = $this->get('api_massage.PhotoService')->getAllPhotosByUserId($muser->getId());
+
+        $path['title'] = 'User list';
+        $path['url'] = $this->generateUrl('muser_index');
+        $paths[] = $path;
+
+        $path['title'] = 'Show User ' . $muser->getUsername();
+        $path['url'] = $this->generateUrl('muser_show', array('id' => $muser->getId()));
+        $paths[] = $path;
+        
+        $path['title'] = 'Manage User Photo ' . $muser->getUsername();
+        $path['url'] = $this->generateUrl('mphoto_manage', array('internalToken' => $muser->getInternalToken()));
+        $paths[] = $path;
+        
         return $this->render('admin/mphoto/managePhoto.html.twig', array(
-            'muser' => $muser
+                    'muser' => $muser,
+                    'allUserPhotos' => array_key_exists('data', $allUserPhotos) ? $allUserPhotos['data'] : array(), 
+                    'paths' => $paths
         ));
-    } 
+    }
 
     /**
      * Creates a form to delete a muser entity.
@@ -221,14 +230,14 @@ class MuserController extends Controller
      * @return \Symfony\Component\Form\Form The form
      */
     /*
-    private function createDeleteForm(Muser $muser)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('muser_delete', array('id' => $muser->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
-    }
+      private function createDeleteForm(Muser $muser)
+      {
+      return $this->createFormBuilder()
+      ->setAction($this->generateUrl('muser_delete', array('id' => $muser->getId())))
+      ->setMethod('DELETE')
+      ->getForm()
+      ;
+      }
      * 
      */
 }

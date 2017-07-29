@@ -426,5 +426,24 @@ class PhotoService {
             return $this->utileService->getResponse();
         }
     }
+    
+    public function getAllPhotosByUserId($user_id)
+    {
+        try{
+            $profilePhotos = $this->em->getRepository('ApiBundle:Mphoto')->loadProfilePhotosByUserId($user_id);
+            $userPhotos = $this->em->getRepository('ApiBundle:Mphoto')->loadUserPhotosByUserId($user_id);
+            $deletedProfilePhotos = $this->em->getRepository('ApiBundle:Mphoto')->loadDeletedProfilePhotosByUserId($user_id);
+            $deletedUserPhotos = $this->em->getRepository('ApiBundle:Mphoto')->loadDeletedUserPhotosByUserId($user_id);    
+        
+            $this->utileService->setResponseData(array('profilePhotos' => $profilePhotos, 'userPhotos' => $userPhotos, 
+                'deletedProfilePhotos' => $deletedProfilePhotos, 'deletedUserPhotos' => $deletedUserPhotos));
+            $this->utileService->setResponseState(true);
+            return $this->utileService->getResponse();
+        } catch (\Exception $e) {
+            $this->utileService->setResponseState(false);
+            $this->utileService->setResponseMessage($e->getMessage());
+            return $this->utileService->getResponse();
+        }
+    }        
 
 }

@@ -99,6 +99,9 @@ twig:
         user_photo_directory: "%user_photo_directory%"
         post_photo_directory: "%post_photo_directory%"
         icon_directory: "%icon_directory%"
+        small_directory: "%small_directory%"
+        medium_directory: "%medium_directory%"
+        original_directory: "%original_directory%"
 
 # Doctrine Configuration
 doctrine:
