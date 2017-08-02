@@ -82,6 +82,7 @@ class UsersService
     
     const MIN_LENGTH_PASSWORD = 8;
     const MIN_LENGTH_TOKEN = 32;
+    const ENCRYPTION_METHOD = 'bcrypt';
 
     public function __construct(Registry $doctrine, Session $session, Translator $translator, RecursiveValidator $validator, Container $container,UtileService $utileService, MailerService $mailer, CacheService $cacheService, $min_top_time)
     {
@@ -176,7 +177,7 @@ class UsersService
 
                 $encodedPassword = $this->encryptPassword($request->get('password1'));
                 $this->mPassword->setPassword($request->get('password1'));
-                $this->mPassword->setEncryptionMethod('bcrypt');
+                $this->mPassword->setEncryptionMethod(self::ENCRYPTION_METHOD);
                 $this->mPassword->setIndication($this->preparePasswordIndication($request->get('password1')));
                 $this->mPassword->setSalt(null);
                 $this->mPassword->setInternalId($this->prepareInternalId());
@@ -253,9 +254,12 @@ class UsersService
         return $internalId . UtileService::RandomString(self::MIN_LENGTH_TOKEN) . UtileService::getDateTimeMicroseconds();
     }
 
-    public function encryptPassword($password, $algo = 'bcrypt', $salt = null)
+    public function encryptPassword($password, $algo = self::ENCRYPTION_METHOD, $salt = null)
     {
-        return password_hash($password, PASSWORD_BCRYPT);
+        if($algo === self::ENCRYPTION_METHOD){
+            return password_hash($password, PASSWORD_BCRYPT);
+        }
+        return $password;
     }
 
     /**

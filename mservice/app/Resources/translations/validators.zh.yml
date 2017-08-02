@@ -1,3 +1,12 @@
 user:
     telephone:
         exist: 此电话号码已被占用
+    password:
+        too:
+            short: 密码至少8位
+    translatedDescription:
+        too:
+            long: 自我介绍太长,请缩短一点。。。
+    description:
+        too:
+            long: 自我介绍太长,请缩短一点。。。        

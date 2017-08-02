@@ -44,7 +44,14 @@ ApiBundle\Entity\Muser:
                 pattern: '/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/'
                 match:   true
                 message: user.email.format.invalid 
-
+        description:        
+            - Length:  
+                max: 255
+                maxMessage: 'user.description.too.long' 
+        translatedDescription:        
+            - Length:  
+                max: 255
+                maxMessage: 'user.translatedDescription.too.long'        
 ApiBundle\Entity\Mpost:
     properties:
         title:

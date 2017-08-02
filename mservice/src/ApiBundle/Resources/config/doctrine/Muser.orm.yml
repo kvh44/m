@@ -201,13 +201,13 @@ ApiBundle\Entity\Muser:
                 fixed: false
             column: shop_name    
         description:
-            type: blob
+            type: text
             nullable: true
             length: 255
             options:
                 fixed: false
         translatedDescription:
-            type: blob
+            type: text
             nullable: true
             length: 255
             options:

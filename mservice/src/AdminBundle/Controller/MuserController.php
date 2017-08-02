@@ -3,6 +3,8 @@
 namespace AdminBundle\Controller;
 
 use ApiBundle\Entity\Muser;
+use ApiBundle\Entity\Mpassword;
+use ApiBundle\Services\UsersService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -85,6 +87,13 @@ class MuserController extends Controller {
      */
     public function newAction(Request $request) {
         $muser = new Muser();
+
+        $muser->setToken($this->get('api_massage.UsersService')->prepareToken());
+        $muser->setInternalToken($this->get('api_massage.UsersService')->prepareInternalToken());
+        $muser->setExternalToken($this->get('api_massage.UsersService')->prepareExternalToken());
+        $muser->setInternalId($this->get('api_massage.UsersService')->prepareInternalId());
+        $muser->setCreated(new \DateTime('now'));
+        $muser->setUpdated(new \DateTime('now'));
         $form = $this->createForm('AdminBundle\Form\MuserType', $muser);
         $form->handleRequest($request);
 
@@ -149,7 +158,6 @@ class MuserController extends Controller {
 
         $profil_photo = '';
         if (array_key_exists('profile_photo', $photos['data'])) {
-            dump($photos['data']['profile_photo']);
             if (count($photos['data']['profile_photo']) > 0) {
                 $profil_photo = '/' . $this->getParameter('upload_directory') . $this->getParameter('profile_photo_directory') . $this->getParameter('small_directory') . $muser->getId() . '/' . $photos['data']['profile_photo'][0]['photoSmall'];
             }
@@ -178,6 +186,29 @@ class MuserController extends Controller {
                     'profil_photo' => $profil_photo,
                     'paths' => $paths
         ));
+    }
+    
+    public function newPasswordAction(Request $request, Muser $muser) {
+        $mpassword = new Mpassword();
+        $mpassword->setUserId($muser->getId());
+        $mpassword->setEncryptionMethod(UsersService::ENCRYPTION_METHOD);
+        $mpassword->setSalt('');
+        $mpassword->setIndication('');
+        $mpassword->setInternalId($this->get('api_massage.UsersService')->prepareInternalId());
+        $form = $this->createForm('AdminBundle\Form\MpasswordType', $mpassword);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $mpassword->setIndication($this->get('api_massage.UsersService')->preparePasswordIndication());
+            $mpassword->setPassword($this->get('api_massage.UsersService')->encryptPassword($mpassword->getPassword()));
+            
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($mpassword);
+            $em->flush($mpassword);
+
+            return $this->redirectToRoute('mpassword_new', array('internalToken' => $muser->getInternalToken()));
+        }
     }
 
     /**

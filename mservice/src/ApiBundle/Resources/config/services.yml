@@ -66,6 +66,8 @@ services:
         arguments:
             - "@fos_elastica.object_persister.app.user"
             - "@fos_elastica.indexable"
+            - "%search.host%"
+            - "%search.port%"
             - { index: app, type: user, identifier: id }
         tags:
             - { name: doctrine.event_subscriber }
