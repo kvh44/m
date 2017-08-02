@@ -38,8 +38,8 @@ mphoto_manage:
     defaults: { _controller: "AdminBundle:Muser:managePhoto" }
     methods:  [GET, POST] 
     
-mpassword_new:
-    path:     /{internalToken}/new/password
-    defaults: { _controller: "AdminBundle:Muser:newPassword" }
+mpassword_manage:
+    path:     /{internalToken}/password
+    defaults: { _controller: "AdminBundle:Muser:managePassword" }
     methods:  [GET, POST]     
     

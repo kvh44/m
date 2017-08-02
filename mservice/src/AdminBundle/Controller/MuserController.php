@@ -188,27 +188,55 @@ class MuserController extends Controller {
         ));
     }
     
-    public function newPasswordAction(Request $request, Muser $muser) {
+    public function managePasswordAction(Request $request, Muser $muser) {
+        
+        $em = $this->getDoctrine()->getManager();
+        $passwords = $em->getRepository('ApiBundle:Mpassword')->loadUserPasswordsByUserId($muser->getId());
+        
         $mpassword = new Mpassword();
+        $mpassword->setUser($muser);
         $mpassword->setUserId($muser->getId());
         $mpassword->setEncryptionMethod(UsersService::ENCRYPTION_METHOD);
         $mpassword->setSalt('');
-        $mpassword->setIndication('');
+        $mpassword->setIndication('xxx');
         $mpassword->setInternalId($this->get('api_massage.UsersService')->prepareInternalId());
+        $mpassword->setCreated(new \DateTime('now'));
+        $mpassword->setUpdated(new \DateTime('now'));
+        
         $form = $this->createForm('AdminBundle\Form\MpasswordType', $mpassword);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             
-            $mpassword->setIndication($this->get('api_massage.UsersService')->preparePasswordIndication());
+            $mpassword->setIndication($this->get('api_massage.UsersService')->preparePasswordIndication($mpassword->getPassword()));
             $mpassword->setPassword($this->get('api_massage.UsersService')->encryptPassword($mpassword->getPassword()));
-            
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($mpassword);
             $em->flush($mpassword);
 
-            return $this->redirectToRoute('mpassword_new', array('internalToken' => $muser->getInternalToken()));
+            return $this->redirectToRoute('mpassword_manage', array('internalToken' => $muser->getInternalToken()));
         }
+        
+        $path['title'] = 'User list';
+        $path['url'] = $this->generateUrl('muser_index');
+        $paths[] = $path;
+
+        $path['title'] = 'Edit User ' . $muser->getUsername();
+        $path['url'] = $this->generateUrl('muser_edit', array('internalToken' => $muser->getInternalToken()));
+        $paths[] = $path;
+        
+        $path['title'] = 'Password ' . $muser->getUsername();
+        $path['url'] = $this->generateUrl('mpassword_manage', array('internalToken' => $muser->getInternalToken()));
+        $paths[] = $path;
+        
+        return $this->render('admin/mpassword/newPassword.html.twig', array(
+                    'muser' => $muser,
+                    'passwords' => $passwords,
+                    'form' => $form->createView(),
+                    'paths' => $paths
+        ));
+        
     }
 
     /**

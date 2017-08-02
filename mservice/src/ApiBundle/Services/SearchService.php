@@ -243,8 +243,8 @@ class SearchService {
     public function getSearchEngineAliases()
     {
         try{
-            $info = $this->client->request('_aliases', 'GET')->getData();
-            if(is_array($info)){
+            $info = exec("curl --silent 'http://'{$this->searchHost}':'{$this->searchPort}");
+            if(strlen($info)){
                 return true;
             } 
             return false;

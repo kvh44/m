@@ -16,7 +16,7 @@ class MpasswordType extends AbstractType
                 ->add('encryptionMethod', HiddenType::class, array('required' => true))
                 ->add('salt', HiddenType::class, array('required' => true))
                 ->add('indication', HiddenType::class, array('required' => true))
-                ->add('internalId', HiddenType::class, array('required' => true))
+                ->add('internalId')
                 ->add('created')
                 ->add('updated')
                 ;

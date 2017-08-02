@@ -503,7 +503,7 @@ class UsersService
             $encodedPassword = $this->encryptPassword($password1);
 
             $this->mPassword->setPassword($password1);
-            $this->mPassword->setEncryptionMethod('bcrypt');
+            $this->mPassword->setEncryptionMethod(self::ENCRYPTION_METHOD);
             $this->mPassword->setIndication($this->preparePasswordIndication($password1));
             $this->mPassword->setSalt(null);
             $this->mPassword->setInternalId($this->prepareInternalId());
@@ -766,12 +766,17 @@ class UsersService
                 if($request->get('height') !== NULL){
                     $user->setHeight($request->get('height'));
                 }
-                if($request->get('birthday') !== NULL){
+                
+                if($request->get('birthday') !== NULL && $request->get('birthday') !==""){
                     $time = strtotime($request->get('birthday'));
                     $time = date('Y-m-d',$time);
                     $time = new \DateTime($time);
                     $user->setBirthday($time);
+                } else {
+                    $user->setBirthday(null);
                 }
+                
+                
                 if($request->get('hour_price') !== NULL && $request->get('hour_price')!== ""){
                     $user->setHourPrice($request->get('hour_price'));
                 } else {
