@@ -28,6 +28,18 @@ var initiateUploader = function(buttonId, isLocal, photoType, uploadButtonHtml){
             onLeave: 'leave error',
         },
         template: 'uploader-template',
+		classes: {
+		  buttonFocus: 'upload-button-focus',
+		  buttonHover: 'upload-button-hover'
+		},
+		/*
+		thumbnails: {
+		  placeholders: {
+			notAvailablePath: "/bundles/front/fine-uploader/placeholders/not_available-generic.png",
+			waitingPath: "/bundles/front/fine-uploader/placeholders/waiting-generic.png"
+		  }
+		},
+		*/
         text: {
             fileInputTitle: uploadButtonHtml,
             formatProgress: '{percent}%'
