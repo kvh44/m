@@ -1,4 +1,6 @@
 
+try{
+
 $(document).ready(function(){
     $('#userListTable').DataTable({
         serverSide: true,
@@ -52,3 +54,9 @@ $(document).ready(function(){
     });
 
 });
+
+}
+catch(e)
+{
+	
+}

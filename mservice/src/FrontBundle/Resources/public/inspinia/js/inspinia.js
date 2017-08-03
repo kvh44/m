@@ -4,7 +4,8 @@
  *   version 2.7.1
  *
  */
-
+try{
+	
 $(document).ready(function () {
 
 
@@ -295,4 +296,9 @@ function WinMove() {
         .disableSelection();
 }
 
+
+}
+catch(e)
+{
+}
 
