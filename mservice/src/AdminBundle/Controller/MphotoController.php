@@ -66,5 +66,39 @@ class MphotoController extends Controller
             )
         );
     }
+    
+    public function showAction(Request $request,Mphoto $mphoto)
+    {
+        
+        
+        $path['title'] ='Photo list';
+        $path['url'] = $this->generateUrl('mphoto_index');
+        $paths[] = $path;
+        
+        $path['title'] = 'Show User ' . $mphoto->getUser()->getUsername();
+        $path['url'] = $this->generateUrl('muser_show', array('id' => $mphoto->getUser()->getId()));
+        $paths[] = $path;
+        
+        $path['title'] = 'Show Photo ' . $mphoto->getId() . ' '. $mphoto->getUser()->getUsername();
+        $path['url'] = $this->generateUrl('mphoto_show', array('id' => $mphoto->getId()));
+        $paths[] = $path;
+        
+        return $this->render('admin/mphoto/show.html.twig', array(
+                    'mphoto' => $mphoto,
+                    'paths' => $paths
+        ));
+    }
+    
+    public function deleteAction(Request $request, Mphoto $mphoto) {
+        $result = $this->get('api_massage.PhotoService')->deletePhoto($mphoto->getInternalId(), $mphoto->getUser()->getInternalId(),$mphoto->getUser()->getInternalToken());
+
+        return $this->redirectToRoute('mphoto_show', array('id' => $mphoto->getId()));
+    }
+    
+    public function enableAction(Request $request, Mphoto $mphoto) {
+        $result = $this->get('api_massage.PhotoService')->enablePhoto($mphoto->getInternalId(), $mphoto->getUser()->getInternalId(),$mphoto->getUser()->getInternalToken());
+
+        return $this->redirectToRoute('mphoto_show', array('id' => $mphoto->getId()));
+    }
      
 }

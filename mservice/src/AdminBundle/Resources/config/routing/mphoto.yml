@@ -7,3 +7,18 @@ mphoto_list_ajax:
     path:     /photo-list-ajax
     defaults: { _controller: "AdminBundle:Mphoto:photoListAjax" }
     methods:  GET    
+    
+mphoto_show:
+    path:     /{id}/show
+    defaults: { _controller: "AdminBundle:Mphoto:show" }
+    methods:  GET    
+    
+mphoto_delete:
+    path:     /{internalId}/delete
+    defaults: { _controller: "AdminBundle:Mphoto:delete" }
+    methods:  [GET, POST]
+    
+mphoto_enable:
+    path:     /{internalId}/enable
+    defaults: { _controller: "AdminBundle:Mphoto:enable" }
+    methods:  [GET, POST]        

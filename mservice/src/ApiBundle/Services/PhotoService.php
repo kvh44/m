@@ -341,6 +341,10 @@ class PhotoService {
     public function findPhotoByInternalId($internal_id) {
         return $this->em->getRepository('ApiBundle:Mphoto')->loadPhotoByInternalId($internal_id);
     }
+    
+    public function findDeletedPhotoByInternalId($internal_id) {
+        return $this->em->getRepository('ApiBundle:Mphoto')->loadDeletedPhotoByInternalId($internal_id);
+    }
 
     public function findUserPhotosByUserIdCache($user_id) {
         $userPhotos = $this->cacheService->getSingleUserPhotosByUserIdCache($user_id);
@@ -419,6 +423,53 @@ class PhotoService {
 
             $this->utileService->setResponseState(true);
             $this->utileService->setResponseMessage($this->translator->trans('user.photo.deleted'));
+            return $this->utileService->getResponse();
+        } catch (\Exception $e) {
+            $this->utileService->setResponseState(false);
+            $this->utileService->setResponseMessage($e->getMessage());
+            return $this->utileService->getResponse();
+        }
+    }
+    
+    public function enablePhoto($internal_id_photo, $internal_id, $internal_token) {
+        try {
+            $user = $this->usersService->findUserByInternalId($internal_id);
+            if (!$user) {
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage($this->translator->trans('user.internal_id.not.exist'));
+                return $this->utileService->getResponse();
+            }
+
+            if ($user->getInternalToken() !== $internal_token) {
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage($this->translator->trans('user.internal_token.wrong'));
+                return $this->utileService->getResponse();
+            }
+
+            $photo = $this->findDeletedPhotoByInternalId($internal_id_photo);
+            if (!$photo) {
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage($this->translator->trans('user.photo.not.exist'));
+                return $this->utileService->getResponse();
+            }
+
+            if ($photo->getUser()->getId() !== $user->getId()) {
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage($this->translator->trans('user.photo.not.yours'));
+                return $this->utileService->getResponse();
+            }
+
+            $photo->setIsDeleted(NULL);
+            $this->em->persist($photo);
+
+            // update cache and search
+            $user->setUpdated($user->getUpdated()->format('Y-m-d H:i:s'));
+            $this->em->persist($user);
+
+            $this->em->flush();
+
+            $this->utileService->setResponseState(true);
+            $this->utileService->setResponseMessage($this->translator->trans('user.photo.enabled'));
             return $this->utileService->getResponse();
         } catch (\Exception $e) {
             $this->utileService->setResponseState(false);

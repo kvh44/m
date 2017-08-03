@@ -26,7 +26,10 @@ $(document).ready(function () {
                         }
                         url = '/' + uploadDirectory + url;
                     }
-                    return '<img src="' + url + '" />';
+                    
+                    var showUrl = mphotoShowUrl;
+                    showUrl = showUrl.replace('id', row.id);
+                    return '<a href="'+showUrl+'"><img src="' + url + '" /></a>';
                 }
             },
             {data: 'userId'},

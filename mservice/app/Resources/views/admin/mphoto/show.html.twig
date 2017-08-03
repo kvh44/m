@@ -1,0 +1,143 @@
+{% extends '@Admin/base.html.twig' %}
+
+{% block body %}
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Photo Page</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#">Config option 1</a>
+                                </li>
+                                <li><a href="#">Config option 2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="text-center center-version">
+                                    {% if mphoto.photoMedium %}
+                                        <img src="/{{upload_directory}}{{mphoto.photoType|photoTypeDirectory}}{{medium_directory}}{{mphoto.userId}}/{{ mphoto.photoMedium }}" />
+                                    {% endif %}
+                                    {% if mphoto.photoSmall %}
+                                        <img src="/{{upload_directory}}{{mphoto.photoType|photoTypeDirectory}}{{small_directory}}{{mphoto.userId}}/{{ mphoto.photoSmall }}" />
+                                    {% endif %}
+                                    {% if mphoto.photoIcon %}
+                                        <img src="/{{upload_directory}}{{mphoto.photoType|photoTypeDirectory}}{{icon_directory}}{{mphoto.userId}}/{{ mphoto.photoIcon }}" />
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <th><label class="control-label">Id</label></th>
+                                        <td>{{ mphoto.id }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">User Id</label></th>
+                                        <td>{{ mphoto.userId }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">Photo Type</label></th>
+                                        <td>{{ mphoto.photoType }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">postId</label></th>
+                                        <td>{{ mphoto.postId }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">photoOrigin</label></th>
+                                        <td>{{ mphoto.photoOrigin }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">photoMedium</label></th>
+                                        <td>{{ mphoto.photoMedium }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">photoSmall</label></th>
+                                        <td>{{ mphoto.photoSmall }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">photoIcon</label></th>
+                                        <td>{{ mphoto.photoIcon }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">title</label></th>
+                                        <td>{{ mphoto.title }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">viewNumber</label></th>
+                                        <td>{{ mphoto.viewNumber }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">isDeleted</label></th>
+                                        <td>{% if mphoto.isDeleted %}Yes{% else %}No{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">deletedByUserId</label></th>
+                                        <td>{{ mphoto.deletedByUserId }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">internalId</label></th>
+                                        <td>{{ mphoto.internalId }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">Created</label></th>
+                                        <td>{% if mphoto.created %}{{ mphoto.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">Updated</label></th>
+                                        <td>{% if mphoto.updated %}{{ mphoto.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+
+                            <a href="{{ path('mphoto_index') }}" class="btn btn-lg btn-outline btn-primary">Back to the list</a>
+
+                            {% if mphoto.isDeleted %}
+                                <a href="{{ path('mphoto_enable', { 'internalId': mphoto.internalId }) }}" class="btn btn-lg btn-info">Enable</a>
+                            {% else %}    
+                                <a href="{{ path('mphoto_delete', { 'internalId': mphoto.internalId }) }}" class="btn btn-lg btn-danger" id="deletePhoto">Delete</a>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block js %}  
+    <!-- Page-Level Scripts -->
+
+    {% javascripts output='js/compiled/photo.js' 
+            '@FrontBundle/Resources/public/inspinia/js/plugins/sweetalert/sweetalert.min.js' 
+            '@AdminBundle/Resources/public/js/admin/photo/show.js' 
+            '@AdminBundle/Resources/public/js/admin/user/common.js' 
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+
+
+{% endblock %}
