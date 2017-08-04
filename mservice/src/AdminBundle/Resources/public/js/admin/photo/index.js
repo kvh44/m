@@ -58,7 +58,9 @@ $(document).ready(function () {
                 }
             },
             {data: function (data, type, row) {
-                    return '<a href="">edit</a>';
+                    var showUrl = mphotoShowUrl;
+                    showUrl = showUrl.replace('id', data.id);
+                    return '<a href="'+showUrl+'">edit</a>';
                 }
             }
         ],

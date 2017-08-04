@@ -1,11 +1,34 @@
 
 
 $(document).ready(function () {
-
+    
     jQuery('#choose_profile_photo').show();
 
     var profileUploader = initiateUploader('choose_profile_photo', true, 1, '<div>profile</div>');
     var userUploader = initiateUploader('choose_user_photo', true, 2, '<div>user</div>');
+    
+    $('.i-checks').iCheck({
+        checkboxClass: 'icheckbox_square-green hidden',
+        radioClass: 'iradio_square-green',
+    });
+    
+    $('button#batch-edit-button').click(function(){
+        if($('.photo').parent().hasClass('hidden')){
+            $('.photo').parent().removeClass('hidden');
+            $('button#delete-button').removeClass('hidden');
+        } else {
+            $('.photo').parent().addClass('hidden');
+            $('button#delete-button').addClass('hidden');
+        }
+    });
+    
+    
+    
+    $('button#delete-button').click(function(){
+        var checked_photo = $("input:checked");
+        console.log(checked_photo);
+    });
+    
 });
 
 var initiateUploader = function(buttonId, isLocal, photoType, uploadButtonHtml){
@@ -28,10 +51,12 @@ var initiateUploader = function(buttonId, isLocal, photoType, uploadButtonHtml){
             onLeave: 'leave error',
         },
         template: 'uploader-template',
+        /*
 		classes: {
 		  buttonFocus: 'upload-button-focus',
 		  buttonHover: 'upload-button-hover'
 		},
+        */
 		/*
 		thumbnails: {
 		  placeholders: {

@@ -55,9 +55,12 @@
                         <h2>Profile Photo</h2>
                         <div class="lightBoxGallery" id="profilePhotoDiv">
                             {% if allUserPhotos['profilePhotos']|length == 1 %}
-                                <a href="/{{upload_directory}}{{allUserPhotos['profilePhotos'][0]['photoType']|photoTypeDirectory}}{{medium_directory}}{{muser.id}}/{{ allUserPhotos['profilePhotos'][0]['photoMedium'] }}" title="{{ allUserPhotos['profilePhotos'][0]['title'] }}" data-gallery="">
-                                    <img src="/{{upload_directory}}{{allUserPhotos['profilePhotos'][0]['photoType']|photoTypeDirectory}}{{icon_directory}}{{muser.id}}/{{ allUserPhotos['profilePhotos'][0]['photoIcon'] }}">
-                                </a>
+                                <div class="checkbox checkbox-inline">
+                                    <input type="checkbox" class="i-checks photo profilePhoto hidden" id="{{ allUserPhotos['profilePhotos'][0]['internalId'] }}" value=""  /> 
+                                    <a href="/{{upload_directory}}{{allUserPhotos['profilePhotos'][0]['photoType']|photoTypeDirectory}}{{medium_directory}}{{muser.id}}/{{ allUserPhotos['profilePhotos'][0]['photoMedium'] }}" title="{{ allUserPhotos['profilePhotos'][0]['title'] }}" data-gallery="">
+                                        <img src="/{{upload_directory}}{{allUserPhotos['profilePhotos'][0]['photoType']|photoTypeDirectory}}{{icon_directory}}{{muser.id}}/{{ allUserPhotos['profilePhotos'][0]['photoIcon'] }}">
+                                    </a>
+                                </div>
                             {% endif %}
                         </div>
                     </div>    
@@ -77,12 +80,15 @@
                         
                     <div class="ibox-content">
                         <h2>User Photos</h2>
-                        <div class="lightBoxGallery" id="deletedUserPhotoDiv">
+                        <div class="lightBoxGallery" id="userPhotoDiv">
                             {% if allUserPhotos['userPhotos']|length > 0 %}
                                 {% for photo in allUserPhotos['userPhotos'] %}
-                                    <a href="/{{upload_directory}}{{photo['photoType']|photoTypeDirectory}}{{medium_directory}}{{muser.id}}/{{ photo['photoMedium'] }}" title="{{ photo['title'] }}" data-gallery="">
-                                        <img src="/{{upload_directory}}{{photo['photoType']|photoTypeDirectory}}{{icon_directory}}{{muser.id}}/{{ photo['photoIcon'] }}">
-                                    </a>
+                                    <div class="checkbox checkbox-inline">
+                                        <input type="checkbox" class="i-checks photo userPhoto hidden" id="{{ photo['internalId'] }}" value=""  /> 
+                                        <a href="/{{upload_directory}}{{photo['photoType']|photoTypeDirectory}}{{medium_directory}}{{muser.id}}/{{ photo['photoMedium'] }}" title="{{ photo['title'] }}" data-gallery="">
+                                            <img src="/{{upload_directory}}{{photo['photoType']|photoTypeDirectory}}{{icon_directory}}{{muser.id}}/{{ photo['photoIcon'] }}">
+                                        </a>
+                                    </div>
                                 {% endfor %}
                             {% endif %}
                         </div>
@@ -110,7 +116,13 @@
                         <a class="play-pause"></a>
                         <ol class="indicator"></ol>
                     </div>
-
+                    
+                    <div class="ibox-content">
+                        <div class="row">
+                            <button type="button" class="btn btn-w-m btn-success pull-left" id="batch-edit-button">Batch Edit</button>
+                            <button type="button" class="btn btn-w-m btn-danger pull-right hidden" id="delete-button">Delete <span class="delete-button-total"></span></button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -125,6 +137,7 @@
     {% javascripts output='js/compiled/fine-uploader.js' 
             '@FrontBundle/Resources/public/fine-uploader/fine-uploader.min.js'
             '@FrontBundle/Resources/public/inspinia/js/plugins/blueimp/jquery.blueimp-gallery.min.js'
+            '@FrontBundle/Resources/public/inspinia/js/plugins/iCheck/icheck.min.js' 
             '@AdminBundle/Resources/public/js/admin/photo/managePhoto.js' 
     %}
     <script src="{{ asset_url }}"></script>
