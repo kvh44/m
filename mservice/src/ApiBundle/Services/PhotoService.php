@@ -383,6 +383,41 @@ class PhotoService {
         $this->utileService->setResponseData($data);
         return $this->utileService->getResponse();
     }
+	
+	public function deletePhotosBatchBo($internal_id_photos) {
+
+		try {
+			$users = array();
+			$number = 0;
+			foreach($internal_id_photos as $internal_id_photo){
+				$photo = $this->findPhotoByInternalId($internal_id_photo);
+				if($photo){
+					$photo->setIsDeleted(true);
+					$this->em->persist($photo);
+					
+					$users[$photo->getUserId()] = $photo->getUserId();
+					$number++;
+				}
+			}
+			
+			foreach($users as $userId){
+				$user = $this->em->getRepository('ApiBundle:Muser')->find($userId);
+				
+				$user->setUpdated($user->getUpdated()->format('Y-m-d H:i:s'));
+                $this->em->persist($user);
+			}
+			$this->em->flush();
+			
+			$this->utileService->setResponseState(true);
+			$this->utileService->setResponseMessage($this->translator->trans('user.photo.batch.deleted', array('%number%' => $number)));
+			return $this->utileService->getResponse();
+			
+		} catch (\Exception $e) {
+			$this->utileService->setResponseState(false);
+			$this->utileService->setResponseMessage($e->getMessage());
+			return $this->utileService->getResponse();
+		}
+	}
 
     public function deletePhoto($internal_id_photo, $internal_id, $internal_token) {
         try {

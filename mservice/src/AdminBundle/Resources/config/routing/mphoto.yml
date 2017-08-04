@@ -13,6 +13,11 @@ mphoto_show:
     defaults: { _controller: "AdminBundle:Mphoto:show" }
     methods:  GET    
     
+mphoto_batch_delete:
+    path:     /batch/delete
+    defaults: { _controller: "AdminBundle:Mphoto:batchDelete" }
+    methods:  [GET, POST]    
+    
 mphoto_delete:
     path:     /{internalId}/delete
     defaults: { _controller: "AdminBundle:Mphoto:delete" }

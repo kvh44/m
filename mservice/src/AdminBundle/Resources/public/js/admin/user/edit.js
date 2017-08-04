@@ -9,7 +9,11 @@ $(document).ready(function () {
             e.preventDefault(); 
             // Prevent the href from redirecting directly
             var linkURL = $(this).attr("href");
-            warnBeforeDelete(linkURL);
+            var title =  "Confirm Delete User?";
+            var text = "If you click 'OK', you will delete the User";
+            var type = "warning";
+            var showCancelButton = true;
+            warnBeforeRedirect(linkURL, title, text, type, showCancelButton);
         });
     }
 });

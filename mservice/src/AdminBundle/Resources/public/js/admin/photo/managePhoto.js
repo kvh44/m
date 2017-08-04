@@ -11,22 +11,67 @@ $(document).ready(function () {
         checkboxClass: 'icheckbox_square-green hidden',
         radioClass: 'iradio_square-green',
     });
-    
+	
+	
     $('button#batch-edit-button').click(function(){
         if($('.photo').parent().hasClass('hidden')){
             $('.photo').parent().removeClass('hidden');
-            $('button#delete-button').removeClass('hidden');
+			var checked_photos = $("input:checked");
+
+			if(checked_photos.length > 0){
+				$('button#delete-button').removeClass('hidden');
+				$('button#delete-button .delete-button-total').removeClass('hidden').text('('+checked_photos.length+')');
+			}
+            
         } else {
             $('.photo').parent().addClass('hidden');
             $('button#delete-button').addClass('hidden');
         }
     });
+	
+	$('.iCheck-helper').click(function(){
+		console.log('g');
+		var checked_photos = $("input:checked");
+		
+		if(checked_photos.length > 0){
+			$('button#delete-button').removeClass('hidden');
+			$('button#delete-button .delete-button-total').removeClass('hidden').text('('+checked_photos.length+')');
+		} else {
+			$('button#delete-button').addClass('hidden');
+			$('button#delete-button .delete-button-total').addClass('hidden').text('');
+		}
+		
+	});
     
     
     
     $('button#delete-button').click(function(){
-        var checked_photo = $("input:checked");
-        console.log(checked_photo);
+        var checked_photos = $("input:checked");
+
+		var photos_array = [];
+		if(checked_photos.length > 0){
+			checked_photos.each(function(index, element){
+				console.log($(element).attr('id'));
+				photos_array.push($(element).attr('id'));
+			});
+			
+			$.ajax({
+			  url: urlBatchDeletePhoto,
+              data: {photos: photos_array},
+			}).done(function(data) {
+
+			  console.log(data);
+			  console.log(window.location.href);
+				var linkURL = window.location.href;
+				var title =  "Delete photo successfully";
+				var text = ('undefined' !== data.message)? data.message : "Deleted Successfully";
+				var type = "warning";
+				var showCancelButton = false;
+				warnBeforeRedirect(linkURL, title, text, type, showCancelButton);
+			  
+			});
+			
+		}
     });
     
 });

@@ -4,6 +4,7 @@
     {% stylesheets output='css/compiled/fine-uploader.css' 
             '@FrontBundle/Resources/public/fine-uploader/fine-uploader.min.css' 
             '@FrontBundle/Resources/public/inspinia/css/plugins/blueimp/css/blueimp-gallery.min.css' 
+			'@FrontBundle/Resources/public/inspinia/css/plugins/ladda/ladda-themeless.min.css'
             filter='cssrewrite' 
     %}
     <link rel="stylesheet" href="{{ asset_url }}" />
@@ -120,7 +121,7 @@
                     <div class="ibox-content">
                         <div class="row">
                             <button type="button" class="btn btn-w-m btn-success pull-left" id="batch-edit-button">Batch Edit</button>
-                            <button type="button" class="btn btn-w-m btn-danger pull-right hidden" id="delete-button">Delete <span class="delete-button-total"></span></button>
+                            <button type="button" class="btn btn-w-m btn-danger pull-right hidden" id="delete-button">Delete <span class="delete-button-total hidden"></span></button>
                         </div>
                     </div>
                 </div>
@@ -138,6 +139,8 @@
             '@FrontBundle/Resources/public/fine-uploader/fine-uploader.min.js'
             '@FrontBundle/Resources/public/inspinia/js/plugins/blueimp/jquery.blueimp-gallery.min.js'
             '@FrontBundle/Resources/public/inspinia/js/plugins/iCheck/icheck.min.js' 
+			'@FrontBundle/Resources/public/inspinia/js/plugins/sweetalert/sweetalert.min.js' 
+			'@AdminBundle/Resources/public/js/admin/user/common.js' 
             '@AdminBundle/Resources/public/js/admin/photo/managePhoto.js' 
     %}
     <script src="{{ asset_url }}"></script>
@@ -145,6 +148,7 @@
 
     <script>
         var urlUploadPhoto = '{{ path('private_api_uploader') }}';
+		var urlBatchDeletePhoto = '{{ path('mphoto_batch_delete') }}';
         var internalToken = '{{muser.internalToken}}';
         var internalId = '{{muser.internalId}}';
     </script>

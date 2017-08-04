@@ -1,6 +1,6 @@
 
 
-function warnBeforeDelete(linkURL, title = "Confirm Delete?", text = "If you click 'OK', you will delete it", type = "warning", showCancelButton = true) {
+function warnBeforeRedirect(linkURL, title = "Confirm Delete?", text = "If you click 'OK', you will delete it", type = "warning", showCancelButton = true) {
     swal({
       title: title, 
       text: text, 

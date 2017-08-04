@@ -8,7 +8,7 @@ $(document).ready(function () {
             var text = "If you click 'OK', you will delete the User";
             var type = "warning";
             var showCancelButton = true;
-            warnBeforeDelete(linkURL, title, text, type, showCancelButton);
+            warnBeforeRedirect(linkURL, title, text, type, showCancelButton);
         });
     }
 });
