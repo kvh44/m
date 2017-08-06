@@ -89,15 +89,15 @@ class MphotoController extends Controller
         ));
     }
 	
-	public function batchDeleteAction(Request $request) {
-		$photos = $request->query->get('photos');
-		
-		$result = $this->get('api_massage.PhotoService')->deletePhotosBatchBo($photos);
-		
-		return new JsonResponse(
+    public function batchDeleteAction(Request $request) {
+        $photos = $request->query->get('photos');
+
+        $result = $this->get('api_massage.PhotoService')->deletePhotosBatchBo($photos);
+
+        return new JsonResponse(
             $result
         );
-	}
+    }
     
     public function deleteAction(Request $request, Mphoto $mphoto) {
         $result = $this->get('api_massage.PhotoService')->deletePhoto($mphoto->getInternalId(), $mphoto->getUser()->getInternalId(),$mphoto->getUser()->getInternalToken());

@@ -192,10 +192,13 @@ class PhotoService {
         }
 
         try {
+            if($request->get('type') == self::PROFILE_PHOTO_TYPE){
+                $this->deleteProfilePhotos($this->user->getId());
+            }
             $this->mPhoto = new Mphoto();
             $this->mPhoto->setUser($this->user);
             $this->mPhoto->setPhotoType($request->get('type'));
-            if ($request->get('type') === self::POST_PHOTO_TYPE) {
+            if ($request->get('type') == self::POST_PHOTO_TYPE) {
                 if (!$request->get('post_id')) {
                     $this->utileService->setResponseMessage($this->translator->trans('post.id.invalid'));
                     $this->utileService->setResponseState(false);
@@ -337,11 +340,15 @@ class PhotoService {
     public function findProfilePhotosByUserId($user_id) {
         return $this->em->getRepository('ApiBundle:Mphoto')->loadProfilePhotosByUserId($user_id);
     }
+    
+    public function findAllNotDeletedProfilePhotosByUserId($user_id) {
+        return $this->em->getRepository('ApiBundle:Mphoto')->loadAllNotDeletedProfilePhotosByUserId($user_id);
+    }
 
     public function findPhotoByInternalId($internal_id) {
         return $this->em->getRepository('ApiBundle:Mphoto')->loadPhotoByInternalId($internal_id);
     }
-    
+
     public function findDeletedPhotoByInternalId($internal_id) {
         return $this->em->getRepository('ApiBundle:Mphoto')->loadDeletedPhotoByInternalId($internal_id);
     }
@@ -383,41 +390,56 @@ class PhotoService {
         $this->utileService->setResponseData($data);
         return $this->utileService->getResponse();
     }
-	
-	public function deletePhotosBatchBo($internal_id_photos) {
+    
+    private function deleteProfilePhotos($user_id)
+    {
+        try{
+            $allNotDeletedProfilePhotosByUserId = $this->findAllNotDeletedProfilePhotosByUserId($user_id);
+            foreach ($allNotDeletedProfilePhotosByUserId as $photo){
+                $photo->setIsDeleted(true);
+                $this->em->persist($photo);
+            }
+            $this->em->flush();
+        } catch (\Exception $e) {
+            $this->utileService->setResponseState(false);
+            $this->utileService->setResponseMessage($e->getMessage());
+            return $this->utileService->getResponse();
+        }
+    }        
 
-		try {
-			$users = array();
-			$number = 0;
-			foreach($internal_id_photos as $internal_id_photo){
-				$photo = $this->findPhotoByInternalId($internal_id_photo);
-				if($photo){
-					$photo->setIsDeleted(true);
-					$this->em->persist($photo);
-					
-					$users[$photo->getUserId()] = $photo->getUserId();
-					$number++;
-				}
-			}
-			
-			foreach($users as $userId){
-				$user = $this->em->getRepository('ApiBundle:Muser')->find($userId);
-				
-				$user->setUpdated($user->getUpdated()->format('Y-m-d H:i:s'));
+    public function deletePhotosBatchBo($internal_id_photos) {
+
+        try {
+            $users = array();
+            $number = 0;
+            foreach ($internal_id_photos as $internal_id_photo) {
+                $photo = $this->findPhotoByInternalId($internal_id_photo);
+                if ($photo) {
+                    $photo->setIsDeleted(true);
+                    $this->em->persist($photo);
+
+                    $users[$photo->getUserId()] = $photo->getUserId();
+                    $number++;
+                }
+            }
+
+            foreach ($users as $userId) {
+                $user = $this->em->getRepository('ApiBundle:Muser')->find($userId);
+
+                $user->setUpdated($user->getUpdated()->format('Y-m-d H:i:s'));
                 $this->em->persist($user);
-			}
-			$this->em->flush();
-			
-			$this->utileService->setResponseState(true);
-			$this->utileService->setResponseMessage($this->translator->trans('user.photo.batch.deleted', array('%number%' => $number)));
-			return $this->utileService->getResponse();
-			
-		} catch (\Exception $e) {
-			$this->utileService->setResponseState(false);
-			$this->utileService->setResponseMessage($e->getMessage());
-			return $this->utileService->getResponse();
-		}
-	}
+            }
+            $this->em->flush();
+
+            $this->utileService->setResponseState(true);
+            $this->utileService->setResponseMessage($this->translator->trans('user.photo.batch.deleted', array('%number%' => $number)));
+            return $this->utileService->getResponse();
+        } catch (\Exception $e) {
+            $this->utileService->setResponseState(false);
+            $this->utileService->setResponseMessage($e->getMessage());
+            return $this->utileService->getResponse();
+        }
+    }
 
     public function deletePhoto($internal_id_photo, $internal_id, $internal_token) {
         try {
@@ -465,7 +487,7 @@ class PhotoService {
             return $this->utileService->getResponse();
         }
     }
-    
+
     public function enablePhoto($internal_id_photo, $internal_id, $internal_token) {
         try {
             $user = $this->usersService->findUserByInternalId($internal_id);
@@ -512,16 +534,15 @@ class PhotoService {
             return $this->utileService->getResponse();
         }
     }
-    
-    public function getAllPhotosByUserId($user_id)
-    {
-        try{
+
+    public function getAllPhotosByUserId($user_id) {
+        try {
             $profilePhotos = $this->em->getRepository('ApiBundle:Mphoto')->loadProfilePhotosByUserId($user_id);
             $userPhotos = $this->em->getRepository('ApiBundle:Mphoto')->loadUserPhotosByUserId($user_id);
             $deletedProfilePhotos = $this->em->getRepository('ApiBundle:Mphoto')->loadDeletedProfilePhotosByUserId($user_id);
-            $deletedUserPhotos = $this->em->getRepository('ApiBundle:Mphoto')->loadDeletedUserPhotosByUserId($user_id);    
-        
-            $this->utileService->setResponseData(array('profilePhotos' => $profilePhotos, 'userPhotos' => $userPhotos, 
+            $deletedUserPhotos = $this->em->getRepository('ApiBundle:Mphoto')->loadDeletedUserPhotosByUserId($user_id);
+
+            $this->utileService->setResponseData(array('profilePhotos' => $profilePhotos, 'userPhotos' => $userPhotos,
                 'deletedProfilePhotos' => $deletedProfilePhotos, 'deletedUserPhotos' => $deletedUserPhotos));
             $this->utileService->setResponseState(true);
             return $this->utileService->getResponse();
@@ -530,6 +551,6 @@ class PhotoService {
             $this->utileService->setResponseMessage($e->getMessage());
             return $this->utileService->getResponse();
         }
-    }        
+    }
 
 }

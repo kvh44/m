@@ -95,6 +95,13 @@
                             </table>
 
                         </div>
+                                
+                        <div class="ibox-content">
+                            <div class="row">
+                                <button type="button" class="btn btn-w-m btn-success " id="batch-edit-button">Batch Edit</button>
+                                <button type="button" class="btn btn-w-m btn-danger hidden" id="delete-button">Delete <span class="delete-button-total hidden"></span></button>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
@@ -115,10 +122,14 @@
         var postPhotoDirectory = '{{ post_photo_directory }}';
         var iconDirectory = '{{ icon_directory }}';
         var uploadDirectory = '{{ upload_directory }}';
+        var urlBatchDeletePhoto = '{{ path('mphoto_batch_delete') }}';
     </script>
 
     {% javascripts output='js/compiled/photolist.js' 
             '@FrontBundle/Resources/public/inspinia/js/plugins/dataTables/datatables.min.js'
+            '@FrontBundle/Resources/public/inspinia/js/plugins/iCheck/icheck.min.js' 
+            '@FrontBundle/Resources/public/inspinia/js/plugins/sweetalert/sweetalert.min.js' 
+            '@AdminBundle/Resources/public/js/admin/common/common.js' 
             '@AdminBundle/Resources/public/js/admin/photo/index.js' 
     %}
     <script src="{{ asset_url }}"></script>

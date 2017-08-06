@@ -30,6 +30,16 @@ class MassagePhotoRepository extends EntityRepository {
                         ->getResult()
         ;
     }
+    
+    public function loadAllNotDeletedProfilePhotosByUserId($user_id) {
+        return $this->createQueryBuilder('p')
+                        ->where('p.userId = :user_id AND p.photoType = :type AND p.isDeleted IS NULL AND p.postId IS NULL')
+                        ->setParameter('user_id', $user_id)
+                        ->setParameter('type', PhotoService::PROFILE_PHOTO_TYPE)
+                        ->getQuery()
+                        ->getResult()
+        ;
+    }
 
     public function loadPhotosByPostId($post_id) {
         return $this->createQueryBuilder('p')
@@ -89,8 +99,16 @@ class MassagePhotoRepository extends EntityRepository {
         }
 
         if (strlen($word) > 0) {
-            $q->andWhere('p.title LIKE :title');
-            $parameters[':title'] = '%' . $word . '%';
+            $q->andWhere('p.title LIKE :word');
+            $q->orWhere('p.photoOrigin LIKE :word2');
+            $q->orWhere('p.photoMedium LIKE :word3');
+            $q->orWhere('p.photoSmall LIKE :word4');
+            $q->orWhere('p.photoIcon LIKE :word5');
+            $parameters[':word'] = '%' . $word . '%';
+            $parameters[':word2'] = '%' . $word . '%';
+            $parameters[':word3'] = '%' . $word . '%';
+            $parameters[':word4'] = '%' . $word . '%';
+            $parameters[':word5'] = '%' . $word . '%';
         }
 
         $q->orderBy('p.updated', 'DESC');
