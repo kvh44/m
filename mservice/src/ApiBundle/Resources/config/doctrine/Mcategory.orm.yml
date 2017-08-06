@@ -1,0 +1,83 @@
+ApiBundle\Entity\Mcategory:
+    type: entity
+    table: mcategory
+    uniqueConstraints:
+        category_en:
+            columns:
+                - category_en
+        category_zh:
+            columns:
+                - category_zh
+        category_fr:
+            columns:
+                - category_fr
+        slug:
+            columns:
+                - slug
+        internal_id:
+            columns:
+                - internal_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        categoryZh:
+            type: string
+            nullable: false
+            length: 20
+            options:
+                fixed: false
+            column: category_zh
+        categoryEn:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+            column: category_en
+        categoryFr:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+            column: category_fr
+        isDeleted:
+            type: boolean
+            nullable: false
+            column: is_deleted
+        isDefaut:
+            type: boolean
+            nullable: false
+            column: is_defaut
+        score:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+        internalId:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: internal_id
+        slug:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        created:
+            type: datetime
+            nullable: false
+        updated:
+            type: datetime
+            nullable: false
+    lifecycleCallbacks: {  }

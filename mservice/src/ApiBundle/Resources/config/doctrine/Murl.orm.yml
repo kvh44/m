@@ -1,0 +1,98 @@
+ApiBundle\Entity\Murl:
+    type: entity
+    table: murl
+    indexes:
+        domain:
+            columns:
+                - domain
+        FK_CA565GYFTF456FDT:
+            columns:
+                - category_id
+    uniqueConstraints:
+        internal_id:
+            columns:
+                - internal_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        internalId:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: internal_id
+        domain:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+        url:
+            type: text
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        isDeleted:
+            type: boolean
+            nullable: false
+            column: is_deleted
+        isDefaut:
+            type: boolean
+            nullable: false
+            column: is_defaut
+        isNormal:
+            type: boolean
+            nullable: false
+            column: is_normal
+        score:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+        isZh:
+            type: boolean
+            nullable: false
+            column: is_zh
+        isEn:
+            type: boolean
+            nullable: false
+            column: is_en
+        isFr:
+            type: boolean
+            nullable: false
+            column: is_fr
+        firstRead:
+            type: datetime
+            nullable: true
+            column: first_read
+        lastRead:
+            type: datetime
+            nullable: true
+            column: last_read
+        created:
+            type: datetime
+            nullable: false
+        updated:
+            type: datetime
+            nullable: false
+    manyToOne:
+        category:
+            targetEntity: Mcategory
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                category_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }
