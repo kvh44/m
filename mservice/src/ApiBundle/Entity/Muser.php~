@@ -1646,33 +1646,4 @@ class Muser
     {
         return $this->mlocation;
     }
-    /**
-     * @var \ApiBundle\Entity\Mdraft
-     */
-    private $draft;
-
-
-    /**
-     * Set draft
-     *
-     * @param \ApiBundle\Entity\Mdraft $draft
-     *
-     * @return Muser
-     */
-    public function setDraft(\ApiBundle\Entity\Mdraft $draft = null)
-    {
-        $this->draft = $draft;
-
-        return $this;
-    }
-
-    /**
-     * Get draft
-     *
-     * @return \ApiBundle\Entity\Mdraft
-     */
-    public function getDraft()
-    {
-        return $this->draft;
-    }
 }

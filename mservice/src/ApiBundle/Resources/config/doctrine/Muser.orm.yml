@@ -203,13 +203,13 @@ ApiBundle\Entity\Muser:
         description:
             type: text
             nullable: true
-            length: 255
+            length: 65535
             options:
                 fixed: false
         translatedDescription:
             type: text
             nullable: true
-            length: 255
+            length: 65535
             options:
                 fixed: false
             column: translated_description
@@ -384,5 +384,15 @@ ApiBundle\Entity\Muser:
             joinColumns:
                 location_id:
                     referencedColumnName: id
-            orphanRemoval: false    
+            orphanRemoval: false  
+        draft:
+            targetEntity: Mdraft
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                draft_id:
+                    referencedColumnName: id
+            orphanRemoval: false
     lifecycleCallbacks: {  }        

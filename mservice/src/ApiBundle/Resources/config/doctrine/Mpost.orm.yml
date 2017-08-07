@@ -77,6 +77,8 @@ ApiBundle\Entity\Mpost:
             type: boolean
             nullable: true
             column: is_deleted
+            options:
+                default: '0'
         deletedByUserId:
             type: integer
             nullable: true
