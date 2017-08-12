@@ -40,6 +40,20 @@ ApiBundle\Entity\Mpost:
             options:
                 fixed: false
             column: internal_id
+        categoryId:
+            type: string
+            nullable: false
+            length: 3
+            options:
+                fixed: false
+            column: category_id  
+        draftId:
+            type: string
+            nullable: false
+            length: 11
+            options:
+                fixed: false
+            column: draft_id        
         title:
             type: string
             nullable: false
@@ -47,11 +61,23 @@ ApiBundle\Entity\Mpost:
             options:
                 fixed: false
         description:
-            type: blob
+            type: text
             nullable: false
             length: 65535
             options:
                 fixed: false
+        isZh:
+            type: boolean
+            nullable: true
+            column: is_zh
+        isEn:
+            type: boolean
+            nullable: true
+            column: is_en
+        isFr:
+            type: boolean
+            nullable: true
+            column: is_fr        
         displayedHome:
             type: boolean
             nullable: true
@@ -120,4 +146,24 @@ ApiBundle\Entity\Mpost:
                 user_id:
                     referencedColumnName: id
             orphanRemoval: false
+        category:
+            targetEntity: Mcategory
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                category_id:
+                    referencedColumnName: id
+            orphanRemoval: false 
+        draft:
+            targetEntity: Mdraft
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                draft_id:
+                    referencedColumnName: id
+            orphanRemoval: false     
     lifecycleCallbacks: {  }

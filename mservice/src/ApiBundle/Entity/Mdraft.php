@@ -399,4 +399,149 @@ class Mdraft
     {
         return $this->updated;
     }
+    /**
+     * @var boolean
+     */
+    private $isZh;
+
+    /**
+     * @var boolean
+     */
+    private $isEn;
+
+    /**
+     * @var boolean
+     */
+    private $isFr;
+
+    /**
+     * @var string
+     */
+    private $categoryId;
+
+    /**
+     * @var \ApiBundle\Entity\Mcategory
+     */
+    private $category;
+
+
+    /**
+     * Set isZh
+     *
+     * @param boolean $isZh
+     *
+     * @return Mdraft
+     */
+    public function setIsZh($isZh)
+    {
+        $this->isZh = $isZh;
+
+        return $this;
+    }
+
+    /**
+     * Get isZh
+     *
+     * @return boolean
+     */
+    public function getIsZh()
+    {
+        return $this->isZh;
+    }
+
+    /**
+     * Set isEn
+     *
+     * @param boolean $isEn
+     *
+     * @return Mdraft
+     */
+    public function setIsEn($isEn)
+    {
+        $this->isEn = $isEn;
+
+        return $this;
+    }
+
+    /**
+     * Get isEn
+     *
+     * @return boolean
+     */
+    public function getIsEn()
+    {
+        return $this->isEn;
+    }
+
+    /**
+     * Set isFr
+     *
+     * @param boolean $isFr
+     *
+     * @return Mdraft
+     */
+    public function setIsFr($isFr)
+    {
+        $this->isFr = $isFr;
+
+        return $this;
+    }
+
+    /**
+     * Get isFr
+     *
+     * @return boolean
+     */
+    public function getIsFr()
+    {
+        return $this->isFr;
+    }
+
+    /**
+     * Set categoryId
+     *
+     * @param string $categoryId
+     *
+     * @return Mdraft
+     */
+    public function setCategoryId($categoryId)
+    {
+        $this->categoryId = $categoryId;
+
+        return $this;
+    }
+
+    /**
+     * Get categoryId
+     *
+     * @return string
+     */
+    public function getCategoryId()
+    {
+        return $this->categoryId;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \ApiBundle\Entity\Mcategory $category
+     *
+     * @return Mdraft
+     */
+    public function setCategory(\ApiBundle\Entity\Mcategory $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \ApiBundle\Entity\Mcategory
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
 }

@@ -313,4 +313,3 @@ class Mcategory
         return $this->updated;
     }
 }
-

@@ -458,4 +458,3 @@ class Murl
         return $this->category;
     }
 }
-
