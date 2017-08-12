@@ -1,0 +1,80 @@
+ApiBundle\Entity\Mmessage:
+    type: entity
+    table: mmessage
+    indexes:
+        user_id:
+            columns:
+                - user_id
+    uniqueConstraints:
+        internal_id:
+            columns:
+                - internal_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        internalId:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: internal_id
+        categoryId:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: category_id
+        content:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+        isZh:
+            type: boolean
+            nullable: true
+            column: is_zh
+        isFr:
+            type: boolean
+            nullable: true
+            column: is_fr
+        isEn:
+            type: boolean
+            nullable: true
+            column: is_en
+        isDeleted:
+            type: boolean
+            nullable: true
+            column: is_deleted
+        deletedByUserId:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: deleted_by_user_id
+        created:
+            type: datetime
+            nullable: false
+        updated:
+            type: datetime
+            nullable: false
+    manyToOne:
+        user:
+            targetEntity: Muser
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                user_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

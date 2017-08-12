@@ -515,4 +515,207 @@ class Mpost
 
         return $this;
     }
+    /**
+     * @var string
+     */
+    private $categoryId;
+
+    /**
+     * @var string
+     */
+    private $draftId;
+
+    /**
+     * @var boolean
+     */
+    private $isZh;
+
+    /**
+     * @var boolean
+     */
+    private $isEn;
+
+    /**
+     * @var boolean
+     */
+    private $isFr;
+
+    /**
+     * @var \ApiBundle\Entity\Mcategory
+     */
+    private $category;
+
+    /**
+     * @var \ApiBundle\Entity\Mdraft
+     */
+    private $draft;
+
+
+    /**
+     * Set categoryId
+     *
+     * @param string $categoryId
+     *
+     * @return Mpost
+     */
+    public function setCategoryId($categoryId)
+    {
+        $this->categoryId = $categoryId;
+
+        return $this;
+    }
+
+    /**
+     * Get categoryId
+     *
+     * @return string
+     */
+    public function getCategoryId()
+    {
+        return $this->categoryId;
+    }
+
+    /**
+     * Set draftId
+     *
+     * @param string $draftId
+     *
+     * @return Mpost
+     */
+    public function setDraftId($draftId)
+    {
+        $this->draftId = $draftId;
+
+        return $this;
+    }
+
+    /**
+     * Get draftId
+     *
+     * @return string
+     */
+    public function getDraftId()
+    {
+        return $this->draftId;
+    }
+
+    /**
+     * Set isZh
+     *
+     * @param boolean $isZh
+     *
+     * @return Mpost
+     */
+    public function setIsZh($isZh)
+    {
+        $this->isZh = $isZh;
+
+        return $this;
+    }
+
+    /**
+     * Get isZh
+     *
+     * @return boolean
+     */
+    public function getIsZh()
+    {
+        return $this->isZh;
+    }
+
+    /**
+     * Set isEn
+     *
+     * @param boolean $isEn
+     *
+     * @return Mpost
+     */
+    public function setIsEn($isEn)
+    {
+        $this->isEn = $isEn;
+
+        return $this;
+    }
+
+    /**
+     * Get isEn
+     *
+     * @return boolean
+     */
+    public function getIsEn()
+    {
+        return $this->isEn;
+    }
+
+    /**
+     * Set isFr
+     *
+     * @param boolean $isFr
+     *
+     * @return Mpost
+     */
+    public function setIsFr($isFr)
+    {
+        $this->isFr = $isFr;
+
+        return $this;
+    }
+
+    /**
+     * Get isFr
+     *
+     * @return boolean
+     */
+    public function getIsFr()
+    {
+        return $this->isFr;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \ApiBundle\Entity\Mcategory $category
+     *
+     * @return Mpost
+     */
+    public function setCategory(\ApiBundle\Entity\Mcategory $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \ApiBundle\Entity\Mcategory
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set draft
+     *
+     * @param \ApiBundle\Entity\Mdraft $draft
+     *
+     * @return Mpost
+     */
+    public function setDraft(\ApiBundle\Entity\Mdraft $draft = null)
+    {
+        $this->draft = $draft;
+
+        return $this;
+    }
+
+    /**
+     * Get draft
+     *
+     * @return \ApiBundle\Entity\Mdraft
+     */
+    public function getDraft()
+    {
+        return $this->draft;
+    }
 }
