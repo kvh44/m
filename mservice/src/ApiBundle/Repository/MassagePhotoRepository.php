@@ -30,7 +30,7 @@ class MassagePhotoRepository extends EntityRepository {
                         ->getResult()
         ;
     }
-    
+
     public function loadAllNotDeletedProfilePhotosByUserId($user_id) {
         return $this->createQueryBuilder('p')
                         ->where('p.userId = :user_id AND p.photoType = :type AND p.isDeleted IS NULL AND p.postId IS NULL')
@@ -68,7 +68,7 @@ class MassagePhotoRepository extends EntityRepository {
                         ->getQuery()
                         ->getOneOrNullResult();
     }
-    
+
     public function loadDeletedPhotoByInternalId($photo_internal_id) {
         return $this->createQueryBuilder('p')
                         ->where('p.internalId = :internal_id AND p.isDeleted = 1')
