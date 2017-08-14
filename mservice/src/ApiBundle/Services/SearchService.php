@@ -112,9 +112,9 @@ class SearchService {
 
         $boolQuery = new \Elastica\Query\BoolQuery();
         
-        $activeQuery = new \Elastica\Query\Terms();
-        $activeQuery->setTerms('isDeleted', array(UtileService::BOOL_TRUE, UtileService::TINY_INT_TRUE, UtileService::TINY_INT_TRUE_STRING));
-        $boolQuery->addMustNot($activeQuery);
+        $deletedQuery = new \Elastica\Query\Terms();
+        $deletedQuery->setTerms('isDeleted', array(UtileService::BOOL_TRUE, UtileService::TINY_INT_TRUE, UtileService::TINY_INT_TRUE_STRING));
+        $boolQuery->addMustNot($deletedQuery);
         
         if(strlen($word) > 0){
             $wordQuery = new \Elastica\Query\QueryString();
@@ -125,9 +125,11 @@ class SearchService {
         if($only_total){
             return $search->search($boolQuery)->getTotalHits(); 
         }
+        
         $queryObject = Query::create($boolQuery);
         $queryObject->setSize($limit);
-        $queryObject->setFrom($offset);        
+        $queryObject->setFrom($offset);    
+        $queryObject->addSort(array('updated' => array('order' => 'desc')));
         $this->resultSet = $search->search($queryObject)->getResults();
         return $this->getSourceArray();
     }
@@ -227,6 +229,7 @@ class SearchService {
         $queryObject = Query::create($boolQuery);
         $queryObject->setSize($limit);
         $queryObject->setFrom($offset);        
+        $queryObject->addSort(array('updated' => array('order' => 'desc')));
         $this->resultSet = $search->search($queryObject)->getResults();
         return $this->getSourceArray();
         //return $search->search($queryObject)->getSuggests();

@@ -9,7 +9,12 @@ $(document).ready(function(){
         ajax: mpostListAjaxUrl,
         columns: [
             { data: 'id' },
-            { data: 'username' },
+            { data: function ( data ) {
+                    var showUrl = muserShowUrl;
+                    showUrl = showUrl.replace('id', data.userId);
+                    return '<a href="'+showUrl+'">'+data.username+'</a>';
+                } 
+            },
             { data: 'categoryEn' },
             { data: 'draftId' },
             { data: 'title' },

@@ -43,7 +43,7 @@
                                     <tr>
                                         <th>Id</th>
                                         <th>Photo</th>
-                                        <th>userId</th>
+                                        <th>username</th>
                                         <th>type</th>
                                         <th>postId</th>
                                         <th>origin</th>
@@ -68,7 +68,7 @@
                                                     No
                                                 {% endif %}
                                             </td>
-                                            <td>{{ mphoto.userId }}</td>
+                                            <td>{{ mphoto.username }}</td>
                                             <td>{{ mphoto.photoType }}</td>
                                             <td>{{ mphoto.postId }}</td>
                                             <td>{{ mphoto.photoOrigin }}</td>
@@ -80,14 +80,8 @@
                                             <td>{% if mphoto.created %}{{ mphoto.created|date('Y-m-d H:i:s') }}{% endif %}</td>
                                             <td>{% if mphoto.updated %}{{ mphoto.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
                                             <td>
-                                                <ul>
-                                                    <li>
-                                                        <a href="">show</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="">delete</a>
-                                                    </li>
-                                                </ul>
+                                                <a href="">show</a>
+                                                <a href="">delete</a>
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -117,6 +111,7 @@
     <script>
         var mphotoListAjaxUrl = '{{ path('mphoto_list_ajax') }}';
         var mphotoShowUrl = '{{ path('mphoto_show', {'id' : 'id'}) }}';
+        var muserShowUrl = '{{ path('muser_show', {'id' : 'id'}) }}';
         var profilePhotoDirectory = '{{ profile_photo_directory }}';
         var userPhotoDirectory = '{{ user_photo_directory }}';
         var postPhotoDirectory = '{{ post_photo_directory }}';

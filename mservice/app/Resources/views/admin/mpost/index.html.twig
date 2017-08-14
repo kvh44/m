@@ -72,14 +72,8 @@
                                             <td>{% if mpost.created %}{{ mpost.created|date('Y-m-d H:i:s') }}{% endif %}</td>
                                             <td>{% if mpost.updated %}{{ mpost.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
                                             <td>
-                                                <ul>
-                                                    <li>
-                                                        <a href="{{ path('mpost_show', { 'id': mpost.id }) }}">show</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="{{ path('mpost_edit', { 'internalId': mpost.internalId }) }}">edit</a>
-                                                    </li>
-                                                </ul>
+                                                <a href="{{ path('mpost_show', { 'id': mpost.id }) }}">show</a>
+                                                <a href="{{ path('mpost_edit', { 'internalId': mpost.internalId }) }}">edit</a>
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -102,6 +96,7 @@
         var mpostListAjaxUrl = '{{ path('mpost_list_ajax') }}';
         var mpostEditUrl = '{{ path('mpost_edit', {'internalId' : 'internalId'}) }}';
         var mpostShowUrl = '{{ path('mpost_show', {'id' : 'id'}) }}';
+        var muserShowUrl = '{{ path('muser_show', {'id' : 'id'}) }}';
     </script>
 
     {% javascripts output='js/compiled/postlist.js' 

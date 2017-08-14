@@ -1092,8 +1092,8 @@ class UsersService
                 return $this->utileService->getResponse();
             }
 
-            $user->setIsDeleted(false);
-            $user->setIsActive(true);
+            $user->setIsDeleted(UtileService::TINY_INT_FALSE);
+            $user->setIsActive(UtileService::TINY_INT_TRUE);
             $this->em->persist($user);
             $this->em->flush();
             

@@ -70,14 +70,8 @@
                                             <td>{% if muser.created %}{{ muser.created|date('Y-m-d H:i:s') }}{% endif %}</td>
                                             <td>{% if muser.updated %}{{ muser.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
                                             <td>
-                                                <ul>
-                                                    <li>
-                                                        <a href="{{ path('muser_show', { 'id': muser.id }) }}">show</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="{{ path('muser_edit', { 'internalToken': muser.internalToken }) }}">edit</a>
-                                                    </li>
-                                                </ul>
+                                                <a href="{{ path('muser_show', { 'id': muser.id }) }}">show</a>
+                                                <a href="{{ path('muser_edit', { 'internalToken': muser.internalToken }) }}">edit</a>
                                             </td>
                                         </tr>
                                     {% endfor %}

@@ -80,11 +80,13 @@ class MassagePhotoRepository extends EntityRepository {
 
     public function getPhotoListBo($only_total = false, $offset = 0, $limit = 25, $type = null, $is_deleted = null, $word = null) {
         $q = $this->createQueryBuilder('p');
-        $q->select('p.id, p.userId, p.photoType, p.postId, p.photoOrigin, p.photoMedium, p.photoSmall, p.photoIcon, p.title, p.isDeleted, p.internalId, p.created, p.updated');
+        $q->select('p.id, p.userId, u.username, p.photoType, p.postId, p.photoOrigin, p.photoMedium, p.photoSmall, p.photoIcon, p.title, p.isDeleted, p.internalId, p.created, p.updated');
 
         if ($only_total) {
             $q->select(' count(p.id) ');
         }
+        
+        $q->innerJoin('ApiBundle:Muser', 'u', 'WITH', 'u.id = p.userId');
 
         $q->where(' 1 = 1 ');
 

@@ -43,7 +43,12 @@ $(document).ready(function () {
                     return '<a href="' + showUrl + '"><img src="' + url + '" /></a>';
                 }
             },
-            {data: 'userId'},
+            {data: function ( data ) {
+                    var showUrl = muserShowUrl;
+                    showUrl = showUrl.replace('id', data.userId);
+                    return '<a href="'+showUrl+'">'+data.username+'</a>';
+                } 
+            },
             {data: 'photoType'},
             {data: 'postId'},
             {data: 'photoOrigin'},

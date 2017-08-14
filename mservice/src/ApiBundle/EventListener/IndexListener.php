@@ -13,6 +13,9 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 use FOS\ElasticaBundle\Elastica\Client;
 use ApiBundle\Services\UtileService;
 
+/**
+ * elastic search 
+ */
 class IndexListener extends Listener implements EventSubscriber {
 
     protected $propertyAccessor;
@@ -20,7 +23,6 @@ class IndexListener extends Listener implements EventSubscriber {
     private $config;
     private $searchHost;
     private $searchPort;
-
 
     public function __construct(
     ObjectPersisterInterface $userPersister, IndexableInterface $indexable, $searchHost, $searchPort, array $config
@@ -30,7 +32,7 @@ class IndexListener extends Listener implements EventSubscriber {
         $this->config = $config;
         $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
         $this->client = new Client();
-        
+
         $this->searchHost = $searchHost;
         $this->searchPort = $searchPort;
     }
@@ -40,7 +42,7 @@ class IndexListener extends Listener implements EventSubscriber {
     }
 
     public function prePersist(LifecycleEventArgs $args) {
-        try{
+        try {
             $entity = $args->getObject();
             if ($entity instanceof Muser || $entity instanceof Mpost) {
                 $this->testSearchEngineAliasesInfo($entity);
@@ -73,7 +75,7 @@ class IndexListener extends Listener implements EventSubscriber {
     }
 
     public function preUpdate(LifecycleEventArgs $args) {
-        try{
+        try {
             $entity = $args->getObject();
             if ($entity instanceof Muser || $entity instanceof Mpost) {
                 $this->testSearchEngineAliasesInfo($entity);
@@ -92,7 +94,7 @@ class IndexListener extends Listener implements EventSubscriber {
                 if ($entity->getIsdeleted()) {
                     $this->preRemove($args);
                 }
-                
+
                 //$this->testSearchEngineAliasesInfo($entity);
                 if ($this->objectPersister->handlesObject($entity) && $entity->getIsSynchronizedBySearch()) {
                     if ($this->isObjectIndexable($entity)) {

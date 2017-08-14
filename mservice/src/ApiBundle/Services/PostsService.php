@@ -341,7 +341,7 @@ class PostsService
                 return $this->utileService->getResponse();
             }
             
-            $this->mPost->setIsDeleted(UtileService::TINY_INT_FALSE);
+            $this->mPost->setIsDeleted(UtileService::CONST_NULL);
             $this->em->persist($this->mPost);
             $this->em->flush();
             
