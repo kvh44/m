@@ -1,0 +1,34 @@
+mpost_index:
+    path:     /
+    defaults: { _controller: "AdminBundle:Mpost:index" }
+    methods:  GET
+    
+mpost_list_ajax:
+    path:     /post-list-ajax
+    defaults: { _controller: "AdminBundle:Mpost:postListAjax" }
+    methods:  GET    
+    
+mpost_show:
+    path:     /{id}/show
+    defaults: { _controller: "AdminBundle:Mpost:show" }
+    methods:  GET    
+    
+mpost_batch_delete:
+    path:     /batch/delete
+    defaults: { _controller: "AdminBundle:Mpost:batchDelete" }
+    methods:  [GET, POST]    
+    
+mpost_edit:
+    path:     /{internalId}/edit
+    defaults: { _controller: "AdminBundle:Mpost:edit" }
+    methods:  [GET, POST]    
+    
+mpost_delete:
+    path:     /{internalId}/delete
+    defaults: { _controller: "AdminBundle:Mpost:delete" }
+    methods:  [GET, POST]
+    
+mpost_enable:
+    path:     /{internalId}/enable
+    defaults: { _controller: "AdminBundle:Mpost:enable" }
+    methods:  [GET, POST]  

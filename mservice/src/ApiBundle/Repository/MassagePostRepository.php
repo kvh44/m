@@ -36,7 +36,7 @@ class MassagePostRepository extends EntityRepository {
     public function loadPostsBo($only_total = false, $offset = 0, $limit = 25, $country_id = null, $lang = null, $is_deleted = null, $word = null) {
         $q = $this->createQueryBuilder('p');
         
-        $q->select('p.id, p.userId, p.internalId, p.categoryId, p.draftId, p.title, p.description,
+        $q->select('p.id, p.userId, u.username, p.internalId, p.categoryId, ca.categoryEn, p.draftId, p.title, p.description,
                 p.isZh, p.isFr, p.isEn, p.isDeleted, p.topTime, p.created, p.updated');
         
         if($only_total){
@@ -44,12 +44,13 @@ class MassagePostRepository extends EntityRepository {
         }
         
         $q->innerJoin('ApiBundle:Muser', 'u', 'WITH', 'u.id = p.userId');
-        $q->leftJoin('ApiBundle:Mcountry', 'c', 'WITH', 'c.id = u.countryId');
-        $q->leftJoin('ApiBundle:Mlocation', 'l', 'WITH', 'l.id = u.locationId');
+        $q->leftJoin('ApiBundle:Mcategory', 'ca', 'WITH', 'ca.id = p.categoryId');
         
         $q->where(' 1 = 1 ');
         
         if (strlen($country_id) > 0) {
+            $q->leftJoin('ApiBundle:Mcountry', 'c', 'WITH', 'c.id = u.countryId');
+            //$q->leftJoin('ApiBundle:Mlocation', 'l', 'WITH', 'l.id = u.locationId');
             $q->andWhere('u.countryId = :country_id');
             $parameters[':country_id'] = $country_id;
         }
@@ -91,6 +92,10 @@ class MassagePostRepository extends EntityRepository {
         }
         
         $q->orderBy('p.updated', 'DESC');
+        
+        if (isset($parameters)) {
+            $q->setParameters($parameters);
+        }
         
         if ($only_total) {
             //return count($q->getQuery()->getResult());

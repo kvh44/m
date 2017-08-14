@@ -311,6 +311,51 @@ class PostsService
             return $this->utileService->getResponse();
         }
     }
+    
+    public function enablePost($internal_id_post, $internal_id, $internal_token)
+    {
+        try{
+            $user = $this->findUserByInternalToken($internal_token);
+            if(!$user){
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage($this->translator->trans('user.internal_token.wrong'));
+                return $this->utileService->getResponse();
+            }
+
+            if($user->getInternalId() !== $internal_id){
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage($this->translator->trans('user.internal_id.not.exist'));
+                return $this->utileService->getResponse();
+            }
+            
+            $this->mPost = $this->findPostByInternalId($internal_id_post);
+            if(!$this->mPost){
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage($this->translator->trans('post.not.exist'));
+                return $this->utileService->getResponse();
+            }
+            
+            if($this->mPost->getUser()->getId() !== $user->getId()){
+                $this->utileService->setResponseState(false);
+                $this->utileService->setResponseMessage($this->translator->trans('post.not.yours'));
+                return $this->utileService->getResponse();
+            }
+            
+            $this->mPost->setIsDeleted(UtileService::TINY_INT_FALSE);
+            $this->em->persist($this->mPost);
+            $this->em->flush();
+            
+            $this->utileService->setResponseState(true);
+            $this->utileService->setResponseMessage($this->translator->trans('post.enabled'));
+            $this->utileService->setResponseFrom(UtileService::FROM_SQL);
+            return $this->utileService->getResponse();
+            
+        } catch (\Exception $e) {
+            $this->utileService->setResponseState(false);
+            $this->utileService->setResponseMessage($e->getMessage());
+            return $this->utileService->getResponse();
+        }
+    }
 }
 	
 	

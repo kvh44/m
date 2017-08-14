@@ -1,0 +1,156 @@
+{% extends '@Admin/base.html.twig' %}
+
+{% block body %}
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Post Page</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#">Config option 1</a>
+                                </li>
+                                <li><a href="#">Config option 2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="ibox-content">
+                        <div class="row">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <th><label class="control-label">Id</label></th>
+                                        <td>{{ mpost.id }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">userId</label></th>
+                                        <td>{{ mpost.userId }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">InternalId</label></th>
+                                        <td>{{ mpost.internalId }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">categoryId</label></th>
+                                        <td>{{ mpost.categoryId }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">draftId</label></th>
+                                        <td>{{ mpost.draftId }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">title</label></th>
+                                        <td>{{ mpost.title }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">Description</label></th>
+                                        <td>{{ mpost.description }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">Iszh</label></th>
+                                        <td>{% if mpost.isZh %}Yes{% else %}No{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">Isen</label></th>
+                                        <td>{% if mpost.isEn %}Yes{% else %}No{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">Isfr</label></th>
+                                        <td>{% if mpost.isFr %}Yes{% else %}No{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">displayedHome</label></th>
+                                        <td>{% if mpost.displayedHome %}Yes{% else %}No{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">Viewnumber</label></th>
+                                        <td>{{ mpost.viewNumber }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">Isfromotherweb</label></th>
+                                        <td>{% if mpost.isFromOtherWeb %}Yes{% else %}No{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">Otherweb</label></th>
+                                        <td>{{ mpost.otherWeb }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">Isdeleted</label></th>
+                                        <td>{% if mpost.isDeleted %}Yes{% else %}No{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">deletedByUserId</label></th>
+                                        <td>{{ mpost.deletedByUserId }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">Issynchronizedbycache</label></th>
+                                        <td>{% if mpost.isSynchronizedByCache %}Yes{% else %}No{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">Issynchronizedbysearch</label></th>
+                                        <td>{% if mpost.isSynchronizedBySearch %}Yes{% else %}No{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">Slug</label></th>
+                                        <td>{{ mpost.slug }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">Toptime</label></th>
+                                        <td>{% if mpost.topTime %}{{ mpost.topTime|date('Y-m-d H:i:s') }}{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">Created</label></th>
+                                        <td>{% if mpost.created %}{{ mpost.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">Updated</label></th>
+                                        <td>{% if mpost.updated %}{{ mpost.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+
+                            <a href="{{ path('mpost_index') }}" class="btn btn-lg btn-outline btn-primary">Back to the list</a>
+
+                            {% if mpost.isDeleted %}
+                                <a href="{{ path('mpost_enable', { 'internalId': mpost.internalId }) }}" class="btn btn-lg btn-info">Enable</a>
+                            {% else %}    
+                                <a href="{{ path('mpost_delete', { 'internalId': mpost.internalId }) }}" class="btn btn-lg btn-danger" id="deletePost">Delete</a>
+                            {% endif %}
+                            <a href="{{ path('mpost_edit', { 'internalId': mpost.internalId }) }}" class="btn btn-lg btn-success">Edit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block js %}  
+    <!-- Page-Level Scripts -->
+
+    {% javascripts output='js/compiled/postedit.js' 
+            '@FrontBundle/Resources/public/inspinia/js/plugins/sweetalert/sweetalert.min.js' 
+            '@AdminBundle/Resources/public/js/admin/post/show.js' 
+            '@AdminBundle/Resources/public/js/admin/common/common.js' 
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+
+
+{% endblock %}

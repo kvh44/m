@@ -4,7 +4,12 @@ admin_muser:
     
 admin_mphoto:
     resource: "@AdminBundle/Resources/config/routing/mphoto.yml"
-    prefix:   /photo    
+    prefix:   /photo  
+    
+admin_mpost:
+    resource: "@AdminBundle/Resources/config/routing/mpost.yml"
+    prefix:   /post   
+    
 
 admin_homepage:
     path:     /

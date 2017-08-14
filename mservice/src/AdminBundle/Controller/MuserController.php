@@ -57,6 +57,7 @@ class MuserController extends Controller {
             $limit = 25;
         }
 
+        $word = null;
         $search = $request->query->get('search');
         if (is_array($search)) {
             if (array_key_exists('value', $search)) {

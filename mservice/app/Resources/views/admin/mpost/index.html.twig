@@ -1,0 +1,117 @@
+{% extends '@Admin/base.html.twig' %}
+
+{% block css %}
+    {% stylesheets output='css/compiled/userlist.css' 
+            '@FrontBundle/Resources/public/inspinia/css/plugins/dataTables/datatables.min.css' 
+            filter='cssrewrite' 
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>List of posts</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#">Config option 1</a>
+                                </li>
+                                <li><a href="#">Config option 2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover dataTables" id="postListTable">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>username</th>
+                                        <th>categoryEn</th>
+                                        <th>draftId</th>
+                                        <th>title</th>
+                                        <th>isZh</th>
+                                        <th>isFr</th>
+                                        <th>isEn</th>
+                                        <th>isDeleted</th>
+                                        <th>topTime</th>
+                                        <th>created</th>
+                                        <th>updated</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for mpost in mposts %}
+                                        <tr class="gradeX">
+                                            <td><a href="{{ path('mpost_show', { 'id': mpost.id }) }}">{{ mpost.id }}</a></td>
+                                            <td>{{ mpost.username }}</td>
+                                            <td>{{ mpost.categoryEn }}</td>
+                                            <td>{{ mpost.draftId }}</td>
+                                            <td>{{ mpost.title }}</td>
+                                            <td>{{ mpost.isZh }}</td>
+                                            <td>{{ mpost.isFr }}</td>
+                                            <td>{{ mpost.isEn }}</td>
+                                            <td>{% if mpost.isDeleted %}Yes{% else %}No{% endif %}</td>
+                                            <td>{% if mpost.topTime %}{{ mpost.topTime|date('Y-m-d H:i:s') }}{% endif %}</td>
+                                            <td>{% if mpost.created %}{{ mpost.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+                                            <td>{% if mpost.updated %}{{ mpost.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+                                            <td>
+                                                <ul>
+                                                    <li>
+                                                        <a href="{{ path('mpost_show', { 'id': mpost.id }) }}">show</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ path('mpost_edit', { 'internalId': mpost.internalId }) }}">edit</a>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block js %}  
+    <!-- Page-Level Scripts -->
+    <script>
+        var mpostListAjaxUrl = '{{ path('mpost_list_ajax') }}';
+        var mpostEditUrl = '{{ path('mpost_edit', {'internalId' : 'internalId'}) }}';
+        var mpostShowUrl = '{{ path('mpost_show', {'id' : 'id'}) }}';
+    </script>
+
+    {% javascripts output='js/compiled/postlist.js' 
+            '@FrontBundle/Resources/public/inspinia/js/plugins/dataTables/datatables.min.js'
+            '@AdminBundle/Resources/public/js/admin/post/index.js' 
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+
+
+{% endblock %}
+

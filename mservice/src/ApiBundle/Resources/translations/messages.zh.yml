@@ -115,6 +115,7 @@ post:
         exist: 次贴已经不存在
         yours: 此贴不属于你
     deleted: 此贴已被成功删除
+    enabled: 此贴已被成功恢复
     title:
         not:
             blank: 帖子标题不能为空

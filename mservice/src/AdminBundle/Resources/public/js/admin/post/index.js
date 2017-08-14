@@ -2,27 +2,20 @@
 try{
 
 $(document).ready(function(){
-    $('#userListTable').DataTable({
+    $('#postListTable').DataTable({
         serverSide: true,
         processing: true,
         ordering: false,
-        ajax: muserListAjaxUrl,
+        ajax: mpostListAjaxUrl,
         columns: [
             { data: 'id' },
             { data: 'username' },
-            { data: 'telephone' },
-            { data: 'countryEn' },
-            { data: function(data) {
-                    if(data.cityEn != null || data.postNumber != null){
-                        return data.cityEn + data.postNumber;
-                    }
-                    else {
-                        return '';
-                    } 
-                }
-            },
-            { data: 'shopName' },
-            { data: 'isActive' },
+            { data: 'categoryEn' },
+            { data: 'draftId' },
+            { data: 'title' },
+            { data: 'isZh' },
+            { data: 'isFr' },
+            { data: 'isEn' },
             { data: 'isDeleted' },
             { data: function ( data ) {
                        if(data.topTime){
@@ -49,9 +42,9 @@ $(document).ready(function(){
                     }
             },
             { data: function ( data, type, row ) {
-                    var editUrl = muserEditUrl;
-                    var showUrl = muserShowUrl;
-                    editUrl = editUrl.replace('internalToken', data.internalToken);
+                    var editUrl = mpostEditUrl;
+                    var showUrl = mpostShowUrl;
+                    editUrl = editUrl.replace('internalId', data.internalId);
                     showUrl = showUrl.replace('id', data.id);
                            return '<a href="'+editUrl+'">edit</a>'+'<br>'+'<a href="'+showUrl+'">show</a>';
                     }
