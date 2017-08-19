@@ -59,6 +59,7 @@ class MpostController extends Controller {
     }
     
     public function showAction(Mpost $mpost) {
+        $allPhotosByPostId = $this->get('api_massage.PhotoService')->getAllPhotosByPostId($mpost->getId());
 
         $path['title'] = 'Post list';
         $path['url'] = $this->generateUrl('mpost_index');
@@ -70,6 +71,7 @@ class MpostController extends Controller {
 
         return $this->render('admin/mpost/show.html.twig', array(
                     'mpost' => $mpost,
+                    'allPhotosByPostId' => array_key_exists('data', $allPhotosByPostId) ? $allPhotosByPostId['data'] : array(),
                     'paths' => $paths
         ));
     }

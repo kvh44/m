@@ -2,6 +2,61 @@
 
 {% block body %}
     <div class="wrapper wrapper-content animated fadeInRight">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Post photo</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#">Config option 1</a>
+                                </li>
+                                <li><a href="#">Config option 2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="ibox-content">
+                        <h2>Post Photos</h2>
+                        <div class="lightBoxGallery" id="postPhotoDiv">
+                            {% if allPhotosByPostId['postPhotos']|length > 0 %}
+                                {% for photo in allPhotosByPostId['postPhotos'] %}
+                                    <a href="/{{upload_directory}}{{photo['photoType']|photoTypeDirectory}}{{medium_directory}}{{muser.id}}/{{ photo['photoMedium'] }}" title="{{ photo['title'] }}" data-gallery="">
+                                        <img src="/{{upload_directory}}{{photo['photoType']|photoTypeDirectory}}{{icon_directory}}{{muser.id}}/{{ photo['photoIcon'] }}">
+                                    </a>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="ibox-content">
+                        <h2>Deleted Post Photos</h2>
+                        <div class="lightBoxGallery" id="deletedPostPhotoDiv">
+                            {% if allPhotosByPostId['deletedPostPhotos']|length > 0 %}
+                                {% for photo in allPhotosByPostId['deletedPostPhotos'] %}
+                                    <a href="/{{upload_directory}}{{photo['photoType']|photoTypeDirectory}}{{medium_directory}}{{muser.id}}/{{ photo['photoMedium'] }}" title="{{ photo['title'] }}" data-gallery="">
+                                        <img src="/{{upload_directory}}{{photo['photoType']|photoTypeDirectory}}{{icon_directory}}{{muser.id}}/{{ photo['photoIcon'] }}">
+                                    </a>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">

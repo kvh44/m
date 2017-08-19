@@ -50,6 +50,16 @@ class MassagePhotoRepository extends EntityRepository {
                         ->getResult()
         ;
     }
+    
+    public function loadDeletedPhotosByPostId($post_id) {
+        return $this->createQueryBuilder('p')
+                        ->select('p.id, p.photoType, p.photoOrigin, p.photoMedium, p.photoSmall, p.photoIcon, p.title, p.internalId, p.created')
+                        ->where('p.postId = :post_id AND p.isDeleted = 1')
+                        ->setParameter('post_id', $post_id)
+                        ->getQuery()
+                        ->getResult()
+        ;
+    }
 
     public function loadPhotoById($photo_id) {
         return $this->createQueryBuilder('p')

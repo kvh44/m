@@ -552,5 +552,20 @@ class PhotoService {
             return $this->utileService->getResponse();
         }
     }
+    
+    public function getAllPhotosByPostId($post_id) {
+        try {
+            $postPhotos = $this->em->getRepository('ApiBundle:Mphoto')->loadPhotosByPostId($post_id);
+            $deletedPostPhotos = $this->em->getRepository('ApiBundle:Mphoto')->loadDeletedPhotosByPostId($post_id);
+
+            $this->utileService->setResponseData(array('postPhotos' => $postPhotos, 'deletedPostPhotos' => $deletedPostPhotos));
+            $this->utileService->setResponseState(true);
+            return $this->utileService->getResponse();
+        } catch (\Exception $e) {
+            $this->utileService->setResponseState(false);
+            $this->utileService->setResponseMessage($e->getMessage());
+            return $this->utileService->getResponse();
+        }
+    }
 
 }
