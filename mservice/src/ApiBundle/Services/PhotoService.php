@@ -198,14 +198,32 @@ class PhotoService {
             $this->mPhoto = new Mphoto();
             $this->mPhoto->setUser($this->user);
             $this->mPhoto->setPhotoType($request->get('type'));
+            
+            /**
+             * handler post
+             */
             if ($request->get('type') == self::POST_PHOTO_TYPE) {
-                if (!$request->get('post_id')) {
-                    $this->utileService->setResponseMessage($this->translator->trans('post.id.invalid'));
+                
+                $post_internal_id = $request->get('post_internal_id');
+                if (!$post_internal_id) {
+                    $this->utileService->setResponseMessage($this->translator->trans('post.internalId.invalid'));
                     $this->utileService->setResponseState(false);
                     return $this->utileService->getResponse();
                 }
-                $this->mPhoto->setPostId($request->get('post_id'));
+                
+                $post = $this->findPostByInternalId($post_internal_id);
+                if(!$post){
+                    $this->utileService->setResponseMessage($this->translator->trans('post.internalId.invalid'));
+                    $this->utileService->setResponseState(false);
+                    return $this->utileService->getResponse();
+                }
+                
+                $this->mPhoto->setPostId($post->getId());
             }
+            /**
+             * end handler post
+             */
+            
             $this->mPhoto->setPhotoOrigin($file_name_origin);
             $this->mPhoto->setPhotoMedium($file_name_medium);
             $this->mPhoto->setPhotoSmall($file_name_small);
@@ -351,6 +369,10 @@ class PhotoService {
 
     public function findDeletedPhotoByInternalId($internal_id) {
         return $this->em->getRepository('ApiBundle:Mphoto')->loadDeletedPhotoByInternalId($internal_id);
+    }
+    
+    public function findPostByInternalId($internal_id) {
+        return $this->em->getRepository('ApiBundle:Mpost')->loadPostByInternalId($internal_id);
     }
 
     public function findUserPhotosByUserIdCache($user_id) {

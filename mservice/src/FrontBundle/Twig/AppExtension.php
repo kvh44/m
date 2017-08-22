@@ -35,7 +35,7 @@ class AppExtension extends \Twig_Extension
 			case PhotoService::USER_PHOTO_TYPE :
                 return $twigGlobals['user_photo_directory'];
 				break;			
-			case PhotoService:POST_PHOTO_TYPE :
+			case PhotoService::POST_PHOTO_TYPE :
                 return $twigGlobals['post_photo_directory'];
 				break;
             default:	

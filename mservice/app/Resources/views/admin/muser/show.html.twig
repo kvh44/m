@@ -335,7 +335,7 @@
                                 <a href="{{ path('muser_delete', { 'internalToken': muser.internalToken }) }}" class="btn btn-lg btn-danger" id="deleteUser">Delete</a>
                             {% endif %}
                             <a href="{{ path('muser_edit', { 'internalToken': muser.internalToken }) }}" class="btn btn-lg btn-success">Edit</a>
-                            <a href="{{ path('mphoto_manage', { 'internalToken': muser.internalToken }) }}" class="btn btn-lg btn-success">Manage Photo</a>
+                            <a href="{{ path('muser_mphoto_manage', { 'internalToken': muser.internalToken }) }}" class="btn btn-lg btn-success">Manage User Photo</a>
                             <a href="{{ path('mpassword_manage', { 'internalToken': muser.internalToken }) }}" class="btn btn-lg btn-success">Manage Password</a>
                         </div>
                     </div>

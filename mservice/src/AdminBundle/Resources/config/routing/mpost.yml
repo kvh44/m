@@ -32,3 +32,8 @@ mpost_enable:
     path:     /{internalId}/enable
     defaults: { _controller: "AdminBundle:Mpost:enable" }
     methods:  [GET, POST]  
+    
+mpost_mphoto_manage:
+    path:     /{internalId}/post-photo-manage
+    defaults: { _controller: "AdminBundle:Mpost:managePostPhoto" }
+    methods:  [GET, POST]     

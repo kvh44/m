@@ -1,11 +1,22 @@
 
 
 $(document).ready(function () {
-
-    jQuery('#choose_profile_photo').show();
-
-    var profileUploader = initiateUploader('choose_profile_photo', true, 1, 'rofile');
-    var userUploader = initiateUploader('choose_user_photo', true, 2, 'user');
+    
+    if(jQuery('#choose_profile_photo').length > 0) {
+        jQuery('#choose_profile_photo').show();
+    }
+    
+    if(jQuery('#choose_profile_photo').length > 0) {
+        var profileUploader = initiateUploader('choose_profile_photo', true, 1, 'profile');
+    }
+    
+    if(jQuery('#choose_user_photo').length > 0) {
+        var userUploader = initiateUploader('choose_user_photo', true, 2, 'user');
+    }
+    
+    if(jQuery('#choose_post_photo').length > 0) {
+        var postUploader = initiateUploader('choose_post_photo', true, 3, 'post', postInternalId);
+    }
 
     $('.i-checks').iCheck({
         checkboxClass: 'icheckbox_square-green hidden',
@@ -81,13 +92,14 @@ var batchDeletePhoto = function () {
     }
 }
 
-var initiateUploader = function (buttonId, isLocal, photoType, uploadButtonHtml) {
+var initiateUploader = function (buttonId, isLocal, photoType, uploadButtonHtml, postInternalId = null) {
+
     return new qq.FineUploader({
         // pass the dom node (ex. $(selector)[0] for jQuery users)
         element: document.getElementById(buttonId),
         request: {
             endpoint: urlUploadPhoto,
-            params: {internal_token: internalToken, internal_id: internalId, type: photoType, is_local: isLocal}
+            params: {internal_token: internalToken, internal_id: internalId, type: photoType, is_local: isLocal, post_internal_id: postInternalId}
         },
         validation: {
             allowedExtensions: ["jpeg", "jpg", "bmp", "gif", "png", "png8", "png24"],

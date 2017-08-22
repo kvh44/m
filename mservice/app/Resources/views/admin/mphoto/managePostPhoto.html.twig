@@ -1,0 +1,127 @@
+{% extends '@Admin/base.html.twig' %}
+
+{% block css %}
+    {% stylesheets output='css/compiled/fine-uploader.css' 
+            '@FrontBundle/Resources/public/fine-uploader/fine-uploader.min.css' 
+            '@FrontBundle/Resources/public/inspinia/css/plugins/blueimp/css/blueimp-gallery.min.css' 
+            filter='cssrewrite' 
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Post Photo</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#">Config option 1</a>
+                                </li>
+                                <li><a href="#">Config option 2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="text-center center-version">
+                                    <div id="choose_post_photo"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+
+                    <div class="ibox-content">
+                        <h2>Post Photos</h2>
+                        <div class="lightBoxGallery" id="postPhotoDiv">
+                            {% if allPostPhotos['postPhotos']|length > 0 %}
+                                {% for photo in allPostPhotos['postPhotos'] %}
+                                    <div class="checkbox checkbox-inline">
+                                        <input type="checkbox" class="i-checks photo postPhoto hidden" id="{{ photo['internalId'] }}" value=""  /> 
+                                        <a href="/{{upload_directory}}{{photo['photoType']|photoTypeDirectory}}{{medium_directory}}{{muser.id}}/{{ photo['photoMedium'] }}" title="{{ photo['title'] }}" data-gallery="">
+                                            <img src="/{{upload_directory}}{{photo['photoType']|photoTypeDirectory}}{{icon_directory}}{{muser.id}}/{{ photo['photoIcon'] }}">
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>       
+
+                    <div class="ibox-content">
+                        <h2>Deleted Post Photos</h2>
+                        <div class="lightBoxGallery" id="deletedPostPhotoDiv">
+                            {% if allPostPhotos['deletedPostPhotos']|length > 0 %}
+                                {% for photo in allPostPhotos['deletedPostPhotos'] %}
+                                    <a href="/{{upload_directory}}{{photo['photoType']|photoTypeDirectory}}{{medium_directory}}{{muser.id}}/{{ photo['photoMedium'] }}" title="{{ photo['title'] }}" data-gallery="">
+                                        <img src="/{{upload_directory}}{{photo['photoType']|photoTypeDirectory}}{{icon_directory}}{{muser.id}}/{{ photo['photoIcon'] }}">
+                                    </a>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>       
+
+                    <div id="blueimp-gallery" class="blueimp-gallery">
+                        <div class="slides"></div>
+                        <h3 class="title"></h3>
+                        <a class="prev">‹</a>
+                        <a class="next">›</a>
+                        <a class="close">×</a>
+                        <a class="play-pause"></a>
+                        <ol class="indicator"></ol>
+                    </div>
+
+                    <div class="ibox-content">
+                        <div class="row">
+                            <button type="button" class="btn btn-w-m btn-success pull-left" id="batch-edit-button">Batch Edit</button>
+                            <button type="button" class="btn btn-w-m btn-danger pull-right hidden" id="delete-button">Delete <span class="delete-button-total hidden"></span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block js %}  
+    <!-- Page-Level Scripts -->
+
+    {% javascripts output='js/compiled/fine-uploader.js' 
+            '@FrontBundle/Resources/public/fine-uploader/fine-uploader.min.js'
+            '@FrontBundle/Resources/public/inspinia/js/plugins/blueimp/jquery.blueimp-gallery.min.js'
+            '@FrontBundle/Resources/public/inspinia/js/plugins/iCheck/icheck.min.js' 
+            '@FrontBundle/Resources/public/inspinia/js/plugins/sweetalert/sweetalert.min.js' 
+            '@AdminBundle/Resources/public/js/admin/common/common.js' 
+            '@AdminBundle/Resources/public/js/admin/photo/managePhoto.js' 
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script>
+        var urlUploadPhoto = '{{ path('private_api_uploader') }}';
+        var urlBatchDeletePhoto = '{{ path('mphoto_batch_delete') }}';
+        var postInternalId = '{{mpost.internalId}}';
+        
+        var internalToken = '{{muser.internalToken}}';
+        var internalId = '{{muser.internalId}}';
+    </script>
+
+    {% include 'admin/mphoto/boUploaderTemplate.html.twig' %}
+
+{% endblock %}

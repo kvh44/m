@@ -71,6 +71,7 @@ class MpostController extends Controller {
 
         return $this->render('admin/mpost/show.html.twig', array(
                     'mpost' => $mpost,
+                    'muser' => $mpost->getUser(),
                     'allPhotosByPostId' => array_key_exists('data', $allPhotosByPostId) ? $allPhotosByPostId['data'] : array(),
                     'paths' => $paths
         ));
@@ -119,6 +120,29 @@ class MpostController extends Controller {
     public function enableAction(Request $request, Mpost $mpost) {
         $this->get('api_massage.PostsService')->enablePost($mpost->getInternalId(), $mpost->getUser()->getInternalId(), $mpost->getUser()->getInternalToken());
         return $this->redirectToRoute('mpost_index');
+    }
+    
+    public function managePostPhotoAction(Request $request, Mpost $mpost) {
+        $allPostPhotos = $this->get('api_massage.PhotoService')->getAllPhotosByPostId($mpost->getId());
+
+        $path['title'] = 'Post list';
+        $path['url'] = $this->generateUrl('mpost_index');
+        $paths[] = $path;
+
+        $path['title'] = 'Show Post ' . $mpost->getId();
+        $path['url'] = $this->generateUrl('mpost_show', array('id' => $mpost->getId()));
+        $paths[] = $path;
+        
+        $path['title'] = 'Manage Post Photo ' . $mpost->getId();
+        $path['url'] = $this->generateUrl('mpost_mphoto_manage', array('internalId' => $mpost->getInternalId()));
+        $paths[] = $path;
+        
+        return $this->render('admin/mphoto/managePostPhoto.html.twig', array(
+                    'mpost' => $mpost,
+                    'muser' => $mpost->getUser(),
+                    'allPostPhotos' => array_key_exists('data', $allPostPhotos) ? $allPostPhotos['data'] : array(), 
+                    'paths' => $paths
+        ));
     }
     
     

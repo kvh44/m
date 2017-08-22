@@ -33,9 +33,9 @@ muser_enable:
     defaults: { _controller: "AdminBundle:Muser:enable" }
     methods:  [GET, POST]    
     
-mphoto_manage:
-    path:     /{internalToken}/photo-manage
-    defaults: { _controller: "AdminBundle:Muser:managePhoto" }
+muser_mphoto_manage:
+    path:     /{internalToken}/user-photo-manage
+    defaults: { _controller: "AdminBundle:Muser:manageUserPhoto" }
     methods:  [GET, POST] 
     
 mpassword_manage:

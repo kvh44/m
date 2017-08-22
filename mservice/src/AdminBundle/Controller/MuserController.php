@@ -245,7 +245,7 @@ class MuserController extends Controller {
         return $this->redirectToRoute('muser_index');
     }
 
-    public function managePhotoAction(Request $request, Muser $muser) {
+    public function manageUserPhotoAction(Request $request, Muser $muser) {
         $allUserPhotos = $this->get('api_massage.PhotoService')->getAllPhotosByUserId($muser->getId());
 
         $path['title'] = 'User list';
@@ -257,10 +257,10 @@ class MuserController extends Controller {
         $paths[] = $path;
         
         $path['title'] = 'Manage User Photo ' . $muser->getUsername();
-        $path['url'] = $this->generateUrl('mphoto_manage', array('internalToken' => $muser->getInternalToken()));
+        $path['url'] = $this->generateUrl('muser_mphoto_manage', array('internalToken' => $muser->getInternalToken()));
         $paths[] = $path;
         
-        return $this->render('admin/mphoto/managePhoto.html.twig', array(
+        return $this->render('admin/mphoto/manageUserPhoto.html.twig', array(
                     'muser' => $muser,
                     'allUserPhotos' => array_key_exists('data', $allUserPhotos) ? $allUserPhotos['data'] : array(), 
                     'paths' => $paths
