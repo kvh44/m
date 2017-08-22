@@ -8,9 +8,9 @@ mphoto_list_ajax:
     defaults: { _controller: "AdminBundle:Mphoto:photoListAjax" }
     methods:  GET    
     
-mphoto_show:
-    path:     /{id}/show
-    defaults: { _controller: "AdminBundle:Mphoto:show" }
+mphoto_show_user_photo:
+    path:     /{id}/show/user/photo
+    defaults: { _controller: "AdminBundle:Mphoto:showUserPhoto" }
     methods:  GET    
     
 mphoto_batch_delete:
