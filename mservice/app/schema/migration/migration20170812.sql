@@ -17,7 +17,7 @@ ADD `is_fr` TINYINT(1) NULL DEFAULT NULL AFTER `is_zh`,
 ADD `is_en` TINYINT(1) NULL DEFAULT NULL AFTER `is_fr`;
 
 
---mdraft--
+
 ALTER TABLE `mdraft` CHANGE `content` `content` TEXT NOT NULL;
 
 ALTER TABLE `mdraft` ADD `category_id` INT(3) DEFAULT NULL AFTER `internal_id`;
