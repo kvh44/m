@@ -4,18 +4,6 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `massage`
---
-
---
--- 转存表中的数据 `mcountry`
---
 
 INSERT IGNORE INTO `mcountry` (`id`, `country_zh`, `country_fr`, `country_en`, `internal_id`, `slug`) VALUES
 (1, '法国', 'France', 'France', 'D5eT9FbxU5mwrzmL8RzNwicGHdQlwute', 'france'),

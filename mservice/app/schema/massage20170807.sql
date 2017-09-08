@@ -51,17 +51,17 @@ CREATE TABLE `madmin` (
 
 CREATE TABLE `mcategory` (
   `id` int(3) NOT NULL,
-  `category_zh` varchar(20) CHARACTER SET latin1 NOT NULL,
-  `category_en` varchar(50) CHARACTER SET latin1 NOT NULL,
-  `category_fr` varchar(50) CHARACTER SET latin1 NOT NULL,
+  `category_zh` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `category_en` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `category_fr` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `is_deleted` tinyint(1) NOT NULL,
   `is_defaut` tinyint(1) NOT NULL,
   `score` int(3) NOT NULL,
-  `internal_id` varchar(255) CHARACTER SET latin1 NOT NULL,
-  `slug` varchar(255) CHARACTER SET latin1 NOT NULL,
+  `internal_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -109,7 +109,7 @@ CREATE TABLE `mdraft` (
 
 CREATE TABLE `mip` (
   `id` int(255) NOT NULL,
-  `ip` varchar(255) CHARACTER SET latin1 NOT NULL,
+  `ip` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `user_id` int(255) NOT NULL,
   `is_allowed` tinyint(1) NOT NULL,
   `is_blacked` tinyint(1) NOT NULL,
@@ -217,7 +217,7 @@ CREATE TABLE `mtoken` (
   `token_expired_time` datetime NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -242,7 +242,7 @@ CREATE TABLE `murl` (
   `last_read` datetime DEFAULT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 

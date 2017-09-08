@@ -1,6 +1,7 @@
 ApiBundle\Entity\Mcategory:
     type: entity
     table: mcategory
+    repositoryClass: ApiBundle\Repository\MassageCategoryRepository
     uniqueConstraints:
         category_en:
             columns:

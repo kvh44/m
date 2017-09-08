@@ -1,0 +1,115 @@
+{% extends '@Admin/base.html.twig' %}
+
+{% block body %}
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Category Page</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#">Config option 1</a>
+                                </li>
+                                <li><a href="#">Config option 2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="ibox-content">   
+                        <div class="row">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <th><label class="control-label">Id</label></th>
+                                        <td>{{ mcategory.id }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">categoryZh</label></th>
+                                        <td>{{ mcategory.categoryZh }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">categoryEn</label></th>
+                                        <td>{{ mcategory.categoryEn }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">categoryFr</label></th>
+                                        <td>{{ mcategory.categoryFr }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">isDeleted</label></th>
+                                        <td>{{ mcategory.isDeleted }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">isDefaut</label></th>
+                                        <td>{{ mcategory.isDefaut }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">score</label></th>
+                                        <td>{{ mcategory.score }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">internalId</label></th>
+                                        <td>{{ mcategory.internalId }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">slug</label></th>
+                                        <td>{{ mcategory.slug }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">Created</label></th>
+                                        <td>{% if mcategory.created %}{{ mcategory.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><label class="control-label">Updated</label></th>
+                                        <td>{% if mcategory.updated %}{{ mcategory.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+
+                            <a href="{{ path('mcategory_index') }}" class="btn btn-lg btn-outline btn-primary">Back to the list</a>
+
+                            {% if mcategory.isDeleted %}
+                                <a href="{{ path('mcategory_enable', { 'internalId': mcategory.internalId }) }}" class="btn btn-lg btn-info">Enable</a>
+                            {% else %}    
+                                <a href="{{ path('mcategory_delete', { 'internalId': mcategory.internalId }) }}" class="btn btn-lg btn-danger" id="deleteCategory">Delete</a>
+                            {% endif %}
+                            <a href="{{ path('mcategory_edit', { 'internalId': mcategory.internalId }) }}" class="btn btn-lg btn-success">Edit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block js %}  
+    <!-- Page-Level Scripts -->
+
+    {% javascripts output='js/compiled/categoryshow.js' 
+            '@FrontBundle/Resources/public/inspinia/js/plugins/sweetalert/sweetalert.min.js' 
+            '@FrontBundle/Resources/public/inspinia/js/plugins/iCheck/icheck.min.js' 
+            '@AdminBundle/Resources/public/js/admin/category/show.js' 
+            '@AdminBundle/Resources/public/js/admin/category/edit.js'
+            '@AdminBundle/Resources/public/js/admin/common/common.js' 
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+
+
+{% endblock %}

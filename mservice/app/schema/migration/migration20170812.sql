@@ -47,33 +47,17 @@ CREATE TABLE `mmessage` (
   `deleted_by_user_id` int(11) DEFAULT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Indexes for dumped tables
---
 
---
--- Indexes for table `mmessage`
---
 ALTER TABLE `mmessage`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `internal_id` (`internal_id`),
   ADD KEY `user_id` (`user_id`);
 
---
--- 在导出的表使用AUTO_INCREMENT
---
 
---
--- 使用表AUTO_INCREMENT `mmessage`
---
 ALTER TABLE `mmessage`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
 
 
 ALTER TABLE `mmessage`

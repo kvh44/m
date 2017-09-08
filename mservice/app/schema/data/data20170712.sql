@@ -1,21 +1,3 @@
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `massage`
---
-
---
--- 转存表中的数据 `mlocation`
---
 
 INSERT IGNORE INTO `mlocation` (`id`, `country_id`, `city_zh`, `city_fr`, `city_en`, `post_number`, `post_number_zh`, `internal_id`, `slug`) VALUES
 (1, 1, '巴黎', 'Paris', 'Paris', '75001', '1区', 'UxlRkRaeQhol8PcPJsgKJCW4n5qFVOUC', 'paris75001'),
@@ -40,7 +22,3 @@ INSERT IGNORE INTO `mlocation` (`id`, `country_id`, `city_zh`, `city_fr`, `city_
 (20, 1, '巴黎', 'Paris', 'Paris', '75020', '20区', 'zYLqdw718tVhQdEbfHXXO5VhYeCY0ohS', 'paris75020'),
 (21, 1, '巴黎', 'Paris', 'Paris', '75', '小巴黎市内', 'zYLqdw718tVhQdEbfHXXO5VhYeCY0ohS', 'paris75');
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

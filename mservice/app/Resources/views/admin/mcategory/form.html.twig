@@ -1,0 +1,118 @@
+{{ form_start(form,{ 'attr': {'class': 'form-horizontal'} }) }}
+
+<div class="form-group {% if form.categoryZh.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">categoryZh</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.categoryZh, { 'attr': {'class': 'form-control'} }) }}
+        <span class="help-block m-b-none {% if form.categoryZh.vars.valid == false  %} alert alert-danger {% endif %}">
+            {{ form_errors(form.categoryZh) }}
+        </span>
+    </div>
+</div>    
+
+<div class="form-group {% if form.categoryEn.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">categoryEn</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.categoryEn, { 'attr': {'class': 'form-control'} }) }}
+        <span class="help-block m-b-none {% if form.categoryEn.vars.valid == false  %} alert alert-danger {% endif %}">
+            {{ form_errors(form.categoryEn) }}
+        </span>
+    </div>
+</div>  
+
+<div class="form-group {% if form.categoryFr.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">categoryFr</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.categoryFr, { 'attr': {'class': 'form-control'} }) }}
+        <span class="help-block m-b-none {% if form.categoryFr.vars.valid == false  %} alert alert-danger {% endif %}">
+            {{ form_errors(form.categoryFr) }}
+        </span>
+    </div>
+</div>   
+
+<div class="form-group {% if form.isDeleted.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-sm-2 control-label"></label> 
+    <div class="col-lg-10">
+        <label> {{ form_widget(form.isDeleted, { 'attr': {'class': 'i-checks'} }) }} isDeleted </label>    
+    </div>
+</div>  
+
+<div class="form-group {% if form.isDefaut.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-sm-2 control-label"></label> 
+    <div class="col-lg-10">
+        <label> {{ form_widget(form.isDefaut, { 'attr': {'class': 'i-checks'} }) }} isDefaut </label>    
+    </div>
+</div>     
+
+<div class="form-group {% if form.score.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">score</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.score, { 'attr': {'class': 'form-control'} }) }}
+        <span class="help-block m-b-none {% if form.score.vars.valid == false  %} alert alert-danger {% endif %}">
+            {{ form_errors(form.score) }}
+        </span>
+    </div>
+</div>         
+
+<div class="form-group {% if form.internalId.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">internalId</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.internalId, { 'attr': {'class': 'form-control'} }) }}
+        <span class="help-block m-b-none {% if form.internalId.vars.valid == false  %} alert alert-danger {% endif %}">
+            {{ form_errors(form.internalId) }}
+        </span>
+    </div>
+</div>      
+     
+<div class="form-group {% if form.slug.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">slug</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.slug, { 'attr': {'class': 'form-control'} }) }}
+        <span class="help-block m-b-none {% if form.slug.vars.valid == false  %} alert alert-danger {% endif %}">
+            {{ form_errors(form.slug) }}
+        </span>
+    </div>
+</div>         
+
+<div class="form-group {% if form.created.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">created</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.created.date.year, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        {{ form_widget(form.created.date.month, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        {{ form_widget(form.created.date.day, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        {{ form_widget(form.created.time.hour, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        {{ form_widget(form.created.time.minute, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        <span class="help-block m-b-none {% if form.created.vars.valid == false  %} alert alert-danger {% endif %}">
+            {{ form_errors(form.created) }}
+        </span>
+    </div>
+</div>      
+
+<div class="form-group {% if form.updated.vars.valid == false  %} has-error {% endif %}">
+    <label class="col-lg-2 control-label">updated</label> 
+    <div class="col-lg-10">
+        {{ form_widget(form.updated.date.year, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        {{ form_widget(form.updated.date.month, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        {{ form_widget(form.updated.date.day, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        {{ form_widget(form.updated.time.hour, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        {{ form_widget(form.updated.time.minute, { 'attr': {'class': 'form-control col-lg-2 time-select-list'} }) }}
+        <span class="help-block m-b-none {% if form.updated.vars.valid == false  %} alert alert-danger {% endif %}">
+            {{ form_errors(form.updated) }}
+        </span>
+    </div>
+</div>          
+
+<a href="{{ path('mcategory_index') }}" class="btn btn-lg btn-outline btn-primary">Back to the list</a>
+{% if mcategory.id is not null %}
+    <a href="{{ path('mcategory_show', { 'id' : mcategory.id }) }}" class="btn btn-lg btn-info">Show</a>
+{% endif %}
+{% if mcategory.id is not null %}
+    {% if mcategory.isDeleted %}
+        <a href="{{ path('mcategory_enable', { 'internalId': mcategory.internalId }) }}" class="btn btn-lg btn-info">Enable</a>
+    {% else %}    
+        <a href="{{ path('mcategory_delete', { 'internalId': mcategory.internalId }) }}" class="btn btn-lg btn-danger" id="deleteCategory">Delete</a>
+    {% endif %}
+{% endif %}
+
+<input type="submit" value="Save" class="btn btn-lg btn-success" />
+{{ form_end(form) }}

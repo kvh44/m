@@ -1,0 +1,29 @@
+mcategory_index:
+    path:     /
+    defaults: { _controller: "AdminBundle:Mcategory:index" }
+    methods:  GET  
+    
+mcategory_show:
+    path:     /{id}/show
+    defaults: { _controller: "AdminBundle:Mcategory:show" }
+    methods:  GET      
+
+mcategory_new:
+    path:     /new
+    defaults: { _controller: "AdminBundle:Mcategory:new" }
+    methods:  [GET, POST]   
+    
+mcategory_edit:
+    path:     /{internalId}/edit
+    defaults: { _controller: "AdminBundle:Mcategory:edit" }
+    methods:  [GET, POST]    
+    
+mcategory_delete:
+    path:     /{internalId}/delete
+    defaults: { _controller: "AdminBundle:Mcategory:delete" }
+    methods:  [GET, POST]
+    
+mcategory_enable:
+    path:     /{internalId}/enable
+    defaults: { _controller: "AdminBundle:Mcategory:enable" }
+    methods:  [GET, POST]    

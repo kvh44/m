@@ -91,7 +91,7 @@ CREATE TABLE `mdraft` (
 
 CREATE TABLE `mip` (
   `id` int(255) NOT NULL,
-  `ip` varchar(255) CHARACTER SET latin1 NOT NULL,
+  `ip` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `user_id` int(255) NOT NULL,
   `is_allowed` tinyint(1) NOT NULL,
   `is_blacked` tinyint(1) NOT NULL,
@@ -199,7 +199,7 @@ CREATE TABLE `mtoken` (
   `token_expired_time` datetime NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 

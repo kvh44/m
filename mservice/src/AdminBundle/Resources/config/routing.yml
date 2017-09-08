@@ -10,6 +10,10 @@ admin_mpost:
     resource: "@AdminBundle/Resources/config/routing/mpost.yml"
     prefix:   /post   
     
+admin_mcategory:
+    resource: "@AdminBundle/Resources/config/routing/mcategory.yml"
+    prefix:   /category       
+    
 
 admin_homepage:
     path:     /
