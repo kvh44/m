@@ -228,8 +228,13 @@ class SearchService {
         }
         $queryObject = Query::create($boolQuery);
         $queryObject->setSize($limit);
-        $queryObject->setFrom($offset);        
-        $queryObject->addSort(array('updated' => array('order' => 'desc')));
+        $queryObject->setFrom($offset);
+        /**
+         * if no word search. We sort by updated time. Otherwise we sort by the word scoring by default
+         */
+        if(strlen($word) === 0){
+            $queryObject->addSort(array('updated' => array('order' => 'desc')));
+        }
         $this->resultSet = $search->search($queryObject)->getResults();
         return $this->getSourceArray();
         //return $search->search($queryObject)->getSuggests();
