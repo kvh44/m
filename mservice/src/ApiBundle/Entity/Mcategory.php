@@ -312,4 +312,10 @@ class Mcategory
     {
         return $this->updated;
     }
+    
+    public function __toString()
+    {
+        return $this->categoryEn;
+    }        
+            
 }
